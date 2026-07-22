@@ -1,0 +1,82 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ------------------------------------------------------
+// 1. USERS & AUTHENTICATION (Admin / Sub-admin)
+// ------------------------------------------------------
+// Note: SQLite doesn't support enums natively, so we use Strings for roles
+
+model User {
+  id                    String    @id @default(cuid())
+  name                  String?
+  email                 String    @unique
+  passwordHash          String?
+  image                 String?
+  role                  String    @default("STUDENT") // SUPER_ADMIN, SUB_ADMIN, STUDENT
+  canManagePosts        Boolean   @default(true)
+  canManageCertificates Boolean   @default(true)
+  canManagePayments     Boolean   @default(false)
+  enrolledCourse        String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  // Relationships
+  posts         Post[]
+  payments      Payment[]
+}
+
+// ------------------------------------------------------
+// 2. BLOG SYSTEM
+// ------------------------------------------------------
+
+model Post {
+  id          String     @id @default(cuid())
+  title       String
+  slug        String     @unique
+  content     String     // String maps to TEXT in SQLite automatically
+  coverImage  String?
+  status      String     @default("DRAFT") // DRAFT, PUBLISHED
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Author Relationship
+  authorId    String
+  author      User       @relation(fields: [authorId], references: [id])
+}
+
+// ------------------------------------------------------
+// 3. CERTIFICATES (For Verification Portal)
+// ------------------------------------------------------
+model Certificate {
+  id              String   @id @default(cuid())
+  credentialCode  String   @unique // e.g. "CC-101"
+  recipientName   String
+  courseTitle     String
+  issueDate       DateTime
+  published       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+}
+
+// ------------------------------------------------------
+// 4. PAYMENTS & ENROLLMENTS
+// ------------------------------------------------------
+
+model Payment {
+  id              String        @id @default(cuid())
+  amount          Int
+  currency        String        @default("INR")
+  status          String        @default("PENDING") // PENDING, SUCCESS, FAILED
+  razorpayOrderId String?       @unique
+  razorpayPaymentId String?     @unique
+  createdAt       DateTime      @default(now())
+
+  // Relationship
+  userId          String
+  user            User          @relation(fields: [userId], references: [id])
+}
