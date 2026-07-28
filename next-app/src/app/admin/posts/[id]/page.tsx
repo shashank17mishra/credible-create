@@ -21,6 +21,11 @@ export default function EditPost() {
   const [htmlPreview, setHtmlPreview] = useState("");
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "info" } | null>(null);
 
+  const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
+
   // Load existing post details
   useEffect(() => {
     async function loadPost() {
@@ -35,8 +40,8 @@ export default function EditPost() {
         setCoverImage(post.coverImage || "");
         setContent(post.content);
         setStatus(post.status);
-      } catch (err: any) {
-        showToast(err.message || "Error loading post", "error");
+      } catch (err) {
+        showToast(err instanceof Error ? err.message : "Error loading post", "error");
       } finally {
         setLoading(false);
       }
@@ -64,10 +69,7 @@ export default function EditPost() {
     renderMarkdown();
   }, [content]);
 
-  const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
-    setToast({ message, type });
-    setTimeout(() => setToast(null), 3000);
-  };
+
 
   // Helper function to insert formatted markdown tags at selection ranges (like MS Word / Google Docs)
   const insertFormat = (type: string) => {
@@ -181,8 +183,8 @@ export default function EditPost() {
         router.push("/admin/posts");
         router.refresh();
       }, 1000);
-    } catch (err: any) {
-      showToast(err.message, "error");
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "An error occurred", "error");
       setSaving(false);
     }
   };
@@ -192,7 +194,7 @@ export default function EditPost() {
       {toast && (
         <div className={`toast-msg ${toast.type}`}>
           <span style={{ fontFamily: "var(--font-mono)" }}>
-            [ {toast.type === "error" ? "FAIL" : "OK"} // {toast.message.toUpperCase()} ]
+            {`[ ${toast.type === "error" ? "FAIL" : "OK"} // ${toast.message.toUpperCase()} ]`}
           </span>
         </div>
       )}

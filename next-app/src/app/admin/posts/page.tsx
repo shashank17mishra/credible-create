@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface Post {
   id: string;
@@ -17,7 +16,6 @@ interface Post {
 }
 
 export default function BlogPostsManager() {
-  const router = useRouter();
   const [posts, setPosts] = useState<Post[]>([]);
   const [userRole, setUserRole] = useState("SUB_ADMIN");
   const [loading, setLoading] = useState(true);
@@ -39,8 +37,8 @@ export default function BlogPostsManager() {
         if (!postsRes.ok) throw new Error("Failed to load blog posts");
         const postsData = await postsRes.json();
         setPosts(postsData);
-      } catch (err: any) {
-        setError(err.message || "Error fetching posts");
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Error fetching posts");
       } finally {
         setLoading(false);
       }
@@ -74,8 +72,8 @@ export default function BlogPostsManager() {
 
       setPosts(posts.map(p => p.id === post.id ? { ...p, status: newStatus } : p));
       showToast(`Post status updated to ${newStatus.toUpperCase()}`, "success");
-    } catch (err: any) {
-      showToast(err.message, "error");
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "An error occurred", "error");
     }
   };
 
@@ -101,8 +99,8 @@ export default function BlogPostsManager() {
 
       setPosts(posts.filter(p => p.id !== id));
       showToast("Blog post deleted successfully", "success");
-    } catch (err: any) {
-      showToast(err.message, "error");
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "An error occurred", "error");
     }
   };
 
@@ -111,7 +109,7 @@ export default function BlogPostsManager() {
       {toast && (
         <div className={`toast-msg ${toast.type}`}>
           <span style={{ fontFamily: "var(--font-mono)" }}>
-            [ {toast.type === "error" ? "FAIL" : toast.type === "success" ? "OK" : "INFO"} // {toast.message.toUpperCase()} ]
+            {`[ ${toast.type === "error" ? "FAIL" : toast.type === "success" ? "OK" : "INFO"} // ${toast.message.toUpperCase()} ]`}
           </span>
         </div>
       )}
@@ -142,7 +140,7 @@ export default function BlogPostsManager() {
         <div className="glass-panel table-panel" style={{ padding: "1.5rem" }}>
           {posts.length === 0 ? (
             <div style={{ padding: "3rem 1.5rem", textAlign: "center", color: "var(--admin-text-muted)" }}>
-              No blog posts composed yet. Click "Compose Article" to get started.
+              No blog posts composed yet. Click &quot;Compose Article&quot; to get started.
             </div>
           ) : (
             <table className="admin-table">

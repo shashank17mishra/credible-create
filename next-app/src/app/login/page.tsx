@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -11,23 +11,24 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [submitError, setSubmitError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const callbackUrl = searchParams.get("callbackUrl") || "/admin";
   const authError = searchParams.get("error");
 
-  useEffect(() => {
+  let error = submitError;
+  if (!error && authError) {
     if (authError === "CredentialsSignin") {
-      setError("Invalid credentials. Access denied.");
-    } else if (authError) {
-      setError("Authentication failed. Please try again.");
+      error = "Invalid credentials. Access denied.";
+    } else {
+      error = "Authentication failed. Please try again.";
     }
-  }, [authError]);
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setSubmitError("");
     setLoading(true);
 
     try {
@@ -38,13 +39,13 @@ function LoginForm() {
       });
 
       if (res?.error) {
-        setError("Invalid email or password.");
+        setSubmitError("Invalid email or password.");
       } else {
         router.push(callbackUrl);
         router.refresh();
       }
     } catch (err) {
-      setError("An unexpected error occurred.");
+      setSubmitError("An unexpected error occurred.");
       console.error(err);
     } finally {
       setLoading(false);

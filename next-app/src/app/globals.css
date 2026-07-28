@@ -2990,10 +2990,6 @@ body:has(.scroll-container) nav a.active {
   fill: rgba(0, 102, 204, 0.08);
 }
 
-/* ROBOT SHADOW FLIGHT */
-#robot-car {
-  will-change: transform;
-}
 
 /* Milestone Cards (Apple/Google Glassmorphism Redesign) */
 .milestone-card {
@@ -4265,80 +4261,6 @@ body:has(.scroll-container) nav a.active {
     gap: 1rem;
   }
   .trust-divider {
-    display: none;
-  }
-}
-/* ==========================================================================
-   3D ROBOT SCROLL CANVAS
-   ========================================================================== */
-.robot-canvas-container {
-  position: fixed;
-  right: 3%;
-  top: 50%;
-  transform: translateY(-48%);
-  width: 50vw;
-  max-width: 680px;
-  aspect-ratio: 16/9;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(-48%) scale(0.88) rotateY(12deg);
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-  perspective: 1200px;
-  /* Subtle glow aura behind the robot */
-  filter: drop-shadow(0 8px 32px rgba(0, 194, 255, 0.15))
-          drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
-}
-
-.robot-canvas-container.visible {
-  opacity: 1;
-  transform: translateY(-48%) scale(1) rotateY(0deg);
-}
-
-.robot-canvas-container canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: contain;
-}
-
-/* Animated glow ring behind the robot for a tech aesthetic */
-.robot-canvas-container::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 70%;
-  height: 70%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(0, 194, 255, 0.08) 0%,
-    rgba(0, 194, 255, 0.03) 40%,
-    transparent 70%
-  );
-  animation: robotGlowPulse 4s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
-@keyframes robotGlowPulse {
-  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
-}
-
-@media (max-width: 1024px) {
-  .robot-canvas-container {
-    width: 45vw;
-    right: 2%;
-  }
-}
-
-@media (max-width: 768px) {
-  /* On small screens, hide to preserve space for text readability and avoid layout messiness */
-  .robot-canvas-container {
     display: none;
   }
 }

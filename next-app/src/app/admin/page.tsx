@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 
 interface StatLog {
   id: string;
@@ -40,8 +39,8 @@ export default function AdminDashboard() {
         const data = await res.json();
         setStats(data);
         setDbStatus("ONLINE");
-      } catch (err: any) {
-        setError(err.message || "Error loading system data");
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Error loading system data");
         setDbStatus("ERROR");
       } finally {
         setLoading(false);

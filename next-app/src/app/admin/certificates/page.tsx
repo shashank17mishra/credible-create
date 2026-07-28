@@ -21,7 +21,6 @@ interface Certificate {
 export default function CertificatesManager() {
   const [students, setStudents] = useState<Student[]>([]);
   const [certs, setCerts] = useState<Certificate[]>([]);
-  const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
   const [userRole, setUserRole] = useState("SUB_ADMIN");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -64,9 +63,8 @@ export default function CertificatesManager() {
 
         setStudents(Array.isArray(studentsData) ? studentsData : []);
         setCerts(Array.isArray(certsData) ? certsData : []);
-        setFilteredStudents(studentsData);
-      } catch (err: any) {
-        setError(err.message || "Error retrieving server documents");
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Error retrieving server documents");
       } finally {
         setLoading(false);
       }
@@ -76,7 +74,7 @@ export default function CertificatesManager() {
   }, []);
 
   // Filter students based on selectedCourse and searchQuery
-  useEffect(() => {
+  const filteredStudents = React.useMemo(() => {
     let result = students;
 
     if (selectedCourse !== "ALL") {
@@ -91,7 +89,7 @@ export default function CertificatesManager() {
       );
     }
 
-    setFilteredStudents(result);
+    return result;
   }, [selectedCourse, searchQuery, students]);
 
   // Handle certificate issuance
@@ -131,8 +129,8 @@ export default function CertificatesManager() {
       });
 
       showToast(`Certificate ${newCert.credentialCode} successfully issued to ${student.name}!`, "success");
-    } catch (err: any) {
-      showToast(err.message, "error");
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "An error occurred", "error");
     }
   };
 
@@ -159,8 +157,8 @@ export default function CertificatesManager() {
 
       setCerts(certs.filter(c => c.id !== certId));
       showToast(`Certificate ${code} successfully revoked`, "success");
-    } catch (err: any) {
-      showToast(err.message, "error");
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "An error occurred", "error");
     }
   };
 
@@ -176,7 +174,7 @@ export default function CertificatesManager() {
       {toast && (
         <div className={`toast-msg ${toast.type}`}>
           <span style={{ fontFamily: "var(--font-mono)" }}>
-            [ {toast.type === "error" ? "FAIL" : "OK"} // {toast.message.toUpperCase()} ]
+            {`[ ${toast.type === "error" ? "FAIL" : "OK"} // ${toast.message.toUpperCase()} ]`}
           </span>
         </div>
       )}

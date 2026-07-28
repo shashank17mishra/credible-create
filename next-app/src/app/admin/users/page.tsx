@@ -67,8 +67,8 @@ export default function UsersManager() {
         if (!usersRes.ok) throw new Error("Failed to load user credentials");
         const usersData = await usersRes.json();
         setUsers(usersData);
-      } catch (err: any) {
-        setError(err.message || "Error loading user files");
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Error loading user files");
       } finally {
         setLoading(false);
       }
@@ -119,8 +119,8 @@ export default function UsersManager() {
       setCanManageCertificates(true);
       setCanManagePayments(false);
       setIsAddingUser(false); // Close modal
-    } catch (err: any) {
-      showToast(err.message, "error");
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "An error occurred", "error");
     } finally {
       setSubmitting(false);
     }
@@ -131,18 +131,15 @@ export default function UsersManager() {
     if (!editingUser) return;
 
     try {
-      const payload: any = {
+      const payload = {
         name: editingUser.name,
         email: editingUser.email,
         role: editingUser.role,
         canManagePosts: editingUser.canManagePosts,
         canManageCertificates: editingUser.canManageCertificates,
         canManagePayments: editingUser.canManagePayments,
+        ...(editPassword.trim() !== "" ? { password: editPassword } : {}),
       };
-
-      if (editPassword.trim() !== "") {
-        payload.password = editPassword;
-      }
 
       const res = await fetch(`/api/admin/users/${editingUser.id}`, {
         method: "PUT",
@@ -160,8 +157,8 @@ export default function UsersManager() {
       setEditingUser(null);
       setEditPassword("");
       showToast(`User credentials updated`, "success");
-    } catch (err: any) {
-      showToast(err.message, "error");
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "An error occurred", "error");
     }
   };
 
@@ -187,8 +184,8 @@ export default function UsersManager() {
 
       setUsers(users.filter(u => u.id !== id));
       showToast("Credentials deleted successfully", "success");
-    } catch (err: any) {
-      showToast(err.message, "error");
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "An error occurred", "error");
     }
   };
 
@@ -213,7 +210,7 @@ export default function UsersManager() {
       {toast && (
         <div className={`toast-msg ${toast.type}`}>
           <span style={{ fontFamily: "var(--font-mono)" }}>
-            [ {toast.type === "error" ? "FAIL" : "OK"} // {toast.message.toUpperCase()} ]
+            {`[ ${toast.type === "error" ? "FAIL" : "OK"} // ${toast.message.toUpperCase()} ]`}
           </span>
         </div>
       )}
@@ -430,7 +427,7 @@ export default function UsersManager() {
                 
                 {(role === "SUPER_ADMIN" || role === "STUDENT") && (
                   <p style={{ fontSize: "0.7rem", color: "var(--admin-text-muted)", marginTop: "0.5rem", fontStyle: "italic" }}>
-                    * Permissions are locked based on the selected role's mandatory access requirements.
+                    * Permissions are locked based on the selected role&apos;s mandatory access requirements.
                   </p>
                 )}
               </div>

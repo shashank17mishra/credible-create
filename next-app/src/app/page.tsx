@@ -1,6 +1,7 @@
 
 "use client";
-import React, { useEffect } from 'react';
+import React from 'react';
+import Link from 'next/link';
 import ChromaKeyVideo from "@/components/ChromaKeyVideo";
 
 export default function Page() {
@@ -28,7 +29,7 @@ export default function Page() {
             <li><a className="overlay-trigger" data-target="overlay-about">About</a></li>
             <li><a className="overlay-trigger" data-target="overlay-projects">Projects & FAQ</a></li>
             <li><a className="overlay-trigger" data-target="overlay-verify">Verify Portal</a></li>
-            <li><a href="/blog" className="nav-link">Blog</a></li>
+            <li><Link href="/blog" className="nav-link">Blog</Link></li>
             <li><a className="overlay-trigger btn btn-primary" data-target="overlay-demo"
                 style={{ padding: "0.45rem 1.25rem", fontSize: "0.65rem" }}><span className="btn-text">Book Demo</span></a></li>
           </ul>
@@ -43,10 +44,6 @@ export default function Page() {
         <button className="side-nav-dot" data-sec="4" aria-label="Chapter 5: Gallery"></button>
         <button className="side-nav-dot" data-sec="5" aria-label="Chapter 6: Myna UI"></button>
         <button className="side-nav-dot" data-sec="6" aria-label="Chapter 7: Footer"></button>
-      </div>
-
-      <div className="robot-canvas-container">
-        <canvas id="robot-scroll-canvas" width="1280" height="720"></canvas>
       </div>
 
       <main className="scroll-container" id="scroll-wrapper">
@@ -340,7 +337,7 @@ export default function Page() {
             <ul>
               <li><a className="overlay-trigger" data-target="overlay-about">Our Mission</a></li>
               <li><a className="overlay-trigger" data-target="overlay-about">Our Team</a></li>
-              <li><a href="#" style={{ pointerEvents: "none", opacity: 0.4 }}>Careers (We're Hiring)</a></li>
+              <li><a href="#" style={{ pointerEvents: "none", opacity: 0.4 }}>Careers (We&apos;re Hiring)</a></li>
               <li><a href="#" style={{ pointerEvents: "none", opacity: 0.4 }}>Partnerships</a></li>
             </ul>
           </div>
@@ -364,7 +361,7 @@ export default function Page() {
           </div>
           <div className="footer-col footer-cta-col">
             <h4>Connect</h4>
-            <p className="footer-cta-text">Have a school or program in mind? Let's build something meaningful.</p>
+            <p className="footer-cta-text">Have a school or program in mind? Let&apos;s build something meaningful.</p>
             <button className="btn btn-primary overlay-trigger footer-cta-btn" data-target="overlay-demo">
               <span className="btn-text">Request a Call →</span>
             </button>
@@ -998,7 +995,7 @@ export default function Page() {
           <button id="cert-btn"><span className="btn-text">Verify</span></button>
         </div>
 
-        <div className="error-message" id="cert-error">Certificate not found. Try searching with code "CC-101".</div>
+        <div className="error-message" id="cert-error">Certificate not found. Try searching with code &quot;CC-101&quot;.</div>
 
         
         <div className="verification-result" id="cert-result">
@@ -1057,8 +1054,8 @@ export default function Page() {
         
         <div className="demo-header">
           <span className="demo-pretitle">— Book a Demo</span>
-          <h1 className="demo-headline">Let's build something<br />extraordinary.</h1>
-          <p className="demo-subline">Schedule a live walkthrough of our robotics labs, AI studios, or aerospace programs. We'll tailor the session to your institution's goals.</p>
+          <h1 className="demo-headline">Let&apos;s build something<br />extraordinary.</h1>
+          <p className="demo-subline">Schedule a live walkthrough of our robotics labs, AI studios, or aerospace programs. We&apos;ll tailor the session to your institution&apos;s goals.</p>
         </div>
 
         <div className="demo-mascot-inline">

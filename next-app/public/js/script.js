@@ -4,6 +4,8 @@
 
 function initCredibleCreate() {
   const container = document.getElementById('scroll-wrapper');
+  if (!container) return; // Not on the landing page — nothing to initialize
+
   const sections = document.querySelectorAll('.story-section');
   const dots = document.querySelectorAll('.side-nav-dot');
   const navLinks = document.querySelectorAll('.nav-link');
@@ -205,7 +207,6 @@ function initCredibleCreate() {
   let targetScrollY = 0;
   let currentScrollY = 0;
   const scrollLerpFactor = 0.08; // Smooth scrolling dampening
-  let maxScrollY = 0;
   let activeSectionIndex = 0;
 
   // Touch Swipe state
@@ -214,7 +215,6 @@ function initCredibleCreate() {
   // Calculate scroll boundaries
   function updateScrollBounds() {
     const containerHeight = container.clientHeight;
-    maxScrollY = (sections.length - 1) * containerHeight;
     // Align current target on resize to prevent drift
     targetScrollY = activeSectionIndex * containerHeight;
     currentScrollY = targetScrollY;
@@ -571,13 +571,15 @@ function initCredibleCreate() {
   let currentLevel = 'foundation';
 
   // Infinitely looping robot suspension drift/hover
-  gsap.to("#robot-car", {
-    y: "-=2",
-    repeat: -1,
-    yoyo: true,
-    duration: 0.35,
-    ease: "sine.inOut"
-  });
+  if (document.getElementById('robot-car')) {
+    gsap.to("#robot-car", {
+      y: "-=2",
+      repeat: -1,
+      yoyo: true,
+      duration: 0.35,
+      ease: "sine.inOut"
+    });
+  }
 
   // Track the GSAP timeline instance for hot reloads / tab switches
   let journeyTimeline = null;
@@ -985,7 +987,6 @@ function initCredibleCreate() {
       const achievementsSection = document.getElementById('about-achievements');
 
       if (bioSection && teamSection && achievementsSection) {
-        const bioRect = bioSection.getBoundingClientRect();
         const teamRect = teamSection.getBoundingClientRect();
         const achievementsRect = achievementsSection.getBoundingClientRect();
 
@@ -1454,108 +1455,12 @@ function initCredibleCreate() {
     }
   });
 
-  // ==========================================================================
-  // 3D SCROLL SEQUENCE PRELOADER (80 ROBOT FRAMES)
-  // ==========================================================================
-  const robotFrames = [];
-  const totalRobotFrames = 80;
-  let robotFramesLoaded = 0;
-  let sequenceInitialized = false;
 
-  const robotCanvas = document.getElementById('robot-scroll-canvas');
-  const robotCtx = robotCanvas ? robotCanvas.getContext('2d') : null;
-
-  // Preload all 80 frames into memory for lag-free scroll performance
-  function preloadRobotFrames() {
-    for (let i = 1; i <= totalRobotFrames; i++) {
-      const img = new Image();
-      const frameNum = String(i).padStart(3, '0');
-      img.src = `./robot/ezgif-frame-${frameNum}.jpg`;
-      img.onload = () => {
-        robotFramesLoaded++;
-        if (robotFramesLoaded === totalRobotFrames) {
-          sequenceInitialized = true;
-          // Render initial frame once preloaded
-          renderRobotFrame(0);
-        }
-      };
-      robotFrames.push(img);
-    }
-  }
-
-  function renderRobotFrame(progressFloat) {
-    if (!robotCtx || !robotCanvas || !sequenceInitialized) return;
-
-    // Normalize progress (0 to 3 for Chapters 1-4) to 0 to 1 range
-    const normalized = Math.max(0, Math.min(1, progressFloat / 3));
-    
-    // Map normalized range to 0-79 frame indices
-    const frameIndex = Math.min(totalRobotFrames - 1, Math.floor(normalized * (totalRobotFrames - 1)));
-    const img = robotFrames[frameIndex];
-
-    if (img && img.complete) {
-      robotCtx.clearRect(0, 0, robotCanvas.width, robotCanvas.height);
-      robotCtx.drawImage(img, 0, 0, robotCanvas.width, robotCanvas.height);
-
-      // Smart dual-mode chroma-key: auto-detect black vs white background per frame
-      try {
-        const imgData = robotCtx.getImageData(0, 0, robotCanvas.width, robotCanvas.height);
-        const data = imgData.data;
-        const w = robotCanvas.width;
-        const h = robotCanvas.height;
-
-        // Sample corner pixels to detect background color
-        const cornerOffsets = [
-          0,                          // top-left
-          (w - 1) * 4,               // top-right
-          (h - 1) * w * 4,           // bottom-left
-          ((h - 1) * w + (w - 1)) * 4 // bottom-right
-        ];
-
-        let cornerBrightnessSum = 0;
-        for (const offset of cornerOffsets) {
-          cornerBrightnessSum += (data[offset] + data[offset + 1] + data[offset + 2]) / 3;
-        }
-        const avgCornerBrightness = cornerBrightnessSum / cornerOffsets.length;
-
-        // Determine if background is dark (<128) or light (>=128)
-        const isDarkBg = avgCornerBrightness < 128;
-        const threshold = isDarkBg ? 30 : 35;
-
-        for (let i = 0; i < data.length; i += 4) {
-          const r = data[i];
-          const g = data[i + 1];
-          const b = data[i + 2];
-          const brightness = (r + g + b) / 3;
-
-          if (isDarkBg) {
-            // Key out dark/black background
-            if (brightness < threshold) {
-              data[i + 3] = Math.max(0, Math.floor((brightness / threshold) * 255));
-            }
-          } else {
-            // Key out light/white background
-            const darkness = 255 - brightness;
-            if (darkness < threshold) {
-              data[i + 3] = Math.max(0, Math.floor((darkness / threshold) * 255));
-            }
-          }
-        }
-        robotCtx.putImageData(imgData, 0, 0);
-      } catch (e) {
-        // Chroma keying may fail due to CORS on file:// — gracefully degrade
-        console.warn("Canvas chroma keying unavailable: ", e.message);
-      }
-    }
-  }
-
-  // Begin preloading sequence
-  preloadRobotFrames();
 
   // ==========================================================================
   // PARALLAX ANIMATION TICK LOOP
   // ==========================================================================
-  function tick(timestamp) {
+  function tick() {
     // 1. Lerp mouse values
     mouseX += (targetMouseX - mouseX) * mouseLerpFactor;
     mouseY += (targetMouseY - mouseY) * mouseLerpFactor;
@@ -1564,25 +1469,6 @@ function initCredibleCreate() {
     currentScrollY += (targetScrollY - currentScrollY) * scrollLerpFactor;
     const containerHeight = container.clientHeight;
 
-    // Update 3D robot scroll frame sequence & mouse parallax tilt
-    const robotCanvasContainer = document.querySelector('.robot-canvas-container');
-    if (robotCanvasContainer) {
-      if (currentScrollY <= 3.5 * containerHeight) {
-        robotCanvasContainer.classList.add('visible');
-        const progressFloat = currentScrollY / containerHeight;
-        renderRobotFrame(progressFloat);
-
-        // Gentle interactive mouse drift & 3D tilt
-        const driftX = mouseX * 25;
-        const driftY = mouseY * 15;
-        const rotateY = mouseX * 8;
-        const rotateX = -mouseY * 8;
-        robotCanvasContainer.style.transform = `translate3d(${driftX}px, calc(-48% + ${driftY}px), 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1)`;
-      } else {
-        robotCanvasContainer.classList.remove('visible');
-        robotCanvasContainer.style.transform = `translate3d(0, -48%, 0) scale(0.95) rotateY(10deg)`;
-      }
-    }
 
     // Determine target index closest to current progression float
     const targetIndex = Math.max(0, Math.min(sections.length - 1, Math.round(currentScrollY / containerHeight)));

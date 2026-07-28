@@ -18,7 +18,6 @@ interface Payment {
 
 export default function PaymentsLedger() {
   const [payments, setPayments] = useState<Payment[]>([]);
-  const [filteredPayments, setFilteredPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -33,9 +32,8 @@ export default function PaymentsLedger() {
         if (!res.ok) throw new Error("Failed to load payment logs");
         const data = await res.json();
         setPayments(data);
-        setFilteredPayments(data);
-      } catch (err: any) {
-        setError(err.message || "Error loaded payment logs");
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Error loaded payment logs");
       } finally {
         setLoading(false);
       }
@@ -45,7 +43,7 @@ export default function PaymentsLedger() {
   }, []);
 
   // Filter implementation
-  useEffect(() => {
+  const filteredPayments = React.useMemo(() => {
     let result = payments;
 
     if (search.trim() !== "") {
@@ -62,7 +60,7 @@ export default function PaymentsLedger() {
       result = result.filter(p => p.status === statusFilter);
     }
 
-    setFilteredPayments(result);
+    return result;
   }, [search, statusFilter, payments]);
 
   return (

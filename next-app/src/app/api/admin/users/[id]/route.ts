@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import bcrypt from "bcryptjs";
+import { Prisma } from "@prisma/client";
 
 // PUT /api/admin/users/[id] - Update user (SUPER_ADMIN ONLY)
 export async function PUT(
@@ -41,7 +42,7 @@ export async function PUT(
       }
     }
 
-    const updateData: any = {
+    const updateData: Prisma.UserUpdateInput = {
       name: name || existingUser.name,
       email: email || existingUser.email,
       role: role || existingUser.role,

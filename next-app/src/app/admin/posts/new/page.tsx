@@ -17,19 +17,6 @@ export default function ComposePost() {
   const [htmlPreview, setHtmlPreview] = useState("");
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "info" } | null>(null);
 
-  // Generate slug from title
-  useEffect(() => {
-    if (title) {
-      const generated = title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)+/g, "");
-      setSlug(generated);
-    } else {
-      setSlug("");
-    }
-  }, [title]);
-
   // Update markdown HTML preview
   useEffect(() => {
     async function renderMarkdown() {
@@ -164,8 +151,8 @@ export default function ComposePost() {
         router.push("/admin/posts");
         router.refresh();
       }, 1000);
-    } catch (err: any) {
-      showToast(err.message, "error");
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "An error occurred", "error");
       setLoading(false);
     }
   };
@@ -175,7 +162,7 @@ export default function ComposePost() {
       {toast && (
         <div className={`toast-msg ${toast.type}`}>
           <span style={{ fontFamily: "var(--font-mono)" }}>
-            [ {toast.type === "error" ? "FAIL" : "OK"} // {toast.message.toUpperCase()} ]
+            {`[ ${toast.type === "error" ? "FAIL" : "OK"} // ${toast.message.toUpperCase()} ]`}
           </span>
         </div>
       )}
@@ -226,7 +213,15 @@ export default function ComposePost() {
                 className="admin-input"
                 placeholder="e.g. Navigating AI Ethics in Drone Systems"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setTitle(val);
+                  const generated = val
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, "-")
+                    .replace(/(^-|-$)+/g, "");
+                  setSlug(generated);
+                }}
                 required
               />
             </div>

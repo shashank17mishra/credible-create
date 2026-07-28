@@ -17,7 +17,6 @@ interface Post {
 
 export default function BlogIndex() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,7 +30,6 @@ export default function BlogIndex() {
         if (res.ok) {
           const data = await res.json();
           setPosts(data);
-          setFilteredPosts(data);
         }
       } catch (err) {
         console.error("Error loading blog posts:", err);
@@ -43,7 +41,7 @@ export default function BlogIndex() {
   }, []);
 
   // Filter posts based on category and search query
-  useEffect(() => {
+  const filteredPosts = React.useMemo(() => {
     let result = posts;
 
     if (activeCategory !== "ALL") {
@@ -62,7 +60,7 @@ export default function BlogIndex() {
       );
     }
 
-    setFilteredPosts(result);
+    return result;
   }, [activeCategory, searchQuery, posts]);
 
   const handleSubscribe = (e: React.FormEvent) => {
