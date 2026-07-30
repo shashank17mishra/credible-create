@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compose Publication — Credible Create Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+  <div class="admin-container">
+    <div id="admin-sidebar-wrap"></div>
+
+    <div class="admin-viewport">
+                                                          <header class="admin-header">
+        <div class="header-title-sec" style="display: flex; align-items: center; gap: 1rem;">
+          <button id="admin-mobile-menu-btn" class="admin-mobile-toggle" aria-label="Toggle Navigation Sidebar" style="display: none; background: transparent; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.5rem; cursor: pointer; color: #0f172a;">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <h2>Control Center</h2>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.25rem;">
+          <span class="header-status-badge">SYS.STATUS // LIVE</span>
+          <a href="/index.html" target="_blank" class="btn-view-site" style="font-size: 0.75rem; text-decoration: none; color: #0f172a; border: 1px solid #cbd5e1; padding: 0.45rem 0.85rem; border-radius: 6px; font-weight: 600; background: #fff; display: flex; align-items: center; gap: 0.35rem;">
+            <span>View Website</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </header>
+
+      <main class="admin-content">
+        <div class="workspace-header">
+          <div class="workspace-title">
+            <h1 id="page-heading">Compose New Publication</h1>
+            <p>Draft or update Markdown research articles</p>
+          </div>
+          <div>
+            <a href="/admin-posts.html" class="admin-btn admin-btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;">
+              ← Back to Posts
+            </a>
+          </div>
+        </div>
+
+        <div id="toast-container"></div>
+
+        <form id="post-form" class="glass-panel" style="padding: 2rem;">
+          <div class="admin-form-group">
+            <label class="admin-label" for="title">Article Title</label>
+            <input type="text" id="title" class="admin-input" placeholder="e.g. Next-Gen Robotics in High School Cohorts" required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="admin-form-group">
+              <label class="admin-label" for="slug">URL Slug</label>
+              <input type="text" id="slug" class="admin-input" placeholder="e.g. next-gen-robotics-cohorts" required />
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-label" for="status">Publication Status</label>
+              <select id="status" class="admin-select">
+                <option value="DRAFT">DRAFT</option>
+                <option value="PUBLISHED">PUBLISHED</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-label" for="coverImage">Cover Image URL (Optional)</label>
+            <input type="text" id="coverImage" class="admin-input" placeholder="e.g. /assets/class_robotics.png" />
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-label" for="content">Article Content (Markdown)</label>
+            <textarea id="content" class="admin-textarea" rows="12" placeholder="Write article content in Markdown format..." required></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+            <a href="/admin-posts.html" class="admin-btn admin-btn-secondary">Cancel</a>
+            <button type="submit" id="save-btn" class="admin-btn admin-btn-primary" style="padding: 0.6rem 1.5rem;">
+              Save Publication
+            </button>
+          </div>
+        </form>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/admin-layout.js"></script>
+  <script>
+    let editPostId = null;
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      container.innerHTML = `
+        <div class="toast-msg ${type}">
+          <span style="font-family: var(--font-mono)">
+            [ ${type === 'error' ? 'FAIL' : 'OK'} // ${message.toUpperCase()} ]
+          </span>
+        </div>
+      `;
+      setTimeout(() => { container.innerHTML = ''; }, 3000);
+    }
+
+    function generateSlug(text) {
+      return text
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/--+/g, '-');
+    }
+
+    async function loadPostData(id) {
+      try {
+        const res = await fetch('/api/admin/posts');
+        if (!res.ok) throw new Error('Failed to load posts');
+        const posts = await res.json();
+        const post = posts.find(p => p.id === id);
+        if (post) {
+          document.getElementById('page-heading').textContent = 'Edit Publication';
+          document.getElementById('title').value = post.title || '';
+          document.getElementById('slug').value = post.slug || '';
+          document.getElementById('status').value = post.status || 'DRAFT';
+          document.getElementById('coverImage').value = post.coverImage || '';
+          document.getElementById('content').value = post.content || '';
+        }
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initAdminPage(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        editPostId = urlParams.get('id');
+
+        if (editPostId) {
+          loadPostData(editPostId);
+        }
+
+        const titleInput = document.getElementById('title');
+        const slugInput = document.getElementById('slug');
+
+        titleInput.addEventListener('input', () => {
+          if (!editPostId) {
+            slugInput.value = generateSlug(titleInput.value);
+          }
+        });
+
+        const form = document.getElementById('post-form');
+        const saveBtn = document.getElementById('save-btn');
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          saveBtn.disabled = true;
+          saveBtn.textContent = 'Saving...';
+
+          const title = titleInput.value.trim();
+          const slug = slugInput.value.trim();
+          const status = document.getElementById('status').value;
+          const coverImage = document.getElementById('coverImage').value.trim() || null;
+          const content = document.getElementById('content').value;
+
+          try {
+            const url = editPostId ? `/api/admin/posts/${editPostId}` : '/api/admin/posts';
+            const method = editPostId ? 'PUT' : 'POST';
+
+            const res = await fetch(url, {
+              method,
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ title, slug, status, coverImage, content })
+            });
+
+            if (!res.ok) {
+              const errData = await res.json();
+              throw new Error(errData.error || 'Failed to save publication');
+            }
+
+            showToast(`Publication successfully ${editPostId ? 'updated' : 'created'}!`, 'success');
+            setTimeout(() => {
+              window.location.href = '/admin-posts.html';
+            }, 1000);
+          } catch (err) {
+            showToast(err.message, 'error');
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Save Publication';
+          }
+        });
+      });
+    });
+  </script>
+                
+</body>
+</html>

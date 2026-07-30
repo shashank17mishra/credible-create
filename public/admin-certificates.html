@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificates Registry — Credible Create Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+  <div class="admin-container">
+    <div id="admin-sidebar-wrap"></div>
+
+    <div class="admin-viewport">
+                                                          <header class="admin-header">
+        <div class="header-title-sec" style="display: flex; align-items: center; gap: 1rem;">
+          <button id="admin-mobile-menu-btn" class="admin-mobile-toggle" aria-label="Toggle Navigation Sidebar" style="display: none; background: transparent; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.5rem; cursor: pointer; color: #0f172a;">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <h2>Control Center</h2>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.25rem;">
+          <span class="header-status-badge">SYS.STATUS // LIVE</span>
+          <a href="/index.html" target="_blank" class="btn-view-site" style="font-size: 0.75rem; text-decoration: none; color: #0f172a; border: 1px solid #cbd5e1; padding: 0.45rem 0.85rem; border-radius: 6px; font-weight: 600; background: #fff; display: flex; align-items: center; gap: 0.35rem;">
+            <span>View Website</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </header>
+
+      <main class="admin-content">
+        <div class="workspace-header">
+          <div class="workspace-title">
+            <h1>Student Certificate Registry</h1>
+            <p>Issue verification codes and activate student certificates directly in rows</p>
+          </div>
+        </div>
+
+        <div id="toast-container"></div>
+
+        <!-- Filters Bar -->
+        <div class="glass-panel" style="padding: 1.5rem; margin-bottom: 2rem; display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+          <div style="flex: 1; min-width: 250px;">
+            <label class="admin-label" style="margin-bottom: 0.25rem;">Search Students</label>
+            <input type="text" id="search-input" class="admin-input" placeholder="Search by student name or email..." style="padding: 0.6rem 1rem;" />
+          </div>
+          
+          <div style="width: 300px;">
+            <label class="admin-label" style="margin-bottom: 0.25rem;">Filter by Course</label>
+            <select id="course-select" class="admin-select" style="padding: 0.6rem 1rem;">
+              <option value="ALL">Select All Students</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Table Workspace -->
+        <div class="glass-panel table-panel" style="padding: 1.5rem;">
+          <h3 class="form-section-title" style="margin-top: 0; padding-left: 0.5rem;">
+            <span style="color: var(--admin-cyber-cyan);">✦</span> Enrolled Students & Certifications
+          </h3>
+          <div id="certs-table-wrap">
+            <div style="text-align: center; padding: 4rem 0; color: var(--admin-text-muted);">
+              <span style="font-family: var(--font-mono); font-size: 0.9rem;">[ DETECTING ENROLLED STUDENT REGISTRIES // LOADING ]</span>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/admin-layout.js"></script>
+  <script>
+    let students = [];
+    let certs = [];
+    let userRole = 'SUB_ADMIN';
+    let inputCodes = {};
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      container.innerHTML = `
+        <div class="toast-msg ${type}">
+          <span style="font-family: var(--font-mono)">
+            [ ${type === 'error' ? 'FAIL' : 'OK'} // ${message.toUpperCase()} ]
+          </span>
+        </div>
+      `;
+      setTimeout(() => { container.innerHTML = ''; }, 3000);
+    }
+
+    function renderCertificatesTable() {
+      const wrap = document.getElementById('certs-table-wrap');
+      const searchQuery = document.getElementById('search-input')?.value.toLowerCase() || '';
+      const selectedCourse = document.getElementById('course-select')?.value || 'ALL';
+
+      let filtered = students;
+      if (selectedCourse !== 'ALL') {
+        filtered = filtered.filter(s => s.enrolledCourse === selectedCourse);
+      }
+      if (searchQuery.trim() !== '') {
+        filtered = filtered.filter(s => s.name.toLowerCase().includes(searchQuery) || s.email.toLowerCase().includes(searchQuery));
+      }
+
+      if (filtered.length === 0) {
+        wrap.innerHTML = `<div style="padding: 3rem 1.5rem; text-align: center; color: var(--admin-text-muted);">No enrolled students match the filter criteria.</div>`;
+        return;
+      }
+
+      let rows = '';
+      filtered.forEach(student => {
+        const issuedCert = certs.find(c => c.recipientName === student.name && c.courseTitle === student.enrolledCourse);
+        const codeVal = inputCodes[student.id] || '';
+
+        rows += `
+          <tr>
+            <td>
+              <div style="font-weight: 600;">${student.name}</div>
+              <div style="font-size: 0.75rem; color: var(--admin-text-muted);">${student.email}</div>
+            </td>
+            <td style="font-weight: 500;">${student.enrolledCourse || 'General Cohort'}</td>
+            <td>
+              <span class="status-pill ${issuedCert ? 'success' : 'warning'}">
+                ${issuedCert ? 'ISSUED' : 'NOT GENERATED'}
+              </span>
+            </td>
+            <td>
+              ${issuedCert ? `
+                <span style="font-family: var(--font-mono); font-weight: 700; color: var(--admin-cyber-cyan);">
+                  ${issuedCert.credentialCode}
+                </span>
+              ` : `
+                <input type="text" class="admin-input" placeholder="e.g. CC-102" value="${codeVal}" oninput="updateInputCode('${student.id}', this.value)" style="width: 150px; padding: 0.4rem 0.75rem; font-size: 0.8rem;" />
+              `}
+            </td>
+            <td style="text-align: right;">
+              ${issuedCert ? `
+                <button onclick="revokeCert('${issuedCert.id}', '${issuedCert.credentialCode}')" class="admin-btn admin-btn-danger" style="padding: 0.4rem 0.75rem; font-size: 0.75rem;" ${userRole !== 'SUPER_ADMIN' ? 'disabled title="Revocation action restricted to Super Admins"' : ''}>
+                  Revoke
+                </button>
+              ` : `
+                <button onclick="issueCert('${student.id}')" class="admin-btn admin-btn-primary" style="padding: 0.4rem 0.85rem; font-size: 0.85rem; background: #10b981; color: #ffffff; min-width: 40px;" title="Issue Certificate">
+                  ✓
+                </button>
+              `}
+            </td>
+          </tr>
+        `;
+      });
+
+      wrap.innerHTML = `
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Student Details</th>
+              <th>Course Title</th>
+              <th>Certificate Status</th>
+              <th>Credential Code</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function updateInputCode(studentId, val) {
+      inputCodes[studentId] = val;
+    }
+
+    async function issueCert(studentId) {
+      const student = students.find(s => s.id === studentId);
+      const code = (inputCodes[studentId] || '').trim();
+      if (!student || !code) {
+        showToast('Please enter a Credential Code', 'error');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/admin/certificates', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            credentialCode: code,
+            recipientName: student.name,
+            courseTitle: student.enrolledCourse,
+            issueDate: new Date().toISOString(),
+            published: true
+          })
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.error || 'Failed to issue certificate');
+        }
+
+        const newCert = await res.json();
+        certs.unshift(newCert);
+        delete inputCodes[studentId];
+        renderCertificatesTable();
+        showToast(`Certificate ${newCert.credentialCode} successfully issued to ${student.name}!`, 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function revokeCert(certId, code) {
+      if (userRole !== 'SUPER_ADMIN') {
+        showToast('Access Denied: Only Super Admins can revoke certificates', 'error');
+        return;
+      }
+      if (!confirm(`Are you sure you want to permanently revoke and delete certificate ${code}?`)) return;
+
+      try {
+        const res = await fetch(`/api/admin/certificates/${certId}`, { method: 'DELETE' });
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.error || 'Failed to revoke certificate');
+        }
+        certs = certs.filter(c => c.id !== certId);
+        renderCertificatesTable();
+        showToast(`Certificate ${code} successfully revoked`, 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function loadData() {
+      try {
+        const [studentsRes, certsRes] = await Promise.all([
+          fetch('/api/admin/students'),
+          fetch('/api/admin/certificates')
+        ]);
+
+        students = studentsRes.ok ? await studentsRes.json() : [];
+        certs = certsRes.ok ? await certsRes.json() : [];
+
+        // Populate course dropdown options
+        const courseSelect = document.getElementById('course-select');
+        const uniqueCourses = Array.from(new Set(students.map(s => s.enrolledCourse))).filter(Boolean);
+        uniqueCourses.forEach(course => {
+          const opt = document.createElement('option');
+          opt.value = course;
+          opt.textContent = course;
+          courseSelect.appendChild(opt);
+        });
+
+        renderCertificatesTable();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initAdminPage((user) => {
+        userRole = user.role;
+        loadData();
+
+        document.getElementById('search-input')?.addEventListener('input', renderCertificatesTable);
+        document.getElementById('course-select')?.addEventListener('change', renderCertificatesTable);
+      });
+    });
+  </script>
+                
+</body>
+</html>

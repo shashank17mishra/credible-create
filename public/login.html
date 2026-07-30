@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Credible Create</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body login-body">
+                
+
+  <div class="login-card glass-panel">
+                            <a href="/index.html" class="login-logo" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; margin-bottom: 2rem;">
+      <img src="/assets/logo.png" alt="Credible Create Logo" style="height: 54px; width: auto;" />
+      <span style="font-family: 'Asimovian', sans-serif; font-size: 1.0rem; letter-spacing: 1px; line-height: 1.1; display: flex; flex-direction: column; color: #0f172a; text-align: left;">
+        <span>CREDIBLE</span>
+        <span>CREATE</span>
+      </span>
+    </a>
+
+    <div class="login-header">
+      <h1>Admin Control Login</h1>
+      <p>Provide secure credentials to access control terminal</p>
+    </div>
+
+    <form id="login-form">
+      <div id="login-error" class="login-error" style="display: none;"></div>
+
+      <div class="admin-form-group">
+        <label class="admin-label" for="email">Terminal Identifier (Email)</label>
+        <input type="email" id="email" class="admin-input" placeholder="e.g. admin@crediblecreate.com" required />
+      </div>
+
+      <div class="admin-form-group">
+        <label class="admin-label" for="password">Security Key (Password)</label>
+        <input type="password" id="password" class="admin-input" placeholder="••••••••" required />
+      </div>
+
+      <button type="submit" id="submit-btn" class="admin-btn admin-btn-primary" style="width: 100%; margin-top: 1rem;">
+        Authenticate
+      </button>
+    </form>
+  </div>
+
+  <script src="/js/login.js"></script>
+                
+</body>
+</html>
