@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        window.location.href = '/admin.html';
+        window.location.href = '/admin/index.html';
       } else {
         errorBox.textContent = `[ ERROR // ${(data.error || 'Invalid email or password.').toUpperCase()} ]`;
         errorBox.style.display = 'block';

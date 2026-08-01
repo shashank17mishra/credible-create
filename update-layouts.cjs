@@ -34,11 +34,11 @@ const globalHeader = `  <header>
         <li><a href="/index.html" class="nav-link">Home</a></li>
         <li><a href="/programs.html" class="nav-link">Programs</a></li>
         <li><a href="/about.html" class="nav-link">About</a></li>
-        <li><a href="/projects.html" class="nav-link">Projects & FAQ</a></li>
+        <li><a href="/projects.html" class="nav-link">FAQ</a></li>
         <li><a href="/verify.html" class="nav-link">Verify Portal</a></li>
         <li><a href="/blog.html" class="nav-link">Blog</a></li>
-        <li><a href="/admin.html" class="nav-link">Admin Panel</a></li>
-        <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Book Demo</span></a></li>
+        <li><a href="/login.html" class="nav-link">Login</a></li>
+        <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Join</span></a></li>
       </ul>
     </nav>
   </header>`;
@@ -59,7 +59,7 @@ const globalFooter = `  <footer style="background-color: var(--bg-primary, #f6f6
             <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">About</a></li>
             <li><a href="/projects.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Projects</a></li>
             <li><a href="/verify.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Verify</a></li>
-            <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem; background: #111; color: #fff; text-decoration: none; border-radius: 4px;"><span class="btn-text">Book Demo</span></a></li>
+            <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem; background: #111; color: #fff; text-decoration: none; border-radius: 4px;"><span class="btn-text">Join</span></a></li>
           </ul>
         </nav>
       </div>

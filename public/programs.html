@@ -4,30 +4,142 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Credible Create — Program Pathways & Technical Curriculum</title>
-  <meta name="description" content="Explore Credible Create's immersive technical education pathways in Innovation Design, Robotics & IoT, Drone Tech, and Applied AI.">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Outfit:wght@300;400;500;600;700&family=Roboto+Condensed:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Outfit:wght@300;400;500;600;700&family=Roboto+Condensed:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- Custom Design System & Motion Styles -->
   <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    body { margin: 0; overflow-x: hidden; background-color: #f7f9fc; }
+    .pure-horizontal-wrapper {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      background-color: #f7f9fc;
+    }
+    .timeline-canvas {
+      width: 2400px;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      will-change: transform;
+    }
+    .process-timeline-header {
+      position: absolute;
+      top: 15vh;
+      left: 100px;
+      text-align: left;
+    }
+    .process-timeline-header h3 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #0b1a30;
+      font-family: 'Inter', sans-serif;
+    }
+    .process-timeline-header .subtitle {
+      font-size: 1rem;
+      color: #007bff;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .process-timeline-header .subtitle::before {
+      content: ''; width: 30px; height: 2px; background-color: #007bff;
+    }
+    .process-timeline-header .watermark {
+      position: absolute;
+      top: -2rem;
+      left: 300px;
+      font-size: 6rem;
+      font-weight: 800;
+      color: rgba(0,0,0,0.03);
+      z-index: 0;
+    }
+    
+    .timeline-filter {
+      position: fixed;
+      top: 15vh;
+      right: 50px;
+      display: flex;
+      gap: 12px;
+      z-index: 100;
+    }
+    .filter-btn {
+      padding: 10px 28px;
+      border-radius: 50px;
+      border: 2px solid #007bff;
+      background: rgba(255,255,255,0.8);
+      color: #007bff;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+    .filter-btn:hover {
+      background: #e6f2ff;
+    }
+    .filter-btn.active {
+      background: #007bff;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+
+    .timeline-svg-container {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2400px;
+      height: 500px;
+      z-index: 1;
+    }
+    
+    /* Nodes */
+    .timeline-nodes {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2400px;
+      height: 500px;
+      z-index: 2;
+      transition: opacity 0.4s ease;
+    }
+    
+    /* Pop-up Description Styles */
+    .node-content {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      backdrop-filter: blur(5px);
+    }
+    .process-node.active-popup .node-content {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  </style>
 </head>
-<body>
+<body class="horizontal-page">
 
-  <!-- Tech Grid Background Lines -->
-  <div class="bg-grid-lines">
-    <div class="grid-line grid-line-v1"></div>
-    <div class="grid-line grid-line-v2"></div>
-    <div class="grid-line grid-line-v3"></div>
-  </div>
-
-  <!-- Header Navigation -->
-            <header>
+        <header>
     <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.35rem; text-decoration: none;">
       <img src="/assets/logo.png" alt="Credible Create Logo" style="height: 70px; width: auto;" />
       <span style="font-family: 'Asimovian', sans-serif; font-size: 1.0rem; letter-spacing: 1px; line-height: 1.1; display: flex; flex-direction: column;">
@@ -40,384 +152,232 @@
         <li><a href="/index.html" class="nav-link">Home</a></li>
         <li><a href="/programs.html" class="nav-link">Programs</a></li>
         <li><a href="/about.html" class="nav-link">About</a></li>
-        <li><a href="/projects.html" class="nav-link">Projects & FAQ</a></li>
+        <li><a href="/projects.html" class="nav-link">FAQ</a></li>
         <li><a href="/verify.html" class="nav-link">Verify Portal</a></li>
         <li><a href="/blog.html" class="nav-link">Blog</a></li>
-        <li><a href="/admin.html" class="nav-link">Admin Panel</a></li>
-        <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Book Demo</span></a></li>
+        <li><a href="/login.html" class="nav-link">Login</a></li>
+        <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Join</span></a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Side Navigation Dots -->
-  <div class="side-nav" aria-label="Program chapters">
-    <button class="side-nav-dot active" data-sec="0" aria-label="Chapter 1: Curriculum Overview"></button>
-    <button class="side-nav-dot" data-sec="1" aria-label="Chapter 2: IDT Foundation"></button>
-    <button class="side-nav-dot" data-sec="2" aria-label="Chapter 3: IDT Builder"></button>
-    <button class="side-nav-dot" data-sec="3" aria-label="Chapter 4: Bot Barracks"></button>
-    <button class="side-nav-dot" data-sec="4" aria-label="Chapter 5: Aerospace & Drones"></button>
-    <button class="side-nav-dot" data-sec="5" aria-label="Chapter 6: Applied AI Studios"></button>
-    <button class="side-nav-dot" data-sec="6" aria-label="Chapter 7: Footer"></button>
-  </div>
+  <main class="pure-horizontal-wrapper" id="pure-horizontal-wrapper">
+    
+    <div class="timeline-filter">
+      <button class="filter-btn active" id="btn-idt">Innovation Design (IDT)</button>
+      <button class="filter-btn" id="btn-robo">Robotics & IoT</button>
+    </div>
 
-  <!-- Virtual Scroll Container -->
-  <main class="scroll-container" id="scroll-wrapper">
-
-    <!-- Chapter 01: Hero Pathway Overview -->
-    <section id="prog-overview" class="story-section active" data-index="0">
-      <div class="section-bg"></div>
-
-      <div class="parallax-canvas">
-        <div class="watermark-bg" data-speed="0.15">Programs</div>
-      </div>
-
-      <div class="editorial-container">
-        <div class="story-content-box">
-          <span class="chapter-indicator">CH.01 / ARCHITECTURE</span>
-          <h1 class="story-title">Architecting Next-Gen Technical Leaders</h1>
-          <p class="story-text">Credible Create’s programs bridge the gap between academic theory and real-world industrial innovation. Designed by technologists from MIT and leading research labs, our curriculum transforms students into builders across four core disciplines.</p>
-          
-          <!-- Interactive Program Pathways Summary Cards -->
-          <div class="grid grid-cols-2 gap-4 mt-8 max-w-xl">
-            <div class="glass-card p-4 rounded-xl border border-white/10 hover:border-indigo-500/50 transition-all duration-300">
-              <div class="flex items-center gap-2 text-indigo-400 font-mono text-xs font-bold uppercase tracking-wider mb-1">
-                <span>✦ PATH 01</span>
-              </div>
-              <h4 class="text-base font-bold text-white mb-1">Innovation Design & Thinking</h4>
-              <p class="text-xs text-gray-400">Class 6–11 cohort pathways in 3D CAD, problem framing, and AI-assisted prototyping.</p>
-            </div>
-            <div class="glass-card p-4 rounded-xl border border-white/10 hover:border-cyan-500/50 transition-all duration-300">
-              <div class="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold uppercase tracking-wider mb-1">
-                <span>✦ PATH 02</span>
-              </div>
-              <h4 class="text-base font-bold text-white mb-1">Robotics & IoT (Bot Barracks)</h4>
-              <p class="text-xs text-gray-400">ESP32 microcontrollers, MicroPython, sensor arrays, and physical mechanical rigs.</p>
-            </div>
-            <div class="glass-card p-4 rounded-xl border border-white/10 hover:border-emerald-500/50 transition-all duration-300">
-              <div class="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider mb-1">
-                <span>✦ PATH 03</span>
-              </div>
-              <h4 class="text-base font-bold text-white mb-1">Aerospace & Drone Tech</h4>
-              <p class="text-xs text-gray-400">Flight dynamics, aerofoil modeling, autonomous waypoints, and UAV telemetry.</p>
-            </div>
-            <div class="glass-card p-4 rounded-xl border border-white/10 hover:border-purple-500/50 transition-all duration-300">
-              <div class="flex items-center gap-2 text-purple-400 font-mono text-xs font-bold uppercase tracking-wider mb-1">
-                <span>✦ PATH 04</span>
-              </div>
-              <h4 class="text-base font-bold text-white mb-1">Applied AI & Computing</h4>
-              <p class="text-xs text-gray-400">Computer vision with OpenCV, edge inference, NLP pipelines, and ethical AI deployment.</p>
-            </div>
-          </div>
-
-          <div class="story-actions mt-8">
-            <a href="#prog-idt-foundation" class="btn btn-primary" style="text-decoration: none;"><span class="btn-text">Explore Cohorts ↓</span></a>
-            <a href="/index.html#demo" class="btn btn-secondary" style="text-decoration: none;"><span class="btn-text">Book School Demo</span></a>
-          </div>
-        </div>
-
-        <div class="status-panel">
-          <span class="status-num">01</span>
-          <div>
-            STATUS // LIVE<br>
-            PATHWAYS // 04<br>
-            COHORTS // 2026<br>
-            SYS.RUN // TRUE
-          </div>
-        </div>
-      </div>
-
-      <div class="scroll-indicator" id="scroll-prompt">
-        <span>Scroll to scan pathways</span>
-        <svg viewBox="0 0 24 24">
-          <path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </div>
-    </section>
-
-    <!-- Chapter 02: Innovation Design & Thinking (Foundation) -->
-    <section id="prog-idt-foundation" class="story-section" data-index="1">
-      <div class="section-bg"></div>
-
-      <div class="parallax-canvas">
-        <div class="watermark-bg" data-speed="0.25">IDT 01</div>
-      </div>
-
-      <div class="editorial-container">
-        <div class="story-content-box">
-          <span class="chapter-indicator">CH.02 / FOUNDATION COHORT</span>
-          <h2 class="story-title">Innovation Design & Thinking (Class 6–8)</h2>
-          <p class="story-text">Cultivating confidence, creativity, and basic AI usage. In this foundational 4-week cohort, middle school students transform from passive consumers of technology into active problem solvers through empathy mapping and 3D modeling.</p>
-          
-          <!-- Interactive 4-Week Milestone Showcase Grid -->
-          <div class="grid grid-cols-2 gap-4 mt-6 max-w-2xl">
-            <div class="glass-card p-4 rounded-xl border border-white/10 hover:border-indigo-500/60 transition-all duration-300">
-              <div class="flex items-center justify-between mb-2">
-                <span class="font-mono text-xs font-bold uppercase text-indigo-400">Week 01 // Idea Generator</span>
-                <span class="text-lg">💡</span>
-              </div>
-              <h4 class="text-sm font-bold text-white mb-1">Empathy & Problem Framing</h4>
-              <p class="text-xs text-gray-400">Students interview users, frame problem statements, and sketch low-fidelity solutions.</p>
-            </div>
-            <div class="glass-card p-4 rounded-xl border border-white/10 hover:border-indigo-500/60 transition-all duration-300">
-              <div class="flex items-center justify-between mb-2">
-                <span class="font-mono text-xs font-bold uppercase text-indigo-400">Week 02 // Design Thinker</span>
-                <span class="text-lg">🎨</span>
-              </div>
-              <h4 class="text-sm font-bold text-white mb-1">Figma & Onshape 3D CAD</h4>
-              <p class="text-xs text-gray-400">Translating sketches into digital wireframes and precise 3D mechanical models.</p>
-            </div>
-            <div class="glass-card p-4 rounded-xl border border-white/10 hover:border-indigo-500/60 transition-all duration-300">
-              <div class="flex items-center justify-between mb-2">
-                <span class="font-mono text-xs font-bold uppercase text-indigo-400">Week 03 // AI Explorer</span>
-                <span class="text-lg">🤖</span>
-              </div>
-              <h4 class="text-sm font-bold text-white mb-1">AI Prototyping Workflows</h4>
-              <p class="text-xs text-gray-400">Harnessing generative AI tools for concept validation, visual assets, and logic checks.</p>
-            </div>
-            <div class="glass-card p-4 rounded-xl border border-white/10 hover:border-indigo-500/60 transition-all duration-300">
-              <div class="flex items-center justify-between mb-2">
-                <span class="font-mono text-xs font-bold uppercase text-indigo-400">Week 04 // Systems Builder</span>
-                <span class="text-lg">⚙️</span>
-              </div>
-              <h4 class="text-sm font-bold text-white mb-1">Prototype & Demo Day</h4>
-              <p class="text-xs text-gray-400">Assembling interactive prototypes and pitching live before mentors and peers.</p>
-            </div>
-          </div>
-
-          <div class="story-actions mt-6">
-            <a href="/index.html#demo" class="btn btn-secondary" style="text-decoration: none;"><span class="btn-text">Request Curriculum PDF</span></a>
-          </div>
-        </div>
-
-        <div class="status-panel">
-          <span class="status-num">02</span>
-          <div>
-            LEVEL // FOUNDATION<br>
-            HOURS // 12 HRS<br>
-            OUTPUT // PROTOTYPE<br>
-            TARGET // CLASS 6–8
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Chapter 03: Innovation Design & Thinking (Builder) -->
-    <section id="prog-idt-builder" class="story-section" data-index="2">
-      <div class="section-bg"></div>
-
-      <div class="parallax-canvas">
-        <div class="watermark-bg" data-speed="0.15">IDT 02</div>
-      </div>
-
-      <div class="editorial-container">
-        <div class="story-content-box">
-          <span class="chapter-indicator">CH.03 / BUILDER COHORT</span>
-          <h2 class="story-title">Advanced IDT & Venture Building (Class 9–11)</h2>
-          <p class="story-text">Empowering high school builders to design production-ready concepts. Students integrate user research, iterative prototyping, CAD tolerancing, and AI-assisted software pipelines to prepare competitive portfolio projects.</p>
-          
-          <div class="grid grid-cols-2 gap-4 mt-6 max-w-2xl">
-            <div class="glass-card p-4 rounded-xl border border-white/10">
-              <span class="font-mono text-xs font-bold text-cyan-400 uppercase">01 / Venture Strategy</span>
-              <h4 class="text-sm font-bold text-white mt-1">Product-Market Fit & Research</h4>
-              <p class="text-xs text-gray-400 mt-1">Deep empathy mapping, competitor auditing, and MVP scoping for real users.</p>
-            </div>
-            <div class="glass-card p-4 rounded-xl border border-white/10">
-              <span class="font-mono text-xs font-bold text-cyan-400 uppercase">02 / Engineering CAD</span>
-              <h4 class="text-sm font-bold text-white mt-1">Precision Tolerancing</h4>
-              <p class="text-xs text-gray-400 mt-1">Advanced parametric Onshape modeling ready for 3D printing and CNC milling.</p>
-            </div>
-            <div class="glass-card p-4 rounded-xl border border-white/10">
-              <span class="font-mono text-xs font-bold text-cyan-400 uppercase">03 / AI Co-Pilot</span>
-              <h4 class="text-sm font-bold text-white mt-1">Automated Test Workflows</h4>
-              <p class="text-xs text-gray-400 mt-1">Using large language models and code generators to simulate hardware edge cases.</p>
-            </div>
-            <div class="glass-card p-4 rounded-xl border border-white/10">
-              <span class="font-mono text-xs font-bold text-cyan-400 uppercase">04 / Portfolio Proof</span>
-              <h4 class="text-sm font-bold text-white mt-1">LX Awards & Competition</h4>
-              <p class="text-xs text-gray-400 mt-1">Direct preparation for global science fairs, hackathons, and university portfolios.</p>
-            </div>
-          </div>
-
-          <div class="story-actions mt-6">
-            <a href="/index.html#projects" class="btn btn-secondary" style="text-decoration: none;"><span class="btn-text">View Student Work</span></a>
-          </div>
-        </div>
-
-        <div class="status-panel">
-          <span class="status-num">03</span>
-          <div>
-            LEVEL // BUILDER<br>
-            GOAL // VENTURE PITCH<br>
-            AI.WORKFLOW // ACTIVE<br>
-            TARGET // CLASS 9–11
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Chapter 04: Bot Barracks (Robotics & IoT) -->
-    <section id="prog-robotics" class="story-section" data-index="3">
-      <div class="section-bg"></div>
-
-      <div class="parallax-canvas">
-        <div class="watermark-bg" data-speed="0.3">Robotics</div>
-      </div>
-
-      <div class="editorial-container">
-        <div class="story-content-box">
-          <span class="chapter-indicator">CH.04 / PHYSICAL COMPUTING</span>
-          <h2 class="story-title">Bot Barracks: Robotics & IoT Systems</h2>
-          <p class="story-text">Move beyond virtual simulation into real-world cybernetic hardware. Through Bot Barracks—our dedicated robotics training brand—students wire ESP32 microcontrollers, write MicroPython scripts, and calibrate mechanical sensor rigs.</p>
-          
-          <!-- Interactive Hardware Spec Display -->
-          <div class="glass-card p-5 rounded-xl border border-white/10 mt-6 max-w-2xl bg-black/40">
-            <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
-              <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span class="font-mono text-xs font-bold text-white uppercase tracking-wider">ROBOTICS LAB KIT // SPECS</span>
-              </div>
-              <span class="font-mono text-xs text-gray-400">HARDWARE READY</span>
-            </div>
-            <div class="grid grid-cols-3 gap-4 text-center font-mono">
-              <div class="p-3 rounded-lg bg-white/5 border border-white/5">
-                <span class="block text-xs text-gray-400 mb-1">MCU CORE</span>
-                <span class="text-sm font-bold text-emerald-400">ESP32-S3 Dual</span>
-              </div>
-              <div class="p-3 rounded-lg bg-white/5 border border-white/5">
-                <span class="block text-xs text-gray-400 mb-1">FIRMWARE</span>
-                <span class="text-sm font-bold text-cyan-400">MicroPython 1.20</span>
-              </div>
-              <div class="p-3 rounded-lg bg-white/5 border border-white/5">
-                <span class="block text-xs text-gray-400 mb-1">SENSORS</span>
-                <span class="text-sm font-bold text-purple-400">LiDAR + 6-Axis IMU</span>
-              </div>
-            </div>
-            <p class="text-xs text-gray-400 mt-4 leading-relaxed">
-              Students build custom chassis assemblies, write autonomous line-following and obstacle-avoidance routines, and stream real-time sensor telemetry to web dashboards.
-            </p>
-          </div>
-
-          <div class="story-actions mt-6">
-            <a href="/index.html#demo" class="btn btn-primary" style="text-decoration: none;"><span class="btn-text">Book Lab Walkthrough</span></a>
-          </div>
-        </div>
-
-        <div class="status-panel">
-          <span class="status-num">04</span>
-          <div>
-            CHIP // ESP32-S3<br>
-            LANG // MICROPYTHON<br>
-            SENSORS // LIDAR/IMU<br>
-            SYS.STATUS // CALIB
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Chapter 05: Aerospace & Drone Tech -->
-    <section id="prog-aerospace" class="story-section" data-index="4">
-      <div class="section-bg"></div>
-
-      <div class="parallax-canvas">
-        <div class="watermark-bg" data-speed="0.2">Aerospace</div>
-      </div>
-
-      <div class="editorial-container">
-        <div class="story-content-box">
-          <span class="chapter-indicator">CH.05 / FLIGHT & UAV</span>
-          <h2 class="story-title">Aerospace & Autonomous Drone Tech</h2>
-          <p class="story-text">Master the physics of flight and autonomous aerial navigation. Our Aerospace engineering labs engage students in aerodynamic testing, propeller thrust calculations, and GPS waypoint mission programming.</p>
-          
-          <div class="grid grid-cols-2 gap-4 mt-6 max-w-2xl">
-            <div class="glass-card p-4 rounded-xl border border-white/10">
-              <div class="flex items-center gap-2 font-mono text-xs font-bold text-amber-400 mb-1">
-                <span>✦ AEROFOIL LABS</span>
-              </div>
-              <h4 class="text-sm font-bold text-white mb-1">Aerodynamics & CAD</h4>
-              <p class="text-xs text-gray-400">Simulating lift, drag, and thrust curves using virtual wind tunnels and 3D printed wing ribs.</p>
-            </div>
-            <div class="glass-card p-4 rounded-xl border border-white/10">
-              <div class="flex items-center gap-2 font-mono text-xs font-bold text-amber-400 mb-1">
-                <span>✦ UAV TELEMETRY</span>
-              </div>
-              <h4 class="text-sm font-bold text-white mb-1">Autonomous Waypoints</h4>
-              <p class="text-xs text-gray-400">Programming drone flight controllers to execute automated aerial surveying missions.</p>
-            </div>
-          </div>
-
-          <div class="story-actions mt-6">
-            <a href="/index.html#demo" class="btn btn-secondary" style="text-decoration: none;"><span class="btn-text">Inquire for Schools</span></a>
-          </div>
-        </div>
-
-        <div class="status-panel">
-          <span class="status-num">05</span>
-          <div>
-            UAV.MODE // AUTO<br>
-            FREQ // 5.8 GHZ<br>
-            WAYPOINTS // SYNCED<br>
-            THRUST // NOMINAL
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Chapter 06: Applied AI & Computing -->
-    <section id="prog-ai" class="story-section" data-index="5">
-      <div class="section-bg"></div>
-
-      <div class="parallax-canvas">
-        <div class="watermark-bg" data-speed="0.25">AI Core</div>
-      </div>
-
-      <div class="editorial-container">
-        <div class="story-content-box">
-          <span class="chapter-indicator">CH.06 / AI & COMPUTING</span>
-          <h2 class="story-title">Applied AI & Intelligence Studios</h2>
-          <p class="story-text">Demystifying artificial intelligence through hands-on coding. Students move beyond simple prompts to train computer vision models with OpenCV, build edge inference applications, and explore ethical AI governance.</p>
-          
-          <div class="grid grid-cols-3 gap-3 mt-6 max-w-2xl font-mono">
-            <div class="glass-card p-3 rounded-xl border border-white/10 text-center">
-              <span class="block text-xs font-bold text-indigo-400 mb-1">COMPUTER VISION</span>
-              <span class="text-xs text-gray-300">OpenCV & Object Tracking</span>
-            </div>
-            <div class="glass-card p-3 rounded-xl border border-white/10 text-center">
-              <span class="block text-xs font-bold text-purple-400 mb-1">EDGE AI</span>
-              <span class="text-xs text-gray-300">Embedded Neural Nets</span>
-            </div>
-            <div class="glass-card p-3 rounded-xl border border-white/10 text-center">
-              <span class="block text-xs font-bold text-pink-400 mb-1">ETHICS & GOVERNANCE</span>
-              <span class="text-xs text-gray-300">Responsible Deployment</span>
-            </div>
-          </div>
-
-          <div class="story-actions mt-6">
-            <a href="/index.html#demo" class="btn btn-primary" style="text-decoration: none;"><span class="btn-text">Partner With Us</span></a>
-          </div>
-        </div>
-
-        <div class="status-panel">
-          <span class="status-num">06</span>
-          <div>
-            AI.MODEL // VISION+NLP<br>
-            GPU.ACCEL // ON<br>
-            INFERENCE // 4.2 MS<br>
-            ACCURACY // 99.4%
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Chapter 07: Footer Chapter -->
-    <section id="footer-chapter" class="story-section" data-index="6" style="min-height: auto; padding: 0; display: flex; flex-direction: column; justify-content: flex-end;">
+    <div class="timeline-canvas">
       
-    </section>
+      <div class="process-timeline-header">
+        <div class="subtitle">Pathways.</div>
+        <h3>Process section.</h3>
+        <div class="watermark">2026</div>
+      </div>
 
+      <div class="timeline-svg-container">
+        <svg viewBox="0 0 2400 500" width="2400" height="500" preserveAspectRatio="none">
+          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#007bff" flood-opacity="0.3"/>
+          </filter>
+          <!-- Shifted path 100px right to prevent car cutoff -->
+          <path d="M 100,250 C 200,250 250,400 400,400 C 600,400 600,100 800,100 C 1000,100 1000,400 1200,400 C 1400,400 1400,100 1600,100 C 1800,100 1900,250 2300,250" 
+                fill="none" stroke="#007bff" stroke-width="3" filter="url(#glow)"/>
+        </svg>
+
+        <div id="car-wrapper" style="position: absolute; z-index: 50; width: 100px; height: 50px; left: 0; top: 0; pointer-events: none;">
+          <img src="/assets/car.png" alt="Car" style="width: 100%; height: auto; transform: scaleX(-1); display: block;" />
+        </div>
+      </div>
+
+      <!-- IDT Timeline -->
+      <div class="timeline-nodes" id="nodes-idt" style="display: block;">
+        
+        <div class="process-node pos-trough" style="left: 400px; top: 400px;">
+          <span class="node-bg-num">1</span>
+          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div></div>
+          <div class="node-content">
+            <h4>Creativity & Expression</h4>
+            <p>Empathy mapping & visual creation with Canva.</p>
+          </div>
+        </div>
+
+        <div class="process-node pos-peak" style="left: 800px; top: 100px;">
+          <span class="node-bg-num">2</span>
+          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg></div></div>
+          <div class="node-content">
+            <h4>Idea to Visual Thinking</h4>
+            <p>Wireframing basic apps and screens using Figma.</p>
+          </div>
+        </div>
+
+        <div class="process-node pos-trough" style="left: 1200px; top: 400px;">
+          <span class="node-bg-num">3</span>
+          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div></div>
+          <div class="node-content">
+            <h4>AI + Smart Learning</h4>
+            <p>Prompt engineering & summarizing with NotebookLM.</p>
+          </div>
+        </div>
+
+        <div class="process-node pos-peak" style="left: 1600px; top: 100px;">
+          <span class="node-bg-num">4</span>
+          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg></div></div>
+          <div class="node-content">
+            <h4>Build & Present</h4>
+            <p>Google AI Studio interactive builds & final Demo Day.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Robotics Timeline -->
+      <div class="timeline-nodes" id="nodes-robo" style="display: none; opacity: 0;">
+        
+        <div class="process-node pos-trough" style="left: 400px; top: 400px;">
+          <span class="node-bg-num">1</span>
+          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div></div>
+          <div class="node-content">
+            <h4>How Robots Think</h4>
+            <p>Logic, play, and digital environments with Sim-1.</p>
+          </div>
+        </div>
+
+        <div class="process-node pos-peak" style="left: 800px; top: 100px;">
+          <span class="node-bg-num">2</span>
+          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg></div></div>
+          <div class="node-content">
+            <h4>Smart Robots (Adding AI)</h4>
+            <p>Vibe coding and generating maze-solving logic.</p>
+          </div>
+        </div>
+
+        <div class="process-node pos-trough" style="left: 1200px; top: 400px;">
+          <span class="node-bg-num">3</span>
+          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div></div>
+          <div class="node-content">
+            <h4>Virtual Gadgets & IoT</h4>
+            <p>Tinkercad digital circuits, batteries, and LEDs.</p>
+          </div>
+        </div>
+
+        <div class="process-node pos-peak" style="left: 1600px; top: 100px;">
+          <span class="node-bg-num">4</span>
+          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg></div></div>
+          <div class="node-content">
+            <h4>Build & Show Off</h4>
+            <p>Building virtual robots in Sim-2 & Demo Day.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
   </main>
 
-  <!-- Script Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+  <script>
+    // Tab Filter Logic
+    const btnIdt = document.getElementById('btn-idt');
+    const btnRobo = document.getElementById('btn-robo');
+    const nodesIdt = document.getElementById('nodes-idt');
+    const nodesRobo = document.getElementById('nodes-robo');
+
+    btnIdt.addEventListener('click', () => {
+      btnIdt.classList.add('active');
+      btnRobo.classList.remove('active');
+      
+      nodesRobo.style.opacity = '0';
+      setTimeout(() => {
+        nodesRobo.style.display = 'none';
+        nodesIdt.style.display = 'block';
+        setTimeout(() => nodesIdt.style.opacity = '1', 50);
+        // Force a scrolltrigger refresh if dimensions change
+        ScrollTrigger.refresh();
+      }, 400);
+    });
+
+    btnRobo.addEventListener('click', () => {
+      btnRobo.classList.add('active');
+      btnIdt.classList.remove('active');
+      
+      nodesIdt.style.opacity = '0';
+      setTimeout(() => {
+        nodesIdt.style.display = 'none';
+        nodesRobo.style.display = 'block';
+        setTimeout(() => nodesRobo.style.opacity = '1', 50);
+        ScrollTrigger.refresh();
+      }, 400);
+    });
+
+    // Initialize pure horizontal scroll & car animation
+    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+    
+    const wrapper = document.getElementById('pure-horizontal-wrapper');
+    const canvas = document.querySelector('.timeline-canvas');
+    
+    if (wrapper && canvas) {
+      // Calculate how far to scroll. The canvas width minus viewport width
+      const scrollAmount = canvas.offsetWidth - window.innerWidth;
+      
+      const car = document.getElementById('car-wrapper');
+      const path = document.querySelector('.timeline-svg-container svg path');
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: wrapper,
+          pin: true,
+          scrub: 1,
+          end: () => "+=" + scrollAmount
+        }
+      });
+      
+      // 1. Move the canvas left
+      tl.to(canvas, {
+        x: -scrollAmount,
+        ease: "none"
+      }, 0);
+      
+      // 2. Move the car along the SVG path
+      if (car && path) {
+        tl.to(car, {
+          ease: "none",
+          motionPath: {
+            path: path,
+            align: path,
+            alignOrigin: [0.5, 0.5],
+            autoRotate: true
+          }
+        }, 0);
+      }
+      
+      // 3. Popup logic based on car position proximity
+      const allNodes = document.querySelectorAll('.process-node');
+      tl.eventCallback('onUpdate', function() {
+        // approximate the car's current X position relative to the canvas
+        // path width is 2400. Progress goes 0 to 1.
+        const carX = this.progress() * 2400; 
+        
+        allNodes.forEach(node => {
+          // If car is within 150px of the node, pop it up!
+          if (Math.abs(carX - node.offsetLeft) < 180) {
+            node.classList.add('active-popup');
+          } else {
+            node.classList.remove('active-popup');
+          }
+        });
+      });
+    }
+  </script>
+
+  <!-- Prevent script.js from running the old vertical logic by removing the old IDs -->
   <script src="/js/script.js"></script>
 
+
+  
   
   <div class="floating-contact-actions" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 1rem;">
     <!-- WhatsApp -->

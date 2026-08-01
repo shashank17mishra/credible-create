@@ -3,12 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Credible Create - Book Demo</title>
+  <title>Credible Create — Book a Demo</title>
+  <meta name="description" content="Schedule a live interactive walkthrough of our Robotics, Cybernetics, and AI Innovation labs tailored to your school or college.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Roboto+Condensed:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Design System Styles -->
   <link rel="stylesheet" href="/css/style.css">
-  <script src="/js/script.js" defer></script>
 </head>
-<body>
-          <header>
+<body style="background-color: var(--bg-primary, #f6f6f6); min-height: 100vh; display: flex; flex-direction: column;">
+
+  <!-- Main Navigation Header -->
+        <header>
     <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.35rem; text-decoration: none;">
       <img src="/assets/logo.png" alt="Credible Create Logo" style="height: 70px; width: auto;" />
       <span style="font-family: 'Asimovian', sans-serif; font-size: 1.0rem; letter-spacing: 1px; line-height: 1.1; display: flex; flex-direction: column;">
@@ -21,30 +33,33 @@
         <li><a href="/index.html" class="nav-link">Home</a></li>
         <li><a href="/programs.html" class="nav-link">Programs</a></li>
         <li><a href="/about.html" class="nav-link">About</a></li>
-        <li><a href="/projects.html" class="nav-link">Projects & FAQ</a></li>
+        <li><a href="/projects.html" class="nav-link">FAQ</a></li>
         <li><a href="/verify.html" class="nav-link">Verify Portal</a></li>
         <li><a href="/blog.html" class="nav-link">Blog</a></li>
-        <li><a href="/admin.html" class="nav-link">Admin Panel</a></li>
-        <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Book Demo</span></a></li>
+        <li><a href="/login.html" class="nav-link">Login</a></li>
+        <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Join</span></a></li>
       </ul>
     </nav>
   </header>
 
-  <main class="page-content" style="padding-top: 100px; min-height: 100vh; background-color: var(--bg-primary, #f6f6f6);">
-    <div class="overlay-container">
-      <div class="demo-page">
-        <div class="demo-header">
-          <span class="demo-pretitle">— Book a Demo</span>
-          <h1 class="demo-headline">Let's build something<br>extraordinary.</h1>
-          <p class="demo-subline">Schedule a live walkthrough of our robotics labs, AI studios, or aerospace programs.</p>
-        </div>
+  <!-- Main Section Content -->
+  <main class="page-content" style="padding-top: 110px; padding-bottom: 4rem; flex: 1;">
+    <div class="demo-page">
+      
+      <!-- Top Editorial Header Banner -->
+      <div class="demo-header">
+        <h1 class="demo-headline">Let's build something<br>extraordinary.</h1>
+        <p class="demo-subline">Schedule a live walkthrough of our robotics labs, AI studios, or aerospace programs.</p>
+      </div>
 
-        <div class="demo-mascot-inline">
-          <img src="/assets/image.png" alt="Credible Create Robot" class="floating-mascot-img" />
-        </div>
-
-        <div class="demo-form-card">
+      <!-- Split Master 2-Column Grid Layout -->
+      <div class="demo-split-grid" id="demo-split-grid">
+        
+        <!-- LEFT COLUMN: Form Container -->
+        <div class="demo-form-card" id="demo-card-container">
           <form id="demo-form" onsubmit="event.preventDefault();">
+            
+            <!-- Full Name & Email Row -->
             <div class="demo-form-row">
               <div class="floating-group">
                 <input type="text" id="form-name" required placeholder=" " />
@@ -56,40 +71,63 @@
               </div>
             </div>
 
+            <!-- School / College Name Field -->
             <div class="floating-group">
-              <input type="text" id="form-org" required placeholder=" " />
-              <label for="form-org">Institution / Organization</label>
+              <input type="text" id="form-institution" required placeholder=" " />
+              <label for="form-institution">School / College Name</label>
             </div>
 
+            <!-- Domain Selection (ONLY 2 COURSES) -->
             <span class="selection-title">Domain of Interest</span>
-            <div class="chips-container">
+            <div class="chips-container" id="domain-chips">
               <div class="chip-item selected" data-val="robotics">Robotics</div>
-              <div class="chip-item" data-val="ai">AI & Smart Labs</div>
-              <div class="chip-item" data-val="drones">Drones & Aerospace</div>
-              <div class="chip-item" data-val="school-partnerships">Full Curriculum</div>
-              <div class="chip-item" data-val="other">Other</div>
+              <div class="chip-item" data-val="innovation-ai">Innovation Design and Thinking with AI</div>
             </div>
             <input type="hidden" id="form-interest" value="robotics" />
 
+            <!-- Audience Level Selection -->
             <span class="selection-title">Audience Level</span>
-            <div class="chips-container">
-              <div class="chip-item chip-level selected" data-val="foundation">Class 6–8</div>
-              <div class="chip-item chip-level" data-val="advanced">Class 9–11</div>
-              <div class="chip-item chip-level" data-val="university">Higher Ed</div>
-              <div class="chip-item chip-level" data-val="custom">Custom</div>
+            <div class="chips-container" id="audience-chips">
+              <div class="chip-item chip-level selected" data-val="school">School</div>
+              <div class="chip-item chip-level" data-val="college">College</div>
             </div>
-            <input type="hidden" id="form-level" value="foundation" />
+            <input type="hidden" id="form-level" value="school" />
 
-            <div class="floating-group">
-              <textarea id="form-message" rows="3" required placeholder=" "></textarea>
-              <label for="form-message">Tell us about your goals</label>
+            <!-- Selectable Class Chips for School -->
+            <div id="school-fields" class="conditional-fields">
+              <span class="selection-title">Class / Grade</span>
+              <div class="chips-container" id="class-chips">
+                <div class="chip-item chip-sub" data-val="Class 6">Class 6</div>
+                <div class="chip-item chip-sub" data-val="Class 7">Class 7</div>
+                <div class="chip-item chip-sub" data-val="Class 8">Class 8</div>
+                <div class="chip-item chip-sub selected" data-val="Class 9">Class 9</div>
+                <div class="chip-item chip-sub" data-val="Class 10">Class 10</div>
+                <div class="chip-item chip-sub" data-val="Class 11">Class 11</div>
+                <div class="chip-item chip-sub" data-val="Class 12">Class 12</div>
+              </div>
+              <input type="hidden" id="form-class" value="Class 9" />
             </div>
 
-            <button type="submit" class="btn-demo-cta" id="form-submit-btn">
-              <span class="btn-demo-cta-text">Request a Demo →</span>
+            <!-- Selectable Year / Course Chips for College -->
+            <div id="college-fields" class="conditional-fields" style="display: none;">
+              <span class="selection-title">Course / Year</span>
+              <div class="chips-container" id="college-chips">
+                <div class="chip-item chip-sub selected" data-val="1st Year">1st Year</div>
+                <div class="chip-item chip-sub" data-val="2nd Year">2nd Year</div>
+                <div class="chip-item chip-sub" data-val="3rd Year">3rd Year</div>
+                <div class="chip-item chip-sub" data-val="4th Year">4th Year</div>
+                <div class="chip-item chip-sub" data-val="Postgraduate">Postgraduate</div>
+              </div>
+              <input type="hidden" id="form-course" value="1st Year" />
+            </div>
+
+            <!-- CTA Submit Button -->
+            <button type="submit" class="btn-demo-cta" id="form-submit-btn" style="margin-top: 1.5rem;">
+              <span class="btn-demo-cta-text">Request a Demo &rarr;</span>
             </button>
           </form>
 
+          <!-- Form Success State -->
           <div class="demo-success-container" id="form-success">
             <div class="demo-success-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -102,20 +140,45 @@
           </div>
         </div>
 
-        <div class="trust-bar">
-          <div class="trust-stat"><span class="trust-num" data-count="10000">0</span><span class="trust-label">Students</span></div>
-          <div class="trust-divider"></div>
-          <div class="trust-stat"><span class="trust-num" data-count="50">0</span><span class="trust-label">Cohorts</span></div>
-          <div class="trust-divider"></div>
-          <div class="trust-stat"><span class="trust-num" data-count="5">0</span><span class="trust-label">Hackathons</span></div>
-          <div class="trust-divider"></div>
-          <div class="trust-stat"><span class="trust-num" data-count="99">0</span><span class="trust-label">Satisfaction %</span></div>
+        <!-- RIGHT COLUMN: Background-less Visual Stage (No Card Box, No Overlay Badges) -->
+        <div class="demo-visual-stage" id="demo-visual-card">
+          <!-- Specified Right Side Image: demo page.png -->
+          <img src="/assets/demo page.png" alt="Credible Create Student Innovator" class="demo-student-img" id="demo-student-img" />
+          
+          <!-- Robot Car Mascot: car.png -->
+          <img src="/assets/car.png" alt="Credible Create Cybernetic AI Robot Car" class="demo-car-mascot" id="demo-car-mascot" />
+        </div>
+
+      </div>
+
+      <!-- Trust Metrics Strip -->
+      <div class="trust-bar">
+        <div class="trust-stat">
+          <span class="trust-num" data-count="10000">10,000+</span>
+          <span class="trust-label">Students</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-stat">
+          <span class="trust-num" data-count="50">50+</span>
+          <span class="trust-label">Cohorts</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-stat">
+          <span class="trust-num" data-count="5">5+</span>
+          <span class="trust-label">Hackathons</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-stat">
+          <span class="trust-num" data-count="99">99%</span>
+          <span class="trust-label">Satisfaction %</span>
         </div>
       </div>
+
     </div>
   </main>
 
-          <footer style="background-color: var(--bg-primary, #f6f6f6); border-top: 1px solid rgba(0, 0, 0, 0.06); padding: 5rem 3.5rem 3rem; position: relative; z-index: 10; width: 100%; margin-top: auto;">
+  <!-- Footer -->
+        <footer style="background-color: var(--bg-primary, #f6f6f6); border-top: 1px solid rgba(0, 0, 0, 0.06); padding: 5rem 3.5rem 3rem; position: relative; z-index: 10; width: 100%; margin-top: auto;">
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem;">
       <div class="footer-brand-row" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
         <a href="/index.html" class="logo" style="display: flex; align-items: center; gap: 0.35rem; text-decoration: none;">
@@ -131,7 +194,7 @@
             <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">About</a></li>
             <li><a href="/projects.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Projects</a></li>
             <li><a href="/verify.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Verify</a></li>
-            <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem; background: #111; color: #fff; text-decoration: none; border-radius: 4px;"><span class="btn-text">Book Demo</span></a></li>
+            <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem; background: #111; color: #fff; text-decoration: none; border-radius: 4px;"><span class="btn-text">Join</span></a></li>
           </ul>
         </nav>
       </div>
@@ -195,7 +258,7 @@
     </div>
   </footer>
 
-  
+  <!-- Floating Action Buttons -->
   <div class="floating-contact-actions" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 1rem;">
     <!-- WhatsApp -->
     <a href="https://wa.me/919999999999" target="_blank" class="floating-action-btn whatsapp-btn" style="width: 44px; height: 44px; border-radius: 50%; background-color: #111; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;">
@@ -210,6 +273,11 @@
       </svg>
     </a>
   </div>
+
+  <!-- GSAP Animation Engine CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- Dedicated Book Demo Script -->
+  <script src="/js/demo.js" defer></script>
 
 </body>
 </html>
