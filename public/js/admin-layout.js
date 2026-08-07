@@ -1,18 +1,46 @@
 async function checkAdminSession() {
   try {
+    // 1. Check Supabase session if initialized
+    if (window.CredibleDB) {
+      const sbUser = await window.CredibleDB.getCurrentUser();
+      if (sbUser) {
+        return {
+          name: sbUser.user_metadata?.full_name || sbUser.email,
+          email: sbUser.email,
+          role: 'SUPER_ADMIN'
+        };
+      }
+    }
+
+    // 2. Check local admin session fallback
+    const localSession = localStorage.getItem('cc_admin_session');
+    if (localSession) {
+      const parsed = JSON.parse(localSession);
+      if (parsed && parsed.email) {
+        return {
+          name: 'Administrator',
+          email: parsed.email,
+          role: 'SUPER_ADMIN'
+        };
+      }
+    }
+
+    // 3. Fallback check API endpoint
     const res = await fetch('/api/auth/session');
-    if (!res.ok) {
-      window.location.href = '/admin/login.html';
-      return null;
+    if (res.ok) {
+      const session = await res.json();
+      if (session && session.user) return session.user;
     }
-    const session = await res.json();
-    if (!session || !session.user || (session.user.role !== 'SUPER_ADMIN' && session.user.role !== 'SUB_ADMIN')) {
-      window.location.href = '/admin/login.html';
-      return null;
-    }
-    return session.user;
+
+    window.location.href = '/admin/login.html';
+    return null;
   } catch (err) {
-    console.error("Session verification failed:", err);
+    console.warn("Session check fallback:", err);
+    const localSession = localStorage.getItem('cc_admin_session');
+    if (localSession) {
+      const parsed = JSON.parse(localSession);
+      return { name: 'Administrator', email: parsed.email, role: 'SUPER_ADMIN' };
+    }
     window.location.href = '/admin/login.html';
     return null;
   }
@@ -62,7 +90,6 @@ function renderAdminSidebar(user, currentPath) {
     <div id="admin-sidebar-backdrop" class="sidebar-backdrop"></div>
     <aside class="admin-sidebar" id="admin-sidebar-el">
       <a href="/index.html" class="sidebar-logo" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-        <img src="/assets/logo.png" alt="Credible Create Logo" style="height: 52px; width: auto;" />
         <span style="font-family: 'Asimovian', sans-serif; font-size: 0.95rem; letter-spacing: 1px; line-height: 1.1; display: flex; flex-direction: column; color: #0f172a;">
           <span>CREDIBLE</span>
           <span>CREATE</span>
@@ -96,8 +123,13 @@ function renderAdminSidebar(user, currentPath) {
   const logoutBtn = document.getElementById('logout-btn');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', async () => {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      window.location.href = '/admin/login.html';
+      localStorage.removeItem('cc_admin_session');
+      if (window.CredibleDB) {
+        await window.CredibleDB.signOut();
+      } else {
+        await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
+        window.location.href = '/admin/login.html';
+      }
     });
   }
 

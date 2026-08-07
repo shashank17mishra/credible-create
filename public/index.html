@@ -32,12 +32,12 @@
   </div>
 
   <!-- Header Navigation -->
-    <header>
-    <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.35rem; text-decoration: none;">
-      <img src="/assets/logo.png" alt="Credible Create Logo" style="height: 70px; width: auto;" />
-      <span style="font-family: 'Asimovian', sans-serif; font-size: 1.0rem; letter-spacing: 1px; line-height: 1.1; display: flex; flex-direction: column;">
+                <header>
+    <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
+      <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
+      <span style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; color: #111;">
         <span>CREDIBLE</span>
-        <span>CREATE</span>
+        <span style="color: #666; font-weight: 600;">CREATE</span>
       </span>
     </a>
     <nav>
@@ -45,8 +45,10 @@
         <li><a href="/index.html" class="nav-link">Home</a></li>
         <li><a href="/programs.html" class="nav-link">Programs</a></li>
         <li><a href="/about.html" class="nav-link">About</a></li>
+        <li><a href="/gallery.html" class="nav-link">Gallery</a></li>
+        <li><a href="/download.html" class="nav-link">Software</a></li>
         <li><a href="/projects.html" class="nav-link">FAQ</a></li>
-        <li><a href="/verify.html" class="nav-link">Verify Portal</a></li>
+        <li><a href="/verify.html" class="nav-link">Verify</a></li>
         <li><a href="/blog.html" class="nav-link">Blog</a></li>
         <li><a href="/login.html" class="nav-link">Login</a></li>
         <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Join</span></a></li>
@@ -59,7 +61,7 @@
     <button class="side-nav-dot active" data-sec="0" aria-label="Chapter 1: The Spark"></button>
     <button class="side-nav-dot" data-sec="1" aria-label="Chapter 2: Bot Barracks"></button>
     <button class="side-nav-dot" data-sec="2" aria-label="Chapter 3: Tech Labs"></button>
-    <button class="side-nav-dot" data-sec="3" aria-label="Chapter 4: Sanctuary"></button>
+    <button class="side-nav-dot" data-sec="3" aria-label="Chapter 4: Gallery"></button>
     <button class="side-nav-dot" data-sec="4" aria-label="Chapter 5: Connect & Contact"></button>
     <button class="side-nav-dot" data-sec="5" aria-label="Chapter 6: Myna UI"></button>
     <button class="side-nav-dot" data-sec="6" aria-label="Chapter 7: Footer"></button>
@@ -189,42 +191,72 @@
       </div>
     </section>
 
-    <!-- Chapter 04: Connected Communities -->
-    <section id="sanctuary" class="story-section" data-index="3">
+    <!-- Chapter 04: Gallery -->
+    <section id="gallery" class="story-section" data-index="3">
       <div class="section-bg"></div>
 
       <div class="parallax-canvas">
-        <div class="watermark-bg" data-speed="0.3">Sanctuary</div>
+        <div class="watermark-bg" data-speed="0.25">Showcase</div>
       </div>
 
       <div class="editorial-container">
         <div class="story-content-box">
-          <span class="chapter-indicator">CH.04 / HORIZON</span>
-          <h2 class="story-title">Connected Communities</h2>
-          <p class="story-text">Our flight completes where regional impact is established. Through school training
-            certifications, national hackathons, and cohort networks, we support students as they build real solutions.
-          </p>
+          <span class="chapter-indicator">CH.04 / GALLERY</span>
+          <h2 class="story-title">Creative Work In Motion</h2>
+          <p class="story-text">Observe our robotics, coding, and aerospace classes in action. These images represent cohort milestones, robot test flights, and team builds.</p>
           <div class="story-actions">
-            <button class="btn btn-primary overlay-trigger" data-target="overlay-demo"><span class="btn-text">Partner
-                With Us</span></button>
-            <button class="btn btn-secondary overlay-trigger" data-target="overlay-verify"><span class="btn-text">Verify
-                Certificates</span></button>
+            <a href="/gallery.html" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><span class="btn-text">Full Gallery</span></a>
+          </div>
+        </div>
+
+        <div class="gallery-scroll-wrapper">
+          <div class="gallery-column col-left">
+            <div class="gallery-card">
+              <img src="/assets/class_robotics.png" alt="Robotics Class" class="gallery-img" />
+              <div class="gallery-info">
+                <h4>BOT BARRACKS LAB</h4>
+                <span>CH-01</span>
+              </div>
+            </div>
+            <div class="gallery-card">
+              <img src="/assets/class_ai.png" alt="AI Programming" class="gallery-img" />
+              <div class="gallery-info">
+                <h4>COGNITIVE LABS</h4>
+                <span>CH-02</span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-column col-right">
+            <div class="gallery-card">
+              <img src="/assets/class_drone.png" alt="Drone Aerospace" class="gallery-img" />
+              <div class="gallery-info">
+                <h4>FLIGHT TELEMETRY</h4>
+                <span>CH-03</span>
+              </div>
+            </div>
+            <div class="gallery-card">
+              <img src="/assets/class_aerospace.png" alt="Aerospace Models" class="gallery-img" />
+              <div class="gallery-info">
+                <h4>MODEL PROTOTYPING</h4>
+                <span>CH-04</span>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="status-panel">
           <span class="status-num">04</span>
           <div>
-            CERT // TRUSTED<br>
-            IMPACT // REGIONAL<br>
-            VALLEY // PERCH
+            GALLERY // PORTFOLIO<br>
+            SHOWCASE // ACTIVE<br>
+            INDEX // RUNNING
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Chapter 05: Contact & Connect -->
-    <section id="contact-section" class="story-section" data-index="4">
+    <!-- Chapter 06: Contact & Connect -->
+    <section id="contact-section" class="story-section" data-index="5">
       <div class="section-bg"></div>
 
       <!-- Faded Background Watermark -->
@@ -238,7 +270,7 @@
         <!-- LEFT COLUMN: Indicator, Headline, Description, Mascot Image & Bottom Social Icons -->
         <div class="story-content-box" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; height: 100%; max-height: calc(100vh - 8.5rem); box-sizing: border-box;">
           <div style="width: 100%;">
-            <span class="chapter-indicator" style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; color: #707070; display: block; margin-bottom: 0.4rem;">CH.05 / CONNECT</span>
+            <span class="chapter-indicator" style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; color: #707070; display: block; margin-bottom: 0.4rem;">CH.06 / CONNECT</span>
             <h2 class="story-title" style="font-family: var(--font-display); font-size: clamp(2.1rem, 3.2vw, 2.7rem); font-weight: 800; line-height: 1.05; text-transform: uppercase; color: #111; margin: 0 0 0.75rem 0;">LET'S BUILD<br>TOGETHER</h2>
             <p class="story-text" style="font-family: var(--font-display); font-size: 0.85rem; line-height: 1.55; color: #5a5a5a; margin: 0 0 0.85rem 0; max-width: 420px;">Have an idea, project, or partnership in mind? Reach out to our team for robotics, AI, IoT, design, training programs, internships, or collaborations. We're always ready to connect.</p>
             
@@ -361,8 +393,8 @@
               style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;">
               <span class="myna-avatar-stack">
                 <span class="myna-avatar" style="background-image: url('/assets/anshuman.png')"></span>
-                <span class="myna-avatar" style="background-image: url('/assets/suhani.png')"></span>
                 <span class="myna-avatar" style="background-image: url('/assets/shashank.png')"></span>
+                <span class="myna-avatar" style="background-image: url('/assets/harshit.png')"></span>
               </span>
               Explore Communities
             </a>
@@ -384,11 +416,11 @@
 
       <div class="footer-section-inner">
         <div class="footer-brand-row">
-                    <a href="/index.html" class="logo footer-logo" id="footer-logo-link" style="display: flex; align-items: center; gap: 0.35rem; text-decoration: none;">
-            <img src="/assets/logo.png" alt="Credible Create Logo" style="height: 70px; width: auto;" />
-            <span style="font-family: 'Asimovian', sans-serif; font-size: 1.0rem; letter-spacing: 1px; line-height: 1.1; display: flex; flex-direction: column; text-align: left; color: #121212;">
+                                                                                <a href="/index.html" class="logo footer-logo" id="footer-logo-link" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
+            <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
+            <span style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; text-align: left; color: #121212;">
               <span>CREDIBLE</span>
-              <span>CREATE</span>
+              <span style="color: #666; font-weight: 600;">CREATE</span>
             </span>
           </a>
           <nav class="footer-top-nav">
@@ -455,8 +487,8 @@
             <span>SYS.STATUS // LIVE</span>
           </div>
           <div class="footer-bottom-links">
-            <a href="#" style="pointer-events: none; opacity: 0.4;">Privacy Policy</a>
-            <a href="#" style="pointer-events: none; opacity: 0.4;">Terms &amp; Conditions</a>
+            <a href="/privacy.html">Privacy Policy</a>
+            <a href="/terms.html">Terms &amp; Conditions</a>
           </div>
         </div>
       </div>
@@ -473,6 +505,12 @@
   <script src="/js/script.js"></script>
 
   <!-- Floating Contact Actions -->
+  
+  
+  
+  
+  
+  
   
   <div class="floating-contact-actions" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 1rem;">
     <!-- WhatsApp -->

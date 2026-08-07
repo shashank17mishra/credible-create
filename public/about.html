@@ -8,12 +8,12 @@
   <script src="/js/script.js" defer></script>
 </head>
 <body>
-                <header>
-    <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.35rem; text-decoration: none;">
-      <img src="/assets/logo.png" alt="Credible Create Logo" style="height: 70px; width: auto;" />
-      <span style="font-family: 'Asimovian', sans-serif; font-size: 1.0rem; letter-spacing: 1px; line-height: 1.1; display: flex; flex-direction: column;">
+              <header>
+    <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
+      <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
+      <span style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; color: #111;">
         <span>CREDIBLE</span>
-        <span>CREATE</span>
+        <span style="color: #666; font-weight: 600;">CREATE</span>
       </span>
     </a>
     <nav>
@@ -21,8 +21,10 @@
         <li><a href="/index.html" class="nav-link">Home</a></li>
         <li><a href="/programs.html" class="nav-link">Programs</a></li>
         <li><a href="/about.html" class="nav-link">About</a></li>
+        <li><a href="/gallery.html" class="nav-link">Gallery</a></li>
+        <li><a href="/download.html" class="nav-link">Software</a></li>
         <li><a href="/projects.html" class="nav-link">FAQ</a></li>
-        <li><a href="/verify.html" class="nav-link">Verify Portal</a></li>
+        <li><a href="/verify.html" class="nav-link">Verify</a></li>
         <li><a href="/blog.html" class="nav-link">Blog</a></li>
         <li><a href="/login.html" class="nav-link">Login</a></li>
         <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Join</span></a></li>
@@ -127,28 +129,6 @@
                 <p class="founder-bio">Shashank manages our student cohorts, hackathons, and regional outreach programs. He connects schools and students to cultivate a thriving ecosystem of technical talent.</p>
               </div>
             </div>
-
-            <!-- Team Slide 4 -->
-            <div class="team-slide">
-              <div class="team-slide-header">
-                <span class="news-meta-vol">VOL. XXVI — NO. 197</span>
-                <span class="news-meta-title">CREDIBLE CREATE JOURNAL</span>
-                <span class="news-meta-date">THURSDAY, JULY 16, 2026</span>
-              </div>
-              <div class="team-slide-left">
-                <div class="founder-badge">MEET OUR CO-FOUNDER</div>
-                <h4 class="founder-name">SUHANI YADAV</h4>
-              </div>
-              <div class="team-slide-center">
-                <div class="team-bg-name">SUHANI</div>
-                <div class="about-hero-image">
-                  <img src="/assets/suhani.png" alt="Suhani - AI & IoT Lead Portrait" class="visionary-img" />
-                </div>
-              </div>
-              <div class="team-slide-right">
-                <p class="founder-bio">Suhani leads our research in Artificial Intelligence, IoT integrations, and interactive learning designs. She builds immersive curricula that inspire future engineers.</p>
-              </div>
-            </div>
           </div>
 
           <div class="team-slider-nav">
@@ -156,7 +136,6 @@
               <button class="slider-dot active" data-index="0" aria-label="Go to slide 1"></button>
               <button class="slider-dot" data-index="1" aria-label="Go to slide 2"></button>
               <button class="slider-dot" data-index="2" aria-label="Go to slide 3"></button>
-              <button class="slider-dot" data-index="3" aria-label="Go to slide 4"></button>
             </div>
             <div class="team-slider-arrows">
               <button class="slider-arrow prev-arrow" aria-label="Previous Team Member">
@@ -198,20 +177,22 @@
     </div>
   </main>
 
-                <footer style="background-color: var(--bg-primary, #f6f6f6); border-top: 1px solid rgba(0, 0, 0, 0.06); padding: 5rem 3.5rem 3rem; position: relative; z-index: 10; width: 100%; margin-top: auto;">
+              <footer style="background-color: var(--bg-primary, #f6f6f6); border-top: 1px solid rgba(0, 0, 0, 0.06); padding: 5rem 3.5rem 3rem; position: relative; z-index: 10; width: 100%; margin-top: auto;">
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem;">
       <div class="footer-brand-row" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
-        <a href="/index.html" class="logo" style="display: flex; align-items: center; gap: 0.35rem; text-decoration: none;">
-          <img src="/assets/logo.png" alt="Credible Create Logo" style="height: 70px; width: auto;" />
-          <span style="font-family: 'Asimovian', sans-serif; font-size: 1.0rem; letter-spacing: 1px; line-height: 1.1; display: flex; flex-direction: column; text-align: left; color: #121212;">
+        <a href="/index.html" class="logo" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
+          <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
+          <span style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; text-align: left; color: #121212;">
             <span>CREDIBLE</span>
-            <span>CREATE</span>
+            <span style="color: #666; font-weight: 600;">CREATE</span>
           </span>
         </a>
         <nav class="footer-top-nav">
           <ul style="display: flex; list-style: none; gap: 2rem; align-items: center; flex-wrap: wrap; margin: 0; padding: 0;">
             <li><a href="/programs.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Programs</a></li>
             <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">About</a></li>
+            <li><a href="/gallery.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Gallery</a></li>
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Software</a></li>
             <li><a href="/projects.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Projects</a></li>
             <li><a href="/verify.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Verify</a></li>
             <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem; background: #111; color: #fff; text-decoration: none; border-radius: 4px;"><span class="btn-text">Join</span></a></li>
@@ -227,26 +208,25 @@
           <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin: 0; padding: 0;">
             <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Our Mission</a></li>
             <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Our Team</a></li>
-            <li><a href="#" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem; pointer-events: none; opacity: 0.4;">Careers (We're Hiring)</a></li>
-            <li><a href="#" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem; pointer-events: none; opacity: 0.4;">Partnerships</a></li>
+            <li><a href="/gallery.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Media Gallery</a></li>
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Bot Barracks Suite</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4 style="font-family: var(--font-mono, monospace); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #121212; margin-bottom: 1.25rem;">Bot Barracks</h4>
           <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin: 0; padding: 0;">
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Software Download</a></li>
             <li><a href="/programs.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Robotics Labs</a></li>
             <li><a href="/programs.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Innovation Design</a></li>
             <li><a href="/projects.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Student Cohorts</a></li>
-            <li><a href="/verify.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Verify Portal</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4 style="font-family: var(--font-mono, monospace); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #121212; margin-bottom: 1.25rem;">Resources</h4>
           <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin: 0; padding: 0;">
-            <li><a href="#" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem; pointer-events: none; opacity: 0.4;">Figma Mockups</a></li>
-            <li><a href="#" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem; pointer-events: none; opacity: 0.4;">Onshape Tutorials</a></li>
-            <li><a href="#" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem; pointer-events: none; opacity: 0.4;">NotebookLM Prompts</a></li>
-            <li><a href="#" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem; pointer-events: none; opacity: 0.4;">Curriculum PDFs</a></li>
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Bot Barracks Installer</a></li>
+            <li><a href="/verify.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Verify Certificate</a></li>
+            <li><a href="/blog.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Curriculum Articles</a></li>
           </ul>
         </div>
         <div class="footer-col footer-cta-col">
@@ -257,7 +237,6 @@
           </a>
           <div style="display: flex; flex-direction: column; gap: 0.5rem;">
             <a href="mailto:info@crediblecreate.com" style="text-decoration: none; color: #121212; font-size: 0.85rem;">info@crediblecreate.com</a>
-            <a href="#" style="text-decoration: none; color: #5a5a5a; font-size: 0.85rem; pointer-events: none; opacity: 0.4;">Community Forum</a>
           </div>
         </div>
       </div>
@@ -271,13 +250,15 @@
           <span style="color: #909090;">SYS.STATUS // LIVE</span>
         </div>
         <div style="display: flex; gap: 1.5rem;">
-          <a href="#" style="text-decoration: none; color: #909090; pointer-events: none; opacity: 0.4;">Privacy Policy</a>
-          <a href="#" style="text-decoration: none; color: #909090; pointer-events: none; opacity: 0.4;">Terms &amp; Conditions</a>
+          <a href="/privacy.html" style="text-decoration: none; color: #909090;">Privacy Policy</a>
+          <a href="/terms.html" style="text-decoration: none; color: #909090;">Terms &amp; Conditions</a>
         </div>
       </div>
     </div>
   </footer>
 
+  
+  
   
   
   

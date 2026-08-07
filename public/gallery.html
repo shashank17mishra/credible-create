@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html class="gallery-horizontal-mode" lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery &amp; Media — Credible Create</title>
+  <meta name="description"
+    content="Explore photos and videos from Credible Create robotics labs, AI hackathons, student cohorts, and innovation expos.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Outfit:wght@300;400;500;600;700&family=Roboto+Condensed:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Design System & Motion Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <!-- Tech Grid Background Lines -->
+  <div class="bg-grid-lines">
+    <div class="grid-line grid-line-v1"></div>
+    <div class="grid-line grid-line-v2"></div>
+    <div class="grid-line grid-line-v3"></div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
+      <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
+      <span style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; color: #111;">
+        <span>CREDIBLE</span>
+        <span style="color: #666; font-weight: 600;">CREATE</span>
+      </span>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/index.html" class="nav-link">Home</a></li>
+        <li><a href="/programs.html" class="nav-link">Programs</a></li>
+        <li><a href="/about.html" class="nav-link">About</a></li>
+        <li><a href="/gallery.html" class="nav-link active">Gallery</a></li>
+        <li><a href="/download.html" class="nav-link">Software</a></li>
+        <li><a href="/projects.html" class="nav-link">FAQ</a></li>
+        <li><a href="/verify.html" class="nav-link">Verify</a></li>
+        <li><a href="/blog.html" class="nav-link">Blog</a></li>
+        <li><a href="/login.html" class="nav-link">Login</a></li>
+        <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Join</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Side Navigation Dots -->
+  <div class="side-nav" aria-label="Gallery chapters">
+    <button class="side-nav-dot active" data-sec="0" aria-label="Chapter 1: Visual Archive"></button>
+    <button class="side-nav-dot" data-sec="1" aria-label="Chapter 2: Robotics Labs"></button>
+    <button class="side-nav-dot" data-sec="2" aria-label="Chapter 3: Cognitive AI & IoT"></button>
+    <button class="side-nav-dot" data-sec="3" aria-label="Chapter 4: Flight & Aerodynamics"></button>
+    <button class="side-nav-dot" data-sec="4" aria-label="Chapter 5: Student Cohorts"></button>
+    <button class="side-nav-dot" data-sec="5" aria-label="Chapter 6: Connect & Contact"></button>
+    <button class="side-nav-dot" data-sec="6" aria-label="Chapter 7: Directory"></button>
+  </div>
+
+  <!-- Virtual Horizontal Scroll Container -->
+  <main class="gallery-scroll-container" id="gallery-scroll-wrapper">
+
+    <!-- Chapter 01: Visual Archive Overview & Filter Hub -->
+    <section class="story-section gallery-story-section active" data-index="0">
+      <div class="parallax-canvas">
+        <div class="watermark-bg" data-speed="0.15">ARCHIVE</div>
+      </div>
+
+      <div class="editorial-container">
+        <div class="story-content-box">
+          <span class="chapter-indicator">CH.01 / OVERVIEW</span>
+          <h1 class="story-title">VISUAL ARCHIVE OF INNOVATION</h1>
+          <p class="story-text">A visual tour of our hands-on robotics workshops, AI cohorts, drone racing grounds, and student prototypes built across partnering schools and maker spaces.</p>
+          
+          <div class="story-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+            <button class="filter-btn active" data-target-sec="0" style="padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid #111; background: #111; color: #fff; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; cursor: pointer;">All Visuals</button>
+            <button class="filter-btn" data-target-sec="1" style="padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid rgba(0,0,0,0.15); background: #fff; color: #444; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; cursor: pointer;">Robotics Labs</button>
+            <button class="filter-btn" data-target-sec="2" style="padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid rgba(0,0,0,0.15); background: #fff; color: #444; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; cursor: pointer;">AI &amp; IoT</button>
+            <button class="filter-btn" data-target-sec="3" style="padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid rgba(0,0,0,0.15); background: #fff; color: #444; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; cursor: pointer;">Drone Tech</button>
+            <button class="filter-btn" data-target-sec="4" style="padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid rgba(0,0,0,0.15); background: #fff; color: #444; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; cursor: pointer;">Cohorts</button>
+          </div>
+        </div>
+
+        <div class="gallery-cards-showcase">
+          <div class="gallery-showcase-card">
+            <div class="gallery-showcase-img-wrap">
+              <img src="/assets/class_robotics.png" alt="Robotics Lab Workshop" class="gallery-showcase-img" />
+              <span class="gallery-showcase-badge">ROBOTICS</span>
+            </div>
+            <div class="gallery-showcase-body">
+              <h3 class="gallery-showcase-title">Autonomous Rover Assembly</h3>
+              <p class="gallery-showcase-desc">Students wiring microcontrollers, servomotors, and distance sensors for line-following rovers.</p>
+            </div>
+          </div>
+          <div class="gallery-showcase-card">
+            <div class="gallery-showcase-img-wrap">
+              <img src="/assets/class_ai.png" alt="Generative AI Workshop" class="gallery-showcase-img" />
+              <span class="gallery-showcase-badge">AI &amp; IOT</span>
+            </div>
+            <div class="gallery-showcase-body">
+              <h3 class="gallery-showcase-title">Generative AI Studio</h3>
+              <p class="gallery-showcase-desc">Learners designing custom prompt architectures and prototyping web apps using Google AI Studio.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 02: Robotics & Hardware Labs -->
+    <section class="story-section gallery-story-section" data-index="1">
+      <div class="parallax-canvas">
+        <div class="watermark-bg" data-speed="0.25">ROBOTICS</div>
+      </div>
+
+      <div class="editorial-container">
+        <div class="story-content-box">
+          <span class="chapter-indicator">CH.02 / ROBOTICS</span>
+          <h2 class="story-title">AUTONOMOUS ROVERS &amp; HARDWARE LABS</h2>
+          <p class="story-text">Move beyond virtual limits. Through Bot Barracks—our dedicated robotics training brand—we supply cohorts with hardware assemblies, mechanical programming, and competitive cybernetics skills.</p>
+          <div class="story-actions">
+            <a href="/programs.html" class="btn btn-secondary" style="text-decoration: none;"><span class="btn-text">View Curriculum</span></a>
+          </div>
+        </div>
+
+        <div class="gallery-cards-showcase">
+          <div class="gallery-showcase-card">
+            <div class="gallery-showcase-img-wrap">
+              <img src="/assets/class_robotics.png" alt="Autonomous Rover Chassis" class="gallery-showcase-img" />
+              <span class="gallery-showcase-badge">HARDWARE</span>
+            </div>
+            <div class="gallery-showcase-body">
+              <h3 class="gallery-showcase-title">Rover Microcontroller Setup</h3>
+              <p class="gallery-showcase-desc">MicroPython ESP32 programming and sensor calibration for maze navigation and obstacle avoidance.</p>
+            </div>
+          </div>
+          <div class="gallery-showcase-card">
+            <div class="gallery-showcase-img-wrap">
+              <img src="/assets/bot barraks part.png" alt="Bot Barracks Arena" class="gallery-showcase-img" />
+              <span class="gallery-showcase-badge">ARENA</span>
+            </div>
+            <div class="gallery-showcase-body">
+              <h3 class="gallery-showcase-title">Bot Barracks Arena Setup</h3>
+              <p class="gallery-showcase-desc">Dedicated physical and 2.5D virtual arena setup for student bot battles and speed trials.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 03: Cognitive AI & Smart IoT -->
+    <section class="story-section gallery-story-section" data-index="2">
+      <div class="parallax-canvas">
+        <div class="watermark-bg" data-speed="0.2">COGNITIVE</div>
+      </div>
+
+      <div class="editorial-container">
+        <div class="story-content-box">
+          <span class="chapter-indicator">CH.03 / AI &amp; IOT</span>
+          <h2 class="story-title">GENERATIVE AI &amp; SMART IOT LABS</h2>
+          <p class="story-text">Integrate modern intelligence with physical grids. Students master prompt engineering, neural network APIs, OLED displays, and smart city breadboard prototypes.</p>
+          <div class="story-actions">
+            <a href="/download.html" class="btn btn-secondary" style="text-decoration: none;"><span class="btn-text">Download Suite</span></a>
+          </div>
+        </div>
+
+        <div class="gallery-cards-showcase">
+          <div class="gallery-showcase-card">
+            <div class="gallery-showcase-img-wrap">
+              <img src="/assets/class_ai.png" alt="AI Neural Net Studio" class="gallery-showcase-img" />
+              <span class="gallery-showcase-badge">PROMPT AI</span>
+            </div>
+            <div class="gallery-showcase-body">
+              <h3 class="gallery-showcase-title">Vibe Coding &amp; AI Prompts</h3>
+              <p class="gallery-showcase-desc">Developing custom prompt sequences, Gemini web applications, and NotebookLM visual summaries.</p>
+            </div>
+          </div>
+          <div class="gallery-showcase-card">
+            <div class="gallery-showcase-img-wrap">
+              <img src="/assets/gallery_iot_smart.png" alt="Smart City IoT Build" class="gallery-showcase-img" />
+              <span class="gallery-showcase-badge">SMART IOT</span>
+            </div>
+            <div class="gallery-showcase-body">
+              <h3 class="gallery-showcase-title">Smart City Sensor Grid</h3>
+              <p class="gallery-showcase-desc">Breadboard microcontrollers, OLED status readouts, and IoT ambient monitoring built by students.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 04: Flight Telemetry & Drones -->
+    <section class="story-section gallery-story-section" data-index="3">
+      <div class="parallax-canvas">
+        <div class="watermark-bg" data-speed="0.25">FLIGHT</div>
+      </div>
+
+      <div class="editorial-container">
+        <div class="story-content-box">
+          <span class="chapter-indicator">CH.04 / DRONES</span>
+          <h2 class="story-title">AERODYNAMICS &amp; QUADCOPTER FLIGHT</h2>
+          <p class="story-text">Take flight into aerospace mechanics. Learners assemble micro-quadcopters, calibrate radio transmitters, simulate wind drag, and navigate indoor obstacle courses.</p>
+          <div class="story-actions">
+            <a href="/projects.html" class="btn btn-secondary" style="text-decoration: none;"><span class="btn-text">Student Projects</span></a>
+          </div>
+        </div>
+
+        <div class="gallery-cards-showcase">
+          <div class="gallery-showcase-card">
+            <div class="gallery-showcase-img-wrap">
+              <img src="/assets/class_drone.png" alt="Drone Flying Grounds" class="gallery-showcase-img" />
+              <span class="gallery-showcase-badge">FLIGHT</span>
+            </div>
+            <div class="gallery-showcase-body">
+              <h3 class="gallery-showcase-title">Quadcopter Arena Navigation</h3>
+              <p class="gallery-showcase-desc">Micro-drone flight calibration, transmitter binding, and high-precision indoor flight paths.</p>
+            </div>
+          </div>
+          <div class="gallery-showcase-card">
+            <div class="gallery-showcase-img-wrap">
+              <img src="/assets/class_aerospace.png" alt="3D CAD Prototyping" class="gallery-showcase-img" />
+              <span class="gallery-showcase-badge">3D CAD</span>
+            </div>
+            <div class="gallery-showcase-body">
+              <h3 class="gallery-showcase-title">3D CAD Aerodynamics Model</h3>
+              <p class="gallery-showcase-desc">Designing custom chassis models in Onshape and testing wind drag in physical aerodynamic tunnels.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 05: Student Cohorts & Hackathons -->
+    <section class="story-section gallery-story-section" data-index="4">
+      <div class="parallax-canvas">
+        <div class="watermark-bg" data-speed="0.2">COHORTS</div>
+      </div>
+
+      <div class="editorial-container">
+        <div class="story-content-box">
+          <span class="chapter-indicator">CH.05 / COHORTS</span>
+          <h2 class="story-title">FUTURE INNOVATORS IN ACTION</h2>
+          <p class="story-text">Celebrating milestone achievements. Highlighting school demo days, inter-school robotics hackathons, and prototype showcase events across partner institutions.</p>
+          <div class="story-actions">
+            <a href="/demo.html" class="btn btn-primary"><span class="btn-text">Book School Demo</span></a>
+          </div>
+        </div>
+
+        <div class="gallery-cards-showcase">
+          <div class="gallery-showcase-card">
+            <div class="gallery-showcase-img-wrap">
+              <img src="/assets/demo page.png" alt="Institutional AI Demo Day" class="gallery-showcase-img" />
+              <span class="gallery-showcase-badge">DEMO DAY</span>
+            </div>
+            <div class="gallery-showcase-body">
+              <h3 class="gallery-showcase-title">Institutional AI Demo Day</h3>
+              <p class="gallery-showcase-desc">Demonstrating smart home IoT prototypes and voice-activated automation to school educators.</p>
+            </div>
+          </div>
+          <div class="gallery-showcase-card">
+            <div class="gallery-showcase-img-wrap">
+              <img src="/assets/gallery_hackathon.png" alt="AI & Robotics Hackathon" class="gallery-showcase-img" />
+              <span class="gallery-showcase-badge">HACKATHON</span>
+            </div>
+            <div class="gallery-showcase-body">
+              <h3 class="gallery-showcase-title">Robotics Hackathon Championship</h3>
+              <p class="gallery-showcase-desc">Teams competing in real-time autonomous robot challenges and innovation pitching rounds.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 06: Contact & Connect -->
+    <section class="story-section gallery-story-section" data-index="5">
+      <div class="parallax-canvas" style="z-index: 1;">
+        <div class="watermark-bg" data-speed="0.25" style="opacity: 0.04; font-size: clamp(8rem, 18vw, 22rem); user-select: none;">CONTACT</div>
+      </div>
+
+      <div class="editorial-container" style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1200px; margin: 0 auto; padding: 6.5rem 4rem 2.5rem 4rem; gap: 4rem; position: relative; z-index: 10; box-sizing: border-box;">
+        
+        <div class="story-content-box" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; height: 100%; max-height: calc(100vh - 8.5rem); box-sizing: border-box; flex: 1; max-width: 480px;">
+          <div style="width: 100%;">
+            <span class="chapter-indicator" style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; color: #707070; display: block; margin-bottom: 0.4rem;">CH.06 / CONNECT</span>
+            <h2 class="story-title" style="font-family: var(--font-display); font-size: clamp(2.1rem, 3.2vw, 2.7rem); font-weight: 800; line-height: 1.05; text-transform: uppercase; color: #111; margin: 0 0 0.75rem 0;">LET'S BUILD<br>TOGETHER</h2>
+            <p class="story-text" style="font-family: var(--font-display); font-size: 0.85rem; line-height: 1.55; color: #5a5a5a; margin: 0 0 0.85rem 0; max-width: 420px;">Have an inquiry regarding our gallery visuals, school workshops, or student training cohorts? Reach out to our team.</p>
+            
+            <div class="left-mascot-wrapper" style="max-width: 440px; width: 100%; margin-top: 0.5rem;">
+              <img src="/assets/contact us .png" alt="Contact Us Mascot" style="width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.06));" />
+            </div>
+          </div>
+        </div>
+
+        <div class="center-contact-form-card" style="width: 100%; max-width: 460px; z-index: 10; flex: 1;">
+          <form onsubmit="event.preventDefault(); alert('Thank you for your message! We will get back to you shortly.');" style="background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 16px; padding: 2rem 1.85rem; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04); display: flex; flex-direction: column; gap: 1.15rem;">
+            
+            <div style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: #111; letter-spacing: -0.02em; margin-bottom: 0.25rem; text-transform: uppercase;">
+              GET IN TOUCH
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: #5a5a5a; letter-spacing: 0.08em;">NAME</label>
+              <input type="text" placeholder="Your name" required style="width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; font-family: var(--font-display); font-size: 0.85rem; color: #111; outline: none;" />
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: #5a5a5a; letter-spacing: 0.08em;">EMAIL</label>
+              <input type="email" placeholder="name@domain.com" required style="width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; font-family: var(--font-display); font-size: 0.85rem; color: #111; outline: none;" />
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: #5a5a5a; letter-spacing: 0.08em;">MESSAGE</label>
+              <textarea rows="3" placeholder="Tell us about your inquiry..." style="width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; font-family: var(--font-display); font-size: 0.85rem; color: #111; outline: none; resize: none;"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.8rem 1.25rem; background: #111; color: #fff; border: none; border-radius: 8px; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;">
+              <span class="btn-text">SEND MESSAGE</span>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Chapter 07: Site Directory & Footer -->
+    <section class="story-section gallery-story-section footer-story-section" data-index="6">
+      <div class="parallax-canvas">
+        <div class="watermark-bg" data-speed="0.12">Credible</div>
+      </div>
+
+      <div class="footer-section-inner">
+        <div class="footer-brand-row">
+          <a href="/index.html" class="logo footer-logo" id="footer-logo-link" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
+            <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
+            <span style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; text-align: left; color: #121212;">
+              <span>CREDIBLE</span>
+              <span style="color: #666; font-weight: 600;">CREATE</span>
+            </span>
+          </a>
+          <nav class="footer-top-nav">
+            <ul>
+              <li><a href="/programs.html" style="text-decoration: none; color: #5a5a5a;">Programs</a></li>
+              <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a;">About</a></li>
+              <li><a href="/gallery.html" style="text-decoration: none; color: #5a5a5a;">Gallery</a></li>
+              <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a;">Software</a></li>
+              <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Join</span></a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="footer-section-divider"></div>
+
+        <div class="footer-columns-row">
+          <div class="footer-col">
+            <h4>Credible Create</h4>
+            <ul>
+              <li><a href="/about.html">Our Mission</a></li>
+              <li><a href="/about.html">Our Team</a></li>
+              <li><a href="/gallery.html">Visual Archive</a></li>
+              <li><a href="/download.html">Bot Barracks Suite</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Bot Barracks</h4>
+            <ul>
+              <li><a href="/programs.html">Robotics Labs</a></li>
+              <li><a href="/programs.html">Innovation Design</a></li>
+              <li><a href="/projects.html">Student Cohorts</a></li>
+              <li><a href="/verify.html">Verify Portal</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="/download.html">Installer Downloads</a></li>
+              <li><a href="/verify.html">Certificate Verification</a></li>
+              <li><a href="/blog.html">Curriculum Articles</a></li>
+            </ul>
+          </div>
+          <div class="footer-col footer-cta-col">
+            <h4>Connect</h4>
+            <p class="footer-cta-text">Have a school or program in mind? Let's build something meaningful.</p>
+            <a href="/demo.html" class="btn btn-primary footer-cta-btn" style="text-decoration: none;">
+              <span class="btn-text">Request a Call →</span>
+            </a>
+            <div class="footer-contact-links">
+              <a href="mailto:info@crediblecreate.com">info@crediblecreate.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-section-divider"></div>
+
+        <div class="footer-bottom-row">
+          <span class="footer-copyright">© 2026 Credible Create. All rights reserved.</span>
+          <div class="footer-bottom-status">
+            <span class="footer-status-dot"></span>
+            <span>SYS.STATUS // LIVE</span>
+          </div>
+          <div class="footer-bottom-links">
+            <a href="/privacy.html">Privacy Policy</a>
+            <a href="/terms.html">Terms &amp; Conditions</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close">&times;</button>
+      <div class="lightbox-img-wrap">
+        <img src="" alt="" class="lightbox-img" id="lightbox-img">
+      </div>
+      <div class="lightbox-caption">
+        <span class="lightbox-badge" id="lightbox-badge">CATEGORY</span>
+        <h3 id="lightbox-title" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.35rem;"></h3>
+        <p id="lightbox-desc" style="color: #aaa; font-size: 0.9rem; line-height: 1.5;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Contact Actions -->
+  <div class="floating-contact-actions" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 1rem;">
+    <a href="https://wa.me/919999999999" target="_blank" class="floating-action-btn whatsapp-btn" style="width: 44px; height: 44px; border-radius: 50%; background-color: #111; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-decoration: none;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+    <a href="tel:+919999999999" class="floating-action-btn call-btn" style="width: 44px; height: 44px; border-radius: 50%; background-color: #111; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-decoration: none;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Core Script -->
+  <script src="/js/script.js"></script>
+</body>
+
+</html>

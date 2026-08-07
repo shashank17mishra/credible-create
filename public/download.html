@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Bot Barracks Software — Credible Create</title>
+  <meta name="description" content="Download the official Bot Barracks Suite v2.4.0 featuring Sim-1 Maze Runner 3D, Sim-2 2.5D IoT Sandbox, and MicroPython IDE for Windows, macOS, and Linux.">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/script.js" defer></script>
+  <style>
+    .dl-hero {
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .dl-badge {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #10b981;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      display: inline-block;
+      margin-bottom: 1.25rem;
+    }
+    .dl-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      color: #121212;
+      line-height: 1.1;
+    }
+    .dl-subtitle {
+      font-size: 1.15rem;
+      color: #555;
+      line-height: 1.6;
+      max-width: 760px;
+      margin: 0 auto 3rem;
+    }
+
+    /* Download Card Box */
+    .dl-box {
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      max-width: 820px;
+      margin: 0 auto 5rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+    .os-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .os-tab {
+      background: #f4f4f5;
+      border: 1px solid rgba(0,0,0,0.06);
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      font-family: var(--font-mono, monospace);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #555;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .os-tab.active, .os-tab:hover {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+    .dl-main-action {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .btn-download-hero {
+      background: #111;
+      color: #fff;
+      padding: 1.1rem 3rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 12px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-download-hero:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25);
+    }
+    .dl-meta-info {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.78rem;
+      color: #777;
+      margin-top: 0.75rem;
+    }
+
+    /* Download Progress Bar */
+    .dl-progress-wrap {
+      display: none;
+      margin-top: 1.5rem;
+      background: #f4f4f5;
+      border-radius: 9999px;
+      height: 10px;
+      overflow: hidden;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .dl-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981, #059669);
+      transition: width 0.1s linear;
+    }
+    .dl-status-msg {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.8rem;
+      color: #10b981;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    /* Included Tools Section */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto 5rem;
+      padding: 0 1.5rem;
+    }
+    .tool-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+    .tool-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #f0fdf4;
+      border: 1px solid rgba(16,185,129,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      color: #10b981;
+    }
+    .tool-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 0.5rem;
+    }
+    .tool-desc {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* System Specs Table */
+    .specs-section {
+      max-width: 1000px;
+      margin: 0 auto 6rem;
+      padding: 0 1.5rem;
+    }
+    .specs-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2.5rem;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+    }
+    .specs-table th, .specs-table td {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      font-size: 0.9rem;
+    }
+    .specs-table th {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: #888;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+              <header>
+    <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
+      <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
+      <span style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; color: #111;">
+        <span>CREDIBLE</span>
+        <span style="color: #666; font-weight: 600;">CREATE</span>
+      </span>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/index.html" class="nav-link">Home</a></li>
+        <li><a href="/programs.html" class="nav-link">Programs</a></li>
+        <li><a href="/about.html" class="nav-link">About</a></li>
+        <li><a href="/gallery.html" class="nav-link">Gallery</a></li>
+        <li><a href="/download.html" class="nav-link">Software</a></li>
+        <li><a href="/projects.html" class="nav-link">FAQ</a></li>
+        <li><a href="/verify.html" class="nav-link">Verify</a></li>
+        <li><a href="/blog.html" class="nav-link">Blog</a></li>
+        <li><a href="/login.html" class="nav-link">Login</a></li>
+        <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Join</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main style="padding-top: 100px; min-height: 100vh; background-color: var(--bg-primary, #f6f6f6);">
+    <div class="dl-hero">
+      <span class="dl-badge">OFFICIAL RELEASE v2.4.0</span>
+      <h1 class="dl-title">BOT BARRACKS SUITE</h1>
+      <p class="dl-subtitle">Download the unified robotics sandbox & virtual IoT laboratory. Build 3D pathfinding algorithms, wire virtual ESP32 microcontrollers, and execute MicroPython code directly in your browser or desktop.</p>
+    </div>
+
+    <!-- Download Card -->
+    <div class="dl-box">
+      <div class="os-tabs">
+        <button class="os-tab active" data-os="win">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.95-9.6L24 0v11.4H10.95M0 12.6h9.75v9.451L0 20.699M10.95 12.6H24V24l-13.05-1.85"/></svg>
+          Windows 64-bit (.exe)
+        </button>
+        <button class="os-tab" data-os="mac">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.32c.67-.82 1.13-1.96.99-3.12-1 .04-2.17.67-2.88 1.49-.63.73-1.18 1.89-1.03 3.02 1.11.09 2.25-.56 2.92-1.39z"/></svg>
+          macOS Universal (.dmg)
+        </button>
+        <button class="os-tab" data-os="linux">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z"/></svg>
+          Linux AppImage
+        </button>
+      </div>
+
+      <div class="dl-main-action">
+        <button class="btn-download-hero" id="download-trigger-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span id="dl-btn-label">Download BotBarracks_Setup_v2.4.0.exe</span>
+        </button>
+
+        <div class="dl-meta-info" id="dl-meta-spec">Size: ~142 MB | Version: 2.4.0 (Stable) | License: Free Educational Use</div>
+
+        <div class="dl-progress-wrap" id="progress-wrap">
+          <div class="dl-progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="dl-status-msg" id="status-msg">✔ INSTALLER DOWNLOAD READY! CHECK YOUR DOWNLOADS FOLDER.</div>
+      </div>
+    </div>
+
+    <!-- Included Tools -->
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3 class="tool-title">Sim-1 Maze Runner 3D</h3>
+        <p class="tool-desc">3D pathfinding maze compiler. Code robot navigation using manual WASD parameters or AI-generated path scripts.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>
+        </div>
+        <h3 class="tool-title">Sim-2 2.5D Hardware Sandbox</h3>
+        <p class="tool-desc">Isometric virtual lab for wiring ESP32 microcontrollers, ultrasonic distance sensors, and 4-wheel robot chassis.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3 class="tool-title">MicroPython IDE Bridge</h3>
+        <p class="tool-desc">Built-in code editor and compiler bridge for dumping Python scripts directly into virtual or physical microcontrollers.</p>
+      </div>
+    </div>
+
+    <!-- System Requirements -->
+    <div class="specs-section">
+      <div class="specs-card">
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: #111;">SYSTEM REQUIREMENTS</h2>
+        <table class="specs-table">
+          <thead>
+            <tr>
+              <th>COMPONENT</th>
+              <th>MINIMUM SPECIFICATION</th>
+              <th>RECOMMENDED SPECIFICATION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Operating System</strong></td>
+              <td>Windows 10 / macOS 11 Big Sur / Ubuntu 20.04</td>
+              <td>Windows 11 / macOS 13 Ventura / Ubuntu 22.04+</td>
+            </tr>
+            <tr>
+              <td><strong>Processor</strong></td>
+              <td>Dual-Core Intel / AMD 2.0 GHz</td>
+              <td>Quad-Core Intel i5 / Apple M1 / AMD Ryzen 5</td>
+            </tr>
+            <tr>
+              <td><strong>Memory (RAM)</strong></td>
+              <td>4 GB RAM</td>
+              <td>8 GB RAM or higher</td>
+            </tr>
+            <tr>
+              <td><strong>Graphics (GPU)</strong></td>
+              <td>Intel HD Graphics 4000 (WebGL 2.0)</td>
+              <td>NVIDIA GTX 1050 / Apple M1 GPU</td>
+            </tr>
+            <tr>
+              <td><strong>Disk Space</strong></td>
+              <td>350 MB Available Space</td>
+              <td>1 GB SSD Space</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+              <footer style="background-color: var(--bg-primary, #f6f6f6); border-top: 1px solid rgba(0, 0, 0, 0.06); padding: 5rem 3.5rem 3rem; position: relative; z-index: 10; width: 100%; margin-top: auto;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem;">
+      <div class="footer-brand-row" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+        <a href="/index.html" class="logo" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
+          <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
+          <span style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; text-align: left; color: #121212;">
+            <span>CREDIBLE</span>
+            <span style="color: #666; font-weight: 600;">CREATE</span>
+          </span>
+        </a>
+        <nav class="footer-top-nav">
+          <ul style="display: flex; list-style: none; gap: 2rem; align-items: center; flex-wrap: wrap; margin: 0; padding: 0;">
+            <li><a href="/programs.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Programs</a></li>
+            <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">About</a></li>
+            <li><a href="/gallery.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Gallery</a></li>
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Software</a></li>
+            <li><a href="/projects.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Projects</a></li>
+            <li><a href="/verify.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Verify</a></li>
+            <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem; background: #111; color: #fff; text-decoration: none; border-radius: 4px;"><span class="btn-text">Join</span></a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="footer-section-divider" style="height: 1px; background-color: rgba(0, 0, 0, 0.06); width: 100%;"></div>
+
+      <div class="footer-columns-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2.5rem; width: 100%;">
+        <div class="footer-col">
+          <h4 style="font-family: var(--font-mono, monospace); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #121212; margin-bottom: 1.25rem;">Credible Create</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin: 0; padding: 0;">
+            <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Our Mission</a></li>
+            <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Our Team</a></li>
+            <li><a href="/gallery.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Media Gallery</a></li>
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Bot Barracks Suite</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 style="font-family: var(--font-mono, monospace); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #121212; margin-bottom: 1.25rem;">Bot Barracks</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin: 0; padding: 0;">
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Software Download</a></li>
+            <li><a href="/programs.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Robotics Labs</a></li>
+            <li><a href="/programs.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Innovation Design</a></li>
+            <li><a href="/projects.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Student Cohorts</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 style="font-family: var(--font-mono, monospace); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #121212; margin-bottom: 1.25rem;">Resources</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin: 0; padding: 0;">
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Bot Barracks Installer</a></li>
+            <li><a href="/verify.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Verify Certificate</a></li>
+            <li><a href="/blog.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Curriculum Articles</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-cta-col">
+          <h4 style="font-family: var(--font-mono, monospace); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #121212; margin-bottom: 1.25rem;">Connect</h4>
+          <p style="color: #5a5a5a; font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.25rem;">Have a school or program in mind? Let's build something meaningful.</p>
+          <a href="/demo.html" class="btn btn-primary footer-cta-btn" style="display: inline-block; padding: 0.6rem 1.25rem; background: #111; color: #fff; text-decoration: none; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1.25rem;">
+            <span class="btn-text">Request a Call →</span>
+          </a>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <a href="mailto:info@crediblecreate.com" style="text-decoration: none; color: #121212; font-size: 0.85rem;">info@crediblecreate.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-section-divider" style="height: 1px; background-color: rgba(0, 0, 0, 0.06); width: 100%;"></div>
+
+      <div class="footer-bottom-row" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-family: var(--font-mono, monospace); font-size: 0.75rem; color: #909090;">
+        <span>© 2026 Credible Create. All rights reserved.</span>
+        <div style="display: flex; align-items: center; gap: 0.5rem; color: #10b981;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background-color: #10b981; display: inline-block;"></span>
+          <span style="color: #909090;">SYS.STATUS // LIVE</span>
+        </div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="/privacy.html" style="text-decoration: none; color: #909090;">Privacy Policy</a>
+          <a href="/terms.html" style="text-decoration: none; color: #909090;">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const osTabs = document.querySelectorAll('.os-tab');
+      const dlBtnLabel = document.getElementById('dl-btn-label');
+      const dlMetaSpec = document.getElementById('dl-meta-spec');
+      const triggerBtn = document.getElementById('download-trigger-btn');
+      const progressWrap = document.getElementById('progress-wrap');
+      const progressBar = document.getElementById('progress-bar');
+      const statusMsg = document.getElementById('status-msg');
+
+      const osData = {
+        win: { label: "Download BotBarracks_Setup_v2.4.0.exe", spec: "Size: ~142 MB | Version: 2.4.0 (Windows 64-bit) | License: Free Educational Use", filename: "BotBarracks_Setup_v2.4.0.exe" },
+        mac: { label: "Download BotBarracks_v2.4.0.dmg", spec: "Size: ~158 MB | Version: 2.4.0 (macOS Universal) | License: Free Educational Use", filename: "BotBarracks_v2.4.0.dmg" },
+        linux: { label: "Download BotBarracks_v2.4.0.AppImage", spec: "Size: ~135 MB | Version: 2.4.0 (Linux x86_64) | License: Free Educational Use", filename: "BotBarracks_v2.4.0.AppImage" }
+      };
+
+      let currentOS = 'win';
+
+      osTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          osTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          currentOS = tab.getAttribute('data-os');
+          dlBtnLabel.textContent = osData[currentOS].label;
+          dlMetaSpec.textContent = osData[currentOS].spec;
+
+          // Reset download progress state
+          progressWrap.style.display = 'none';
+          progressBar.style.width = '0%';
+          statusMsg.style.display = 'none';
+        });
+      });
+
+      triggerBtn.addEventListener('click', () => {
+        progressWrap.style.display = 'block';
+        statusMsg.style.display = 'none';
+        progressBar.style.width = '0%';
+
+        let progress = 0;
+        const interval = setInterval(() => {
+          progress += 10;
+          progressBar.style.width = progress + '%';
+
+          if (progress >= 100) {
+            clearInterval(interval);
+            statusMsg.style.display = 'block';
+
+            // Create actual browser download trigger simulation
+            const blob = new Blob(["Bot Barracks v2.4.0 Installer Package Placeholder"], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = osData[currentOS].filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+          }
+        }, 120);
+      });
+    });
+  </script>
+
+
+  
+  
+  
+  
+  
+  <div class="floating-contact-actions" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 1rem;">
+    <!-- WhatsApp -->
+    <a href="https://wa.me/919999999999" target="_blank" class="floating-action-btn whatsapp-btn" style="width: 44px; height: 44px; border-radius: 50%; background-color: #111; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+    <!-- Call -->
+    <a href="tel:+919999999999" class="floating-action-btn call-btn" style="width: 44px; height: 44px; border-radius: 50%; background-color: #111; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+    </a>
+  </div>
+
+</body>
+</html>

@@ -143,11 +143,53 @@ function renderPosts() {
 
 async function loadBlogPosts() {
   try {
-    const res = await fetch('/api/posts');
-    if (res.ok) {
-      allPosts = await res.json();
-      renderPosts();
+    if (window.CredibleDB) {
+      try {
+        const dbPosts = await window.CredibleDB.getPublishedPosts();
+        if (dbPosts && dbPosts.length > 0) {
+          allPosts = dbPosts.map(p => ({
+            id: p.id,
+            title: p.title,
+            slug: p.slug,
+            content: p.content,
+            coverImage: p.cover_image,
+            author: { name: p.author_name || 'Credible Team' },
+            createdAt: p.published_at || p.created_at
+          }));
+          renderPosts();
+          return;
+        }
+      } catch (sbErr) {
+        console.warn("Supabase posts fetch fallback:", sbErr);
+      }
     }
+
+    const res = await fetch('/api/posts').catch(() => null);
+    if (res && res.ok) {
+      allPosts = await res.json();
+    } else {
+      allPosts = [
+        {
+          id: '1',
+          title: 'Getting Started with MicroPython on ESP32',
+          slug: 'micropython-esp32-setup',
+          content: 'MicroPython makes hardware prototyping easy and fast for robotics cohorts. Learn how to flash microcontrollers and write WASD motor scripts.',
+          coverImage: '/assets/class_robotics.png',
+          author: { name: 'Bot Barracks Team' },
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: '2',
+          title: 'Prompt Engineering Strategies for Student Developers',
+          slug: 'prompt-engineering-students',
+          content: 'Generative AI is transforming technology education. Discover how students use Gemini and ChatGPT to vibe code web applications.',
+          coverImage: '/assets/class_ai.png',
+          author: { name: 'Cognitive AI Lab' },
+          createdAt: new Date().toISOString()
+        }
+      ];
+    }
+    renderPosts();
   } catch (err) {
     console.error("Failed to load blog posts:", err);
   }

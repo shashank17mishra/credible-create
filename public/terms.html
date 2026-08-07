@@ -3,12 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Credible Create - Verify Certificate</title>
+  <title>Terms of Service — Credible Create</title>
+  <meta name="description" content="Official Terms of Service governing the use of Credible Create web platforms, Bot Barracks software, and innovation training services.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/script.js" defer></script>
+  <style>
+    .legal-container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 6rem 2rem 5rem;
+    }
+    .legal-badge {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #10b981;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .legal-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 0.5rem;
+    }
+    .legal-date {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 2.5rem;
+      display: block;
+    }
+    .legal-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+    .legal-section {
+      margin-bottom: 2.5rem;
+    }
+    .legal-section:last-child {
+      margin-bottom: 0;
+    }
+    .legal-section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .legal-section-title span {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.85rem;
+      color: #10b981;
+    }
+    .legal-text {
+      font-size: 0.98rem;
+      color: #444;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .legal-list {
+      margin: 0.75rem 0 1.25rem 1.5rem;
+      color: #444;
+      line-height: 1.7;
+    }
+    .legal-list li {
+      margin-bottom: 0.5rem;
+    }
+  </style>
 </head>
 <body>
-                            <header>
+
+              <header>
     <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
       <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
       <span style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; color: #111;">
@@ -32,48 +106,52 @@
     </nav>
   </header>
 
-  <main class="page-content" style="padding-top: 100px; min-height: 100vh; background-color: var(--bg-primary, #f6f6f6);">
-    <div class="overlay-container">
-      <div class="overlay-header">
-        <span class="overlay-tag">Secure Portal</span>
-        <h3 class="overlay-title">Certificate Verification</h3>
-      </div>
+  <main style="padding-top: 100px; min-height: 100vh; background-color: var(--bg-primary, #f6f6f6);">
+    <div class="legal-container">
+      <span class="legal-badge">PLATFORM GOVERNANCE</span>
+      <h1 class="legal-title">TERMS OF SERVICE</h1>
+      <span class="legal-date">EFFECTIVE DATE: AUGUST 2026 // VERSION 2.1</span>
 
-      <div class="verification-box">
-        <p style="color: var(--text-secondary); line-height: 1.6; font-size: 0.9rem;">Enter the unique credential code found on your Credible Create certificate to authenticate achievement details.</p>
-
-        <div class="search-bar">
-          <input type="text" id="cert-input" placeholder="e.g. CC-101" aria-label="Certificate Code" />
-          <button id="cert-btn"><span class="btn-text">Verify</span></button>
+      <div class="legal-card">
+        <div class="legal-section">
+          <h2 class="legal-section-title"><span>01.</span> ACCEPTANCE OF TERMS</h2>
+          <p class="legal-text">By accessing or using the Credible Create website, Bot Barracks virtual IoT simulation software, certificate verification portal, or participating in our robotics and AI training cohorts, you agree to comply with and be bound by these Terms of Service.</p>
         </div>
 
-        <div class="error-message" id="cert-error">Certificate not found. Try searching with code "CC-101".</div>
+        <div class="legal-section">
+          <h2 class="legal-section-title"><span>02.</span> INTELLECTUAL PROPERTY RIGHTS</h2>
+          <p class="legal-text">All curriculum frameworks, 3D simulation assets (Sim-1 and Sim-2), software code, brand materials, and interactive course designs are the exclusive property of Credible Create:</p>
+          <ul class="legal-list">
+            <li><strong>Software License:</strong> Students and participating institutions are granted a non-exclusive, non-transferable license to use Bot Barracks software for educational learning purposes.</li>
+            <li><strong>Prohibited Actions:</strong> Reverse engineering, unauthorized distribution, or commercial reselling of software installers, MicroPython bridges, or course materials is strictly prohibited.</li>
+          </ul>
+        </div>
 
-        <div class="verification-result" id="cert-result">
-          <div class="cert-card">
-            <div class="cert-label">Recipient Name</div>
-            <div class="cert-val" id="cert-holder">Jane Doe</div>
+        <div class="legal-section">
+          <h2 class="legal-section-title"><span>03.</span> CERTIFICATE VERIFICATION & AUTHENTICITY</h2>
+          <p class="legal-text">Certificates issued through the Credible Create Verify Portal contain unique cryptographic identifiers. Any attempt to alter, forge, or falsely claim unearned certifications will result in permanent account termination and notification to associated school authorities.</p>
+        </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
-              <div>
-                <div class="cert-label">Course Title</div>
-                <div class="cert-val" id="cert-course">Robotics & Cybernetics Cohort</div>
-              </div>
-              <div>
-                <div class="cert-label">Issue Date</div>
-                <div class="cert-val" id="cert-date">June 2026</div>
-              </div>
-            </div>
+        <div class="legal-section">
+          <h2 class="legal-section-title"><span>04.</span> USER CONDUCT & COMMUNITY GUIDELINES</h2>
+          <p class="legal-text">Students participating in shared simulation spaces, hackathons, or interactive AI labs must maintain respectful behavior. Submitting malicious scripts, interfering with platform telemetry, or attempting unauthorized access to admin systems is strictly forbidden.</p>
+        </div>
 
-            <div class="cert-label">Credential ID</div>
-            <div class="cert-id" id="cert-id-val">CC-101</div>
-          </div>
+        <div class="legal-section">
+          <h2 class="legal-section-title"><span>05.</span> LIMITATION OF LIABILITY</h2>
+          <p class="legal-text">Credible Create provides educational software and learning materials "as is". While we strive for 100% uptime and seamless hardware integration, we are not liable for incidental damage resulting from user-built hardware circuits or local software environment errors.</p>
+        </div>
+
+        <div class="legal-section">
+          <h2 class="legal-section-title"><span>06.</span> GOVERNING LAW & CONTACT</h2>
+          <p class="legal-text">These terms shall be governed in accordance with international educational standards and applicable regional laws. Questions regarding these terms should be directed to:</p>
+          <p class="legal-text"><strong>Legal Desk:</strong> <a href="mailto:legal@crediblecreate.com" style="color: #111; font-weight: 600;">legal@crediblecreate.com</a></p>
         </div>
       </div>
     </div>
   </main>
 
-                            <footer style="background-color: var(--bg-primary, #f6f6f6); border-top: 1px solid rgba(0, 0, 0, 0.06); padding: 5rem 3.5rem 3rem; position: relative; z-index: 10; width: 100%; margin-top: auto;">
+              <footer style="background-color: var(--bg-primary, #f6f6f6); border-top: 1px solid rgba(0, 0, 0, 0.06); padding: 5rem 3.5rem 3rem; position: relative; z-index: 10; width: 100%; margin-top: auto;">
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem;">
       <div class="footer-brand-row" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
         <a href="/index.html" class="logo" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
@@ -153,11 +231,7 @@
     </div>
   </footer>
 
-  
-  
-  
-  
-  
+
   
   
   
@@ -178,65 +252,5 @@
     </a>
   </div>
 
-  <script src="/js/config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/js/supabase-client.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const input = document.getElementById('cert-input');
-      const btn = document.getElementById('cert-btn');
-      const errBox = document.getElementById('cert-error');
-      const resultBox = document.getElementById('cert-result');
-
-      const holderEl = document.getElementById('cert-holder');
-      const courseEl = document.getElementById('cert-course');
-      const dateEl = document.getElementById('cert-date');
-      const idValEl = document.getElementById('cert-id-val');
-
-      if (!btn || !input) return;
-
-      btn.addEventListener('click', async () => {
-        const query = input.value.trim();
-        if (!query) return;
-
-        errBox.style.display = 'none';
-        resultBox.style.display = 'none';
-
-        if (window.CredibleDB) {
-          try {
-            const cert = await window.CredibleDB.verifyCertificate(query);
-            if (cert) {
-              holderEl.textContent = cert.student_name;
-              courseEl.textContent = cert.program_name;
-              dateEl.textContent = cert.issue_date;
-              idValEl.textContent = cert.certificate_code;
-              resultBox.style.display = 'block';
-              return;
-            }
-          } catch (err) {
-            console.warn("Supabase lookup fallback:", err);
-          }
-        }
-
-        const demoCerts = {
-          'CC-101': { name: 'Jane Doe', course: 'Robotics & Cybernetics Cohort', date: 'June 2026' },
-          'CC-2026-8921': { name: 'Aarav Sharma', course: 'Autonomous Robotics & AI Pro', date: 'August 2026' },
-          'CC-2026-9042': { name: 'Ananya Patel', course: 'Generative AI & IoT Studio', date: 'August 2026' }
-        };
-
-        if (demoCerts[query.toUpperCase()]) {
-          const match = demoCerts[query.toUpperCase()];
-          holderEl.textContent = match.name;
-          courseEl.textContent = match.course;
-          dateEl.textContent = match.date;
-          idValEl.textContent = query.toUpperCase();
-          resultBox.style.display = 'block';
-        } else {
-          errBox.textContent = `Certificate code "${query}" not found. Try searching with code "CC-2026-8921".`;
-          errBox.style.display = 'block';
-        }
-      });
-    });
-  </script>
 </body>
 </html>

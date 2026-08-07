@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 7. Secure Live Submission Handler to Google Apps Script
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyJuIfElPCsZ-2K58rS72-UDDJ9uiAU8HmG7dZw2VLrsoFrjP5csBp5-JGjz3yXTdva/exec';
+  const APPS_SCRIPT_URL = window.APP_CONFIG?.APPS_SCRIPT_URL || '';
   let isSubmitting = false;
 
   if (demoForm) {
@@ -200,6 +200,17 @@ document.addEventListener('DOMContentLoaded', () => {
         class: classVal,
         course: courseVal
       };
+
+      // Also persist lead to Supabase database if available
+      if (window.CredibleDB) {
+        window.CredibleDB.submitDemoRequest({
+          full_name: name,
+          email: email,
+          institution_name: institution,
+          program_interest: interest,
+          message: `Level: ${level}, Class/Course: ${classOrCourse}`
+        }).catch(err => console.warn("Supabase lead submission fallback:", err));
+      }
 
       fetch(APPS_SCRIPT_URL, {
         method: 'POST',
