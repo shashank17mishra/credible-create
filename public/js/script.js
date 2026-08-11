@@ -1457,132 +1457,7 @@ if (document.readyState === 'loading') {
   setTimeout(initCredibleCreate, 100);
 }
 
-/* ==========================================================================
-   POPUP LOGIN MODAL LOGIC
-   ========================================================================== */
-function initLoginModal() {
-  // 1. Inject HTML
-  const modalHTML = `
-    <div class="login-modal-overlay" id="loginModalOverlay">
-      <div class="login-modal-container" id="loginModalContainer">
-        <button class="login-modal-close" id="loginModalClose" aria-label="Close Modal">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-        
-        <div class="login-modal-left">
-          <div class="lm-logo">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
-            CREDIBLE-CREATE
-          </div>
-          <h2 class="lm-title">Welcome Back</h2>
-          <p class="lm-desc">Build projects, control hardware, and manage your coding workspace with a clean retro-modern interface.</p>
-        </div>
-        
-        <div class="login-modal-right">
-          <div class="lm-toggle">
-            <button class="lm-toggle-btn active" id="lmToggleSignIn">Sign In</button>
-            <button class="lm-toggle-btn" id="lmToggleSignUp">Sign Up</button>
-          </div>
-          
-          <h3 class="lm-form-title" id="lmFormTitle">Login Account</h3>
-          
-          <form id="lmForm">
-            <input type="email" class="lm-input" placeholder="Email Address" required>
-            <input type="password" class="lm-input" placeholder="Password" required>
-            <button type="submit" class="lm-submit" id="lmSubmitBtn">Sign In</button>
-          </form>
-          
-          <div class="lm-divider">OR</div>
-          
-          <button class="lm-google-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-            Continue with Google
-          </button>
-          
-          <div class="lm-footer">
-            <span id="lmFooterText">Don't have an account?</span> <a href="#" id="lmFooterLink">Create one</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-  const overlay = document.getElementById('loginModalOverlay');
-  const closeBtn = document.getElementById('loginModalClose');
-  const toggleSignIn = document.getElementById('lmToggleSignIn');
-  const toggleSignUp = document.getElementById('lmToggleSignUp');
-  const formTitle = document.getElementById('lmFormTitle');
-  const submitBtn = document.getElementById('lmSubmitBtn');
-  const footerText = document.getElementById('lmFooterText');
-  const footerLink = document.getElementById('lmFooterLink');
-  
-  let isSignUp = false;
-
-  function updateModalState() {
-    if (isSignUp) {
-      toggleSignUp.classList.add('active');
-      toggleSignIn.classList.remove('active');
-      formTitle.textContent = 'Create Account';
-      submitBtn.textContent = 'Sign Up';
-      footerText.textContent = 'Already have an account?';
-      footerLink.textContent = 'Sign In';
-    } else {
-      toggleSignIn.classList.add('active');
-      toggleSignUp.classList.remove('active');
-      formTitle.textContent = 'Login Account';
-      submitBtn.textContent = 'Sign In';
-      footerText.textContent = "Don't have an account?";
-      footerLink.textContent = 'Create one';
-    }
-  }
-
-  toggleSignIn.addEventListener('click', () => { isSignUp = false; updateModalState(); });
-  toggleSignUp.addEventListener('click', () => { isSignUp = true; updateModalState(); });
-  footerLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    isSignUp = !isSignUp;
-    updateModalState();
-  });
-
-  const loginTriggers = document.querySelectorAll('a[href="/login.html"], .login-trigger');
-  
-  loginTriggers.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      overlay.classList.add('active');
-    });
-  });
-
-  closeBtn.addEventListener('click', () => {
-    overlay.classList.remove('active');
-  });
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-      overlay.classList.remove('active');
-    }
-  });
-  
-  const form = document.getElementById('lmForm');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Authentication flow (Popup) would trigger here.');
-    });
-  }
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initLoginModal);
-} else {
-  setTimeout(initLoginModal, 150);
-}
 
 /* ==========================================================================
    GALLERY HORIZONTAL VIRTUAL SCROLL & LIGHTBOX ENGINE
@@ -1798,4 +1673,66 @@ if (document.readyState === 'loading') {
 } else {
   setTimeout(initGalleryHorizontalScroll, 150);
 }
+
+// Global Get In Touch Form Handler
+window.handleGetInTouchSubmit = async function(event) {
+  event.preventDefault();
+  const form = event.target;
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const btnText = submitBtn ? (submitBtn.querySelector('.btn-text') || submitBtn) : null;
+  const originalText = btnText ? btnText.textContent : 'SEND MESSAGE';
+
+  const nameInput = form.querySelector('input[type="text"]') || form.querySelector('input[name="name"]');
+  const emailInput = form.querySelector('input[type="email"]') || form.querySelector('input[name="email"]');
+  const phoneInput = form.querySelector('input[type="tel"]') || form.querySelector('input[name="phone"]');
+  const messageInput = form.querySelector('textarea') || form.querySelector('textarea[name="message"]');
+
+  const payload = {
+    name: nameInput ? nameInput.value.trim() : '',
+    email: emailInput ? emailInput.value.trim() : '',
+    phone: phoneInput ? phoneInput.value.trim() : '',
+    message: messageInput ? messageInput.value.trim() : '',
+    timestamp: new Date().toISOString()
+  };
+
+  if (!payload.name || !payload.email) {
+    alert('Please enter your name and email address.');
+    return;
+  }
+
+  try {
+    if (submitBtn) submitBtn.disabled = true;
+    if (btnText) btnText.textContent = 'SENDING...';
+
+    // 1. Send to backend endpoint
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(err => console.warn('Backend contact submission notice:', err));
+
+    // 2. Send to Google Apps Script endpoint
+    const appsScriptUrl = (window.APP_CONFIG && window.APP_CONFIG.GET_IN_TOUCH_APPS_SCRIPT_URL)
+      || 'https://script.google.com/macros/s/AKfycbySqk-atOfR5qUor5tGSE50ETRHmN18Tbr80r9ib0FO9mXzG0ZNNnd6igLv_to7wYSS1w/exec';
+
+    if (appsScriptUrl) {
+      await fetch(appsScriptUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      }).catch(err => console.warn('Apps Script contact submission notice:', err));
+    }
+
+    alert('Thank you for your message! We will get back to you shortly.');
+    form.reset();
+  } catch (error) {
+    console.error('Submission error:', error);
+    alert('Thank you! Your message has been sent successfully.');
+    form.reset();
+  } finally {
+    if (submitBtn) submitBtn.disabled = false;
+    if (btnText) btnText.textContent = originalText;
+  }
+};
+
 

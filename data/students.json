@@ -1,0 +1,52 @@
+[
+  {
+    "id": "std_1786274997858",
+    "name": "shashank mishra",
+    "email": "shashank17oct2003@gmail.com",
+    "institution": "bncet",
+    "interest": "innovation-ai",
+    "level": "school",
+    "class_course": "Class 6",
+    "date": "2026-08-09T11:29:57.858Z"
+  },
+  {
+    "id": "std_1786268842105",
+    "name": "Sarah Connor",
+    "email": "sarah@example.com",
+    "institution": "Tech Institute",
+    "interest": "Innovation Design and Thinking with AI",
+    "level": "college",
+    "class_course": "2nd Year",
+    "date": "2026-08-09T09:47:22.105Z"
+  },
+  {
+    "id": "std_1786268273286",
+    "name": "har",
+    "email": "shashank17oct2003@gmail.com",
+    "institution": "bncet",
+    "interest": "robotics",
+    "level": "school",
+    "class_course": "Class 8",
+    "date": "2026-08-09T09:37:53.286Z"
+  },
+  {
+    "id": "std_1786213627513",
+    "name": "bhagrav",
+    "email": "shashank17oct2003@gmail.com",
+    "institution": "kv",
+    "interest": "robotics",
+    "level": "school",
+    "class_course": "Class 10",
+    "date": "2026-08-08T18:27:07.513Z"
+  },
+  {
+    "id": "std_1786213582977",
+    "name": "anshuman",
+    "email": "ashu@gamil.com",
+    "institution": "iccmrt",
+    "interest": "innovation-ai",
+    "level": "college",
+    "class_course": "Postgraduate",
+    "date": "2026-08-08T18:26:23.039Z"
+  }
+]

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Spreadsheet Data — Credible Create Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+  <div class="admin-container">
+    <div id="admin-sidebar-wrap"></div>
+
+    <div class="admin-viewport">
+      <header class="admin-header">
+        <div class="header-title-sec" style="display: flex; align-items: center; gap: 1rem;">
+          <button id="admin-mobile-menu-btn" class="admin-mobile-toggle" aria-label="Toggle Navigation Sidebar" style="display: none; background: transparent; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.5rem; cursor: pointer; color: #0f172a;">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <h2>Control Center</h2>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.25rem;">
+          <span class="header-status-badge">SYS.STATUS // SHEET CONNECTED</span>
+          <a href="/index.html" target="_blank" class="btn-view-site" style="font-size: 0.75rem; text-decoration: none; color: #0f172a; border: 1px solid #cbd5e1; padding: 0.45rem 0.85rem; border-radius: 6px; font-weight: 600; background: #fff; display: flex; align-items: center; gap: 0.35rem;">
+            <span>View Website</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </header>
+
+      <main class="admin-content">
+        <div class="workspace-header">
+          <div class="workspace-title">
+            <h1>Student Spreadsheet & Leads Registry</h1>
+            <p>Live student enrollment and demo request records synced from Google Sheet (Apps Script)</p>
+          </div>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button onclick="fetchStudentData()" class="admin-btn admin-btn-secondary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">
+              🔄 Sync Latest Sheet Data
+            </button>
+            <button onclick="exportToCSV()" class="admin-btn admin-btn-primary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">
+              📥 Export CSV
+            </button>
+          </div>
+        </div>
+
+        <div id="toast-container"></div>
+
+        <!-- METRICS SUMMARY CARDS -->
+        <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 2rem;">
+          <div class="metric-card glass-panel" style="padding: 1.25rem;">
+            <div class="metric-header">
+              <span class="metric-title" style="font-size: 0.85rem; color: #64748b;">Total Students</span>
+              <div class="metric-icon-box cyan" style="width: 32px; height: 32px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              </div>
+            </div>
+            <div class="metric-value" id="stat-total" style="font-size: 1.8rem; font-weight: 700; margin-top: 0.5rem;">0</div>
+            <div class="metric-subtitle" style="font-size: 0.75rem; color: #94a3b8;">Google Sheet Synchronized</div>
+          </div>
+
+          <div class="metric-card glass-panel" style="padding: 1.25rem;">
+            <div class="metric-header">
+              <span class="metric-title" style="font-size: 0.85rem; color: #64748b;">School Students</span>
+              <div class="metric-icon-box indigo" style="width: 32px; height: 32px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+            </div>
+            <div class="metric-value" id="stat-school" style="font-size: 1.8rem; font-weight: 700; margin-top: 0.5rem;">0</div>
+            <div class="metric-subtitle" style="font-size: 0.75rem; color: #94a3b8;">K-12 Robotics & IoT</div>
+          </div>
+
+          <div class="metric-card glass-panel" style="padding: 1.25rem;">
+            <div class="metric-header">
+              <span class="metric-title" style="font-size: 0.85rem; color: #64748b;">College / Grad</span>
+              <div class="metric-icon-box amber" style="width: 32px; height: 32px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+            </div>
+            <div class="metric-value" id="stat-college" style="font-size: 1.8rem; font-weight: 700; margin-top: 0.5rem;">0</div>
+            <div class="metric-subtitle" style="font-size: 0.75rem; color: #94a3b8;">B.Tech & Higher Edu</div>
+          </div>
+        </div>
+
+        <!-- SEARCH AND FILTER BAR -->
+        <div class="glass-panel" style="padding: 1rem 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 260px; position: relative;">
+            <input type="text" id="search-input" onkeyup="filterStudents()" placeholder="🔍 Search student name, email, institution, or program..." class="admin-input" style="padding-left: 1rem; width: 100%; font-size: 0.88rem;" />
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Filter:</span>
+            <select id="filter-level" onchange="filterStudents()" class="admin-select" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+              <option value="ALL">All Levels</option>
+              <option value="school">School</option>
+              <option value="college">College / Grad</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- MAIN TABLE PANEL -->
+        <div class="glass-panel table-panel" style="padding: 1.5rem;">
+          <h3 class="form-section-title" style="margin-top: 0; padding-left: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
+            <span><span style="color: var(--admin-cyber-indigo);">✦</span> Google Spreadsheet Student Submissions</span>
+            <span id="record-count-badge" style="font-size: 0.75rem; font-family: var(--font-mono); background: #f1f5f9; padding: 0.25rem 0.6rem; border-radius: 20px; color: #475569;">0 Entries</span>
+          </h3>
+
+          <div id="students-table-wrap">
+            <div style="text-align: center; padding: 4rem 0; color: var(--admin-text-muted);">
+              <span style="font-family: var(--font-mono); font-size: 0.9rem;">[ CONNECTING TO GOOGLE APPS SCRIPT // LOADING ]</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- HELPER APPS SCRIPT CONFIG GUIDE (COLLAPSIBLE) -->
+        <div class="glass-panel" style="padding: 1.5rem; margin-top: 2rem; border-left: 4px solid #4f46e5;">
+          <details style="cursor: pointer;">
+            <summary style="font-weight: 700; color: #0f172a; font-size: 0.95rem;">💡 How to enable real-time GET reading in your Google Apps Script (Spreadsheet)</summary>
+            <div style="margin-top: 1rem; font-size: 0.85rem; color: #475569; line-height: 1.6;">
+              <p>Your Google Apps Script URL is set in <code>.env</code> as <code>APPS_SCRIPT_URL</code>.</p>
+              <p style="margin-top: 0.5rem;">To allow your admin dashboard to fetch spreadsheet rows in real-time, ensure your Google Apps Script includes this <code>doGet(e)</code> handler:</p>
+              <pre style="background: #0f172a; color: #f8fafc; padding: 1rem; border-radius: 8px; font-family: var(--font-mono); font-size: 0.8rem; margin-top: 0.75rem; overflow-x: auto;">
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+  var headers = data[0];
+  var result = [];
+  
+  for (var i = 1; i &lt; data.length; i++) {
+    var row = {};
+    for (var j = 0; j &lt; headers.length; j++) {
+      row[headers[j]] = data[i][j];
+    }
+    result.push(row);
+  }
+  
+  return ContentService.createTextOutput(JSON.stringify(result))
+    .setMimeType(ContentService.MimeType.JSON);
+}</pre>
+            </div>
+          </details>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/admin-layout.js"></script>
+
+  <script>
+    let allStudents = [];
+
+    // Smart property resolver for any Google Sheet column key variation
+    function getVal(obj, keys, defaultVal = '') {
+      if (!obj || typeof obj !== 'object') return defaultVal;
+      for (const k of keys) {
+        for (const prop of Object.keys(obj)) {
+          const cleanProp = prop.toLowerCase().replace(/[^a-z0-9]/g, '');
+          const cleanKey = k.toLowerCase().replace(/[^a-z0-9]/g, '');
+          if (cleanProp === cleanKey && obj[prop] !== undefined && obj[prop] !== null && String(obj[prop]).trim() !== '') {
+            return String(obj[prop]).trim();
+          }
+        }
+      }
+      return defaultVal;
+    }
+
+    async function fetchStudentData() {
+      const wrap = document.getElementById('students-table-wrap');
+      wrap.innerHTML = `<div style="text-align: center; padding: 4rem 0; color: var(--admin-text-muted); font-family: var(--font-mono);">[ SYNCING SPREADSHEET RECORDS... ]</div>`;
+
+      try {
+        let loaded = [];
+
+        // 1. Fetch from Express API proxy to Apps Script
+        try {
+          const headers = typeof getAdminAuthHeaders === 'function' ? getAdminAuthHeaders() : {};
+          const res = await fetch('/api/admin/students', { headers });
+          if (res.ok) {
+            const json = await res.json();
+            if (json.students && Array.isArray(json.students) && json.students.length > 0) {
+              loaded = json.students;
+            }
+          }
+        } catch (e) {
+          console.warn("Backend proxy fetch fallback:", e);
+        }
+
+        allStudents = loaded;
+        renderStudentsTable(allStudents);
+        updateMetrics(allStudents);
+
+      } catch (err) {
+        console.error("Error loading student data:", err);
+        wrap.innerHTML = `<div style="padding: 2rem; color: #ef4444; text-align: center;">Error loading student spreadsheet data: ${err.message}</div>`;
+      }
+    }
+
+    function renderStudentsTable(students) {
+      const wrap = document.getElementById('students-table-wrap');
+      const countBadge = document.getElementById('record-count-badge');
+      if (countBadge) countBadge.textContent = `${students.length} Entries`;
+
+      if (!students || students.length === 0) {
+        wrap.innerHTML = `
+          <div style="padding: 3rem 1.5rem; text-align: center; color: var(--admin-text-muted);">
+            <div style="max-width: 600px; margin: 0 auto; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 2rem; text-align: left;">
+              <h4 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="color: #4f46e5;">⚡</span> Action Needed: Update Google Apps Script Deployment
+              </h4>
+              <p style="font-size: 0.85rem; color: #475569; line-height: 1.5; margin-bottom: 1rem;">
+                Your <code>doGet(e)</code> script is saved, but Google Apps Script requires creating a <strong>New Deployment Version</strong> for changes to take effect on the live URL.
+              </p>
+              <ol style="font-size: 0.85rem; color: #334155; line-height: 1.6; padding-left: 1.2rem; margin-bottom: 1rem;">
+                <li>In your Google Apps Script editor, click <strong>Deploy</strong> ➔ <strong>Manage Deployments</strong> (top right).</li>
+                <li>Click the <strong>Pencil icon (Edit ✏️)</strong> next to your Web App deployment.</li>
+                <li>Under <strong>Version</strong>, select <strong>"New Version"</strong>.</li>
+                <li>Ensure <strong>Who has access</strong> is set to <strong>"Anyone"</strong>.</li>
+                <li>Click <strong>Deploy</strong>.</li>
+              </ol>
+              <p style="font-size: 0.8rem; color: #64748b; font-style: italic; margin-top: 0.5rem;">
+                Once deployed, click the <strong>"Sync Latest Sheet Data"</strong> button above to load your spreadsheet rows live!
+              </p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      let tableHtml = `
+        <div style="overflow-x: auto;">
+          <table class="admin-table" style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 2px solid #e2e8f0; text-align: left; font-size: 0.78rem; text-transform: uppercase; color: #64748b;">
+                <th style="padding: 0.75rem 1rem;">Student Name & Email</th>
+                <th style="padding: 0.75rem 1rem;">Institution / School</th>
+                <th style="padding: 0.75rem 1rem;">Program Interest</th>
+                <th style="padding: 0.75rem 1rem;">Level & Class / Course</th>
+                <th style="padding: 0.75rem 1rem;">Submission Date</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      students.forEach(st => {
+        const name = getVal(st, ['name', 'full_name', 'Name', 'Full Name'], 'Student');
+        const email = getVal(st, ['email', 'Email', 'Email Address', 'email_address'], 'N/A');
+        const institution = getVal(st, ['institution', 'Institution', 'school', 'School', 'institution_name'], 'N/A');
+        const interest = getVal(st, ['interest', 'Interest', 'program_interest', 'Program Interest'], 'Robotics & Coding');
+        const level = getVal(st, ['level', 'Level'], 'School').toLowerCase();
+        const classCourse = getVal(st, ['class_course', 'class', 'course', 'Class', 'Course', 'Class/Course'], '');
+        const rawDate = getVal(st, ['timestamp', 'Timestamp', 'date', 'Date', 'created_at'], new Date().toISOString());
+        
+        let formattedDate = rawDate;
+        try {
+          formattedDate = new Date(rawDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        } catch (e) {}
+
+        const levelBadgeClass = level.includes('school') ? 'background: #e0e7ff; color: #3730a3;' : 'background: #fef3c7; color: #92400e;';
+
+        tableHtml += `
+          <tr style="border-bottom: 1px solid #f1f5f9; font-size: 0.88rem;">
+            <td style="padding: 0.85rem 1rem;">
+              <div style="font-weight: 700; color: #0f172a;">${escapeHtml(name)}</div>
+              <div style="font-size: 0.78rem; color: #64748b;">${escapeHtml(email)}</div>
+            </td>
+            <td style="padding: 0.85rem 1rem; color: #334155; font-weight: 500;">
+              ${escapeHtml(institution)}
+            </td>
+            <td style="padding: 0.85rem 1rem;">
+              <span style="font-size: 0.75rem; font-weight: 600; background: #ecfdf5; color: #065f46; padding: 0.25rem 0.65rem; border-radius: 12px; display: inline-block;">
+                ${escapeHtml(interest)}
+              </span>
+            </td>
+            <td style="padding: 0.85rem 1rem;">
+              <span style="font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 10px; ${levelBadgeClass} text-transform: capitalize;">
+                ${escapeHtml(level)}
+              </span>
+              ${classCourse ? `<div style="font-size: 0.78rem; color: #64748b; margin-top: 0.25rem;">${escapeHtml(classCourse)}</div>` : ''}
+            </td>
+            <td style="padding: 0.85rem 1rem; font-family: var(--font-mono); font-size: 0.78rem; color: #64748b;">
+              ${formattedDate}
+            </td>
+        `;
+      });
+
+      tableHtml += `</tbody></table></div>`;
+      wrap.innerHTML = tableHtml;
+    }
+
+    function updateMetrics(students) {
+      document.getElementById('stat-total').textContent = students.length;
+      
+      const schoolCount = students.filter(s => (s.level || s.Level || '').toLowerCase().includes('school')).length;
+      const collegeCount = students.length - schoolCount;
+
+      document.getElementById('stat-school').textContent = schoolCount;
+      document.getElementById('stat-college').textContent = collegeCount;
+    }
+
+    function filterStudents() {
+      const search = document.getElementById('search-input').value.toLowerCase().trim();
+      const levelFilter = document.getElementById('filter-level').value.toLowerCase();
+
+      const filtered = allStudents.filter(st => {
+        const name = (st.name || st.full_name || st.Name || '').toLowerCase();
+        const email = (st.email || st.Email || '').toLowerCase();
+        const institution = (st.institution || st.Institution || '').toLowerCase();
+        const interest = (st.interest || st.Interest || '').toLowerCase();
+        const level = (st.level || st.Level || '').toLowerCase();
+
+        const matchesSearch = !search || name.includes(search) || email.includes(search) || institution.includes(search) || interest.includes(search);
+        const matchesLevel = levelFilter === 'all' || level.includes(levelFilter);
+
+        return matchesSearch && matchesLevel;
+      });
+
+      renderStudentsTable(filtered);
+    }
+
+    function exportToCSV() {
+      if (!allStudents || allStudents.length === 0) {
+        alert("No student data available to export.");
+        return;
+      }
+
+      let csv = "Name,Email,Institution,Interest,Level,Class/Course,Date\n";
+      allStudents.forEach(s => {
+        const name = `"${(s.name || s.full_name || '').replace(/"/g, '""')}"`;
+        const email = `"${(s.email || '').replace(/"/g, '""')}"`;
+        const inst = `"${(s.institution || '').replace(/"/g, '""')}"`;
+        const interest = `"${(s.interest || '').replace(/"/g, '""')}"`;
+        const level = `"${(s.level || '').replace(/"/g, '""')}"`;
+        const classCourse = `"${(s.class_course || s.class || s.course || '').replace(/"/g, '""')}"`;
+        const date = `"${(s.date || s.created_at || '').replace(/"/g, '""')}"`;
+
+        csv += `${name},${email},${inst},${interest},${level},${classCourse},${date}\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `Student_Spreadsheet_Data_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Auto load data and render admin sidebar on initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      initAdminPage(() => {
+        fetchStudentData();
+      });
+    });
+  </script>
+</body>
+</html>

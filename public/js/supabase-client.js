@@ -2,49 +2,115 @@
    CREDIBLE CREATE — SUPABASE JS CLIENT & API UTILITIES
    ========================================================================== */
 
-// 1. Configure your Supabase Credentials via window.APP_CONFIG (injected by server)
-const SUPABASE_URL = window.APP_CONFIG?.SUPABASE_URL || '';
-const SUPABASE_ANON_KEY = window.APP_CONFIG?.SUPABASE_ANON_KEY || '';
+let _supabaseClient = null;
 
-// Initialize Supabase Client instance (loaded via CDN script tag)
-let supabaseClient = null;
-
-if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY) {
-  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+function getSupabaseClient() {
+  if (!_supabaseClient && window.supabase) {
+    const url = window.APP_CONFIG?.SUPABASE_URL || '';
+    const key = window.APP_CONFIG?.SUPABASE_ANON_KEY || '';
+    if (url && key) {
+      _supabaseClient = window.supabase.createClient(url, key);
+    }
+  }
+  return _supabaseClient;
 }
 
 const db = {
-  client: supabaseClient,
+  get client() {
+    return getSupabaseClient();
+  },
 
   // ------------------------------------------------------------------------
   // AUTHENTICATION UTILITIES
   // ------------------------------------------------------------------------
+  async signUp(email, password, metadata = {}) {
+    const client = getSupabaseClient();
+    if (!client) throw new Error("Supabase Client is not configured. Please check SUPABASE_URL and SUPABASE_ANON_KEY.");
+    const fullName = metadata.full_name || email.split('@')[0];
+    const { data, error } = await client.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: fullName,
+          role: metadata.role || 'student'
+        }
+      }
+    });
+    if (error) throw error;
+    return data;
+  },
+
   async signIn(email, password) {
-    if (!supabaseClient) throw new Error("Supabase Client not configured.");
-    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    const client = getSupabaseClient();
+    if (!client) throw new Error("Supabase Client is not configured.");
+    const { data, error } = await client.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    return data;
+  },
+
+  async signInWithGoogle() {
+    const client = getSupabaseClient();
+    if (!client) throw new Error("Supabase Client is not configured. Please check SUPABASE_URL and SUPABASE_ANON_KEY.");
+    const { data, error } = await client.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin
+      }
+    });
+    if (error) throw error;
+    return data;
+  },
+
+  async signInWithGithub() {
+    const client = getSupabaseClient();
+    if (!client) throw new Error("Supabase Client is not configured. Please check SUPABASE_URL and SUPABASE_ANON_KEY.");
+    const { data, error } = await client.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        redirectTo: window.location.origin
+      }
+    });
+    if (error) throw error;
+    return data;
+  },
+
+  async resetPassword(email) {
+    const client = getSupabaseClient();
+    if (!client) throw new Error("Supabase Client is not configured. Please check SUPABASE_URL and SUPABASE_ANON_KEY.");
+    const { data, error } = await client.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/index.html`
+    });
     if (error) throw error;
     return data;
   },
 
   async signOut() {
-    if (!supabaseClient) return;
-    const { error } = await supabaseClient.auth.signOut();
+    const client = getSupabaseClient();
+    if (!client) return;
+    const { error } = await client.auth.signOut();
     if (error) throw error;
     window.location.href = '/admin/login.html';
   },
 
   async getCurrentUser() {
-    if (!supabaseClient) return null;
-    const { data: { user } } = await supabaseClient.auth.getUser();
-    return user;
+    const client = getSupabaseClient();
+    if (!client) return null;
+    try {
+      const { data: { user } } = await client.auth.getUser();
+      return user;
+    } catch (e) {
+      return null;
+    }
   },
 
   // ------------------------------------------------------------------------
   // CERTIFICATES API
   // ------------------------------------------------------------------------
   async verifyCertificate(code) {
-    if (!supabaseClient) return null;
-    const { data, error } = await supabaseClient
+    const client = getSupabaseClient();
+    if (!client) return null;
+    const { data, error } = await client
       .from('certificates')
       .select('*')
       .eq('certificate_code', code.trim())
@@ -54,8 +120,9 @@ const db = {
   },
 
   async getCertificates() {
-    if (!supabaseClient) return [];
-    const { data, error } = await supabaseClient
+    const client = getSupabaseClient();
+    if (!client) return [];
+    const { data, error } = await client
       .from('certificates')
       .select('*')
       .order('created_at', { ascending: false });
@@ -64,8 +131,9 @@ const db = {
   },
 
   async createCertificate(certData) {
-    if (!supabaseClient) throw new Error("Supabase not initialized");
-    const { data, error } = await supabaseClient
+    const client = getSupabaseClient();
+    if (!client) throw new Error("Supabase not initialized");
+    const { data, error } = await client
       .from('certificates')
       .insert([certData])
       .select();
@@ -77,8 +145,9 @@ const db = {
   // DEMO REQUESTS API
   // ------------------------------------------------------------------------
   async submitDemoRequest(requestData) {
-    if (!supabaseClient) throw new Error("Supabase not initialized");
-    const { data, error } = await supabaseClient
+    const client = getSupabaseClient();
+    if (!client) throw new Error("Supabase not initialized");
+    const { data, error } = await client
       .from('demo_requests')
       .insert([requestData])
       .select();
@@ -87,8 +156,9 @@ const db = {
   },
 
   async getDemoRequests() {
-    if (!supabaseClient) return [];
-    const { data, error } = await supabaseClient
+    const client = getSupabaseClient();
+    if (!client) return [];
+    const { data, error } = await client
       .from('demo_requests')
       .select('*')
       .order('created_at', { ascending: false });
@@ -100,8 +170,9 @@ const db = {
   // BLOG POSTS API
   // ------------------------------------------------------------------------
   async getPublishedPosts() {
-    if (!supabaseClient) return [];
-    const { data, error } = await supabaseClient
+    const client = getSupabaseClient();
+    if (!client) return [];
+    const { data, error } = await client
       .from('blog_posts')
       .select('*')
       .eq('status', 'published')
@@ -111,8 +182,9 @@ const db = {
   },
 
   async getAllPosts() {
-    if (!supabaseClient) return [];
-    const { data, error } = await supabaseClient
+    const client = getSupabaseClient();
+    if (!client) return [];
+    const { data, error } = await client
       .from('blog_posts')
       .select('*')
       .order('created_at', { ascending: false });
@@ -121,8 +193,9 @@ const db = {
   },
 
   async createPost(postData) {
-    if (!supabaseClient) throw new Error("Supabase not initialized");
-    const { data, error } = await supabaseClient
+    const client = getSupabaseClient();
+    if (!client) throw new Error("Supabase not initialized");
+    const { data, error } = await client
       .from('blog_posts')
       .insert([postData])
       .select();
@@ -132,3 +205,4 @@ const db = {
 };
 
 window.CredibleDB = db;
+

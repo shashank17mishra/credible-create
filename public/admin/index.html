@@ -62,15 +62,12 @@
       const container = document.getElementById('dashboard-content');
       try {
         let stats = {
-          postsCount: 2,
-          certificatesCount: 3,
-          usersCount: 5,
-          paymentsCount: 2,
-          paymentsTotal: 8498,
-          recentLogs: [
-            { type: 'POST', description: 'Published MicroPython on ESP32 Setup guide', time: Date.now() - 3600000 },
-            { type: 'CERT', description: 'Issued certificate CC-2026-8921 to Aarav Sharma', time: Date.now() - 7200000 }
-          ]
+          postsCount: 0,
+          certificatesCount: 0,
+          usersCount: 0,
+          paymentsCount: 0,
+          paymentsTotal: 0,
+          recentLogs: []
         };
 
         const start = Date.now();
@@ -106,6 +103,20 @@
           }
         }
 
+        let studentsCount = 0;
+        try {
+          const stHeaders = typeof getAdminAuthHeaders === 'function' ? getAdminAuthHeaders() : {};
+          const stRes = await fetch('/api/admin/students', { headers: stHeaders });
+          if (stRes.ok) {
+            const stData = await stRes.json();
+            if (stData.students && Array.isArray(stData.students)) {
+              studentsCount = stData.students.length;
+            }
+          }
+        } catch (stErr) {
+          console.warn("Students count fetch warning:", stErr);
+        }
+
         const formattedPayments = new Intl.NumberFormat('en-IN', {
           style: 'currency',
           currency: 'INR',
@@ -130,6 +141,22 @@
 
         container.innerHTML = `
           <div class="metrics-grid">
+            <a href="/admin/students.html" style="text-decoration: none; color: inherit;">
+              <div class="metric-card glass-panel" style="transition: transform 0.2s ease; cursor: pointer;">
+                <div class="metric-header">
+                  <span class="metric-title">Student Leads (Sheet)</span>
+                  <div class="metric-icon-box cyan">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="metric-value">${studentsCount}</div>
+                <div class="metric-subtitle">Google Sheet Synced Data ↗</div>
+              </div>
+            </a>
+
             <div class="metric-card glass-panel">
               <div class="metric-header">
                 <span class="metric-title">Content Engine</span>

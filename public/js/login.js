@@ -40,12 +40,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const data = await res.json();
         if (res.ok && data.success) {
+          if (data.token) {
+            localStorage.setItem('cc_admin_token', data.token);
+          }
           localStorage.setItem('cc_admin_session', JSON.stringify({ email, role: 'admin', time: Date.now() }));
           window.location.href = '/admin/index.html';
           return;
+        } else if (data.error) {
+          errorBox.textContent = `[ ERROR // ${data.error.toUpperCase()} ]`;
+          errorBox.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Authenticate';
+          return;
         }
       } catch (apiErr) {
-        console.warn("API login endpoint unavailable, trying demo fallback.");
+        console.warn("API login endpoint warning:", apiErr.message);
       }
 
       // 3. Fallback demo admin authentication (removed for security, handled by API)

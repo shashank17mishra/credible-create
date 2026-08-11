@@ -212,15 +212,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }).catch(err => console.warn("Supabase lead submission fallback:", err));
       }
 
-      fetch(APPS_SCRIPT_URL, {
+      // Persist lead directly to Supabase Database via API endpoint
+      fetch('/api/admin/students', {
         method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       })
-      .then(() => {
+      .then(res => res.json())
+      .then(data => {
         if (typeof gsap !== 'undefined') {
           gsap.to(demoForm, {
             opacity: 0,

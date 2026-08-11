@@ -237,9 +237,10 @@
 
     async function loadData() {
       try {
+        const authHeaders = typeof getAdminAuthHeaders === 'function' ? getAdminAuthHeaders() : {};
         const [studentsRes, certsRes] = await Promise.all([
-          fetch('/api/admin/students'),
-          fetch('/api/admin/certificates')
+          fetch('/api/admin/students', { headers: authHeaders }),
+          fetch('/api/admin/certificates', { headers: authHeaders })
         ]);
 
         students = studentsRes.ok ? await studentsRes.json() : [];

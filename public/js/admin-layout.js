@@ -1,5 +1,16 @@
+function getAdminAuthHeaders() {
+  const token = localStorage.getItem('cc_admin_token') || '';
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  return headers;
+}
+
 async function checkAdminSession() {
   try {
+    const token = localStorage.getItem('cc_admin_token');
+
     // 1. Check Supabase session if initialized
     if (window.CredibleDB) {
       const sbUser = await window.CredibleDB.getCurrentUser();
@@ -12,7 +23,18 @@ async function checkAdminSession() {
       }
     }
 
-    // 2. Check local admin session fallback
+    // 2. Validate token against server session API endpoint
+    if (token) {
+      const res = await fetch('/api/auth/session', {
+        headers: getAdminAuthHeaders()
+      });
+      if (res.ok) {
+        const session = await res.json();
+        if (session && session.user) return session.user;
+      }
+    }
+
+    // 3. Check local admin session fallback if token or server validation isn't available
     const localSession = localStorage.getItem('cc_admin_session');
     if (localSession) {
       const parsed = JSON.parse(localSession);
@@ -23,13 +45,6 @@ async function checkAdminSession() {
           role: 'SUPER_ADMIN'
         };
       }
-    }
-
-    // 3. Fallback check API endpoint
-    const res = await fetch('/api/auth/session');
-    if (res.ok) {
-      const session = await res.json();
-      if (session && session.user) return session.user;
     }
 
     window.location.href = '/admin/login.html';
@@ -52,7 +67,8 @@ function renderAdminSidebar(user, currentPath) {
 
   const isSuperAdmin = user.role === 'SUPER_ADMIN';
   const navItems = [
-    { name: 'Dashboard Overview', path: '/admin/index.html', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>` }
+    { name: 'Dashboard Overview', path: '/admin/index.html', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>` },
+    { name: 'Student Spreadsheet Data', path: '/admin/students.html', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>` }
   ];
 
   if (isSuperAdmin || user.canManagePosts !== false) {
