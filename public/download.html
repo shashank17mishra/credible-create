@@ -4,218 +4,403 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Download Bot Barracks Software — Credible Create</title>
-  <meta name="description" content="Download the official Bot Barracks Suite v2.4.0 featuring Sim-1 Maze Runner 3D, Sim-2 2.5D IoT Sandbox, and MicroPython IDE for Windows, macOS, and Linux.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Roboto+Condensed:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/script.js" defer></script>
   <style>
-    .dl-hero {
-      padding: 6rem 2rem 4rem;
-      text-align: center;
-      max-width: 960px;
+    /* Google Antigravity Inspired Download Layout */
+    .ag-download-wrapper {
+      max-width: 1200px;
       margin: 0 auto;
+      padding: 4rem 2rem 6rem;
     }
-    .dl-badge {
+
+    /* Top Hero Header Bar */
+    .ag-hero-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .ag-hero-left {
+      max-width: 780px;
+    }
+
+    .ag-main-headline {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #121212;
+      line-height: 1.08;
+      margin-bottom: 0.75rem;
+    }
+
+    .ag-hero-subline {
+      font-size: 1.1rem;
+      color: #555555;
+      line-height: 1.55;
+    }
+
+    .ag-releases-btn {
+      background: #f3f4f6;
+      color: #121212;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.7rem 1.4rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .ag-releases-btn:hover {
+      background: #e5e7eb;
+      color: #000000;
+      transform: translateY(-1px);
+    }
+
+    /* Sub-product Filter Chips */
+    .ag-product-chips {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .ag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: 9999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      color: #374151;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .ag-chip:hover {
+      border-color: #d1d5db;
+      background: #f9fafb;
+      color: #111827;
+    }
+
+    .ag-chip.active {
+      border-color: #121212;
+      color: #121212;
+      background: #f3f4f6;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .ag-chip-icon {
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Product Section Header */
+    .ag-section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding-top: 2.5rem;
+    }
+
+    .ag-product-title {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #121212;
+      letter-spacing: -0.02em;
+    }
+
+    .ag-version-badge {
+      background: #eff6ff;
+      color: #3b82f6;
       font-family: var(--font-mono, monospace);
       font-size: 0.75rem;
       font-weight: 700;
-      color: #10b981;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      padding: 0.4rem 1rem;
       border-radius: 9999px;
-      display: inline-block;
-      margin-bottom: 1.25rem;
-    }
-    .dl-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 3.25rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-      color: #121212;
-      line-height: 1.1;
-    }
-    .dl-subtitle {
-      font-size: 1.15rem;
-      color: #555;
-      line-height: 1.6;
-      max-width: 760px;
-      margin: 0 auto 3rem;
+      padding: 0.25rem 0.7rem;
+      border: 1px solid rgba(59, 130, 246, 0.2);
     }
 
-    /* Download Card Box */
-    .dl-box {
-      background: #fff;
+    /* 3-Column Download Card Grid */
+    .ag-download-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: #ffffff;
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 20px;
-      padding: 3rem 2.5rem;
-      max-width: 820px;
-      margin: 0 auto 5rem;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
-      position: relative;
-    }
-    .os-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-    .os-tab {
-      background: #f4f4f5;
-      border: 1px solid rgba(0,0,0,0.06);
-      padding: 0.75rem 1.5rem;
-      border-radius: 10px;
-      font-family: var(--font-mono, monospace);
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #555;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s ease;
-    }
-    .os-tab.active, .os-tab:hover {
-      background: #111;
-      color: #fff;
-      border-color: #111;
-    }
-    .dl-main-action {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .btn-download-hero {
-      background: #111;
-      color: #fff;
-      padding: 1.1rem 3rem;
-      font-size: 1.1rem;
-      font-weight: 700;
-      border-radius: 12px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.8rem;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      cursor: pointer;
-      border: none;
-    }
-    .btn-download-hero:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25);
-    }
-    .dl-meta-info {
-      font-family: var(--font-mono, monospace);
-      font-size: 0.78rem;
-      color: #777;
-      margin-top: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+      margin-bottom: 4rem;
     }
 
-    /* Download Progress Bar */
-    .dl-progress-wrap {
-      display: none;
-      margin-top: 1.5rem;
-      background: #f4f4f5;
-      border-radius: 9999px;
-      height: 10px;
-      overflow: hidden;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
+    .ag-os-column {
+      padding: 2.75rem 2.25rem;
+      border-right: 1px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background-color 0.2s ease;
     }
-    .dl-progress-bar {
+
+    .ag-os-column:last-child {
+      border-right: none;
+    }
+
+    .ag-os-column.highlighted {
+      background-color: #fafafa;
+    }
+
+    .ag-os-header {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #121212;
+      margin-bottom: 2.25rem;
+    }
+
+    .ag-os-badge-detect {
+      font-size: 0.65rem;
+      font-family: var(--font-mono, monospace);
+      background: #10b981;
+      color: #ffffff;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-left: 0.3rem;
+    }
+
+    .ag-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    /* Primary Dark Pill Button */
+    .btn-ag-primary {
+      background: #121212;
+      color: #ffffff;
+      text-align: center;
+      border-radius: 9999px;
+      padding: 0.9rem 1.5rem;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      display: block;
+      width: 100%;
+    }
+
+    .btn-ag-primary:hover {
+      background: #2a2a2a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+      color: #ffffff;
+    }
+
+    /* Secondary Light Pill Button */
+    .btn-ag-secondary {
+      background: #f3f4f6;
+      color: #121212;
+      text-align: center;
+      border-radius: 9999px;
+      padding: 0.9rem 1.5rem;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: block;
+      width: 100%;
+    }
+
+    .btn-ag-secondary:hover {
+      background: #e5e7eb;
+      color: #000000;
+      transform: translateY(-1px);
+    }
+
+    /* Download Feedback Bar */
+    .ag-status-container {
+      max-width: 600px;
+      margin: -2rem auto 4rem;
+      text-align: center;
+    }
+
+    .ag-progress-wrap {
+      display: none;
+      background: #e5e7eb;
+      border-radius: 9999px;
+      height: 8px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+
+    .ag-progress-bar {
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, #10b981, #059669);
       transition: width 0.1s linear;
     }
-    .dl-status-msg {
+
+    .ag-status-text {
       font-family: var(--font-mono, monospace);
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: #10b981;
       font-weight: 700;
-      margin-top: 0.5rem;
       display: none;
     }
 
-    /* Included Tools Section */
-    .tools-grid {
+    /* Feature Tools Grid */
+    .ag-tools-section {
+      margin-bottom: 5rem;
+    }
+
+    .ag-section-heading {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #121212;
+      margin-bottom: 2rem;
+    }
+
+    .ag-tools-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      max-width: 1100px;
-      margin: 0 auto 5rem;
-      padding: 0 1.5rem;
+      gap: 1.5rem;
     }
-    .tool-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 2rem;
-      border: 1px solid rgba(0,0,0,0.08);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+
+    .ag-tool-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 2.25rem 2rem;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-    .tool-icon-wrap {
-      width: 48px;
-      height: 48px;
+
+    .ag-tool-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .ag-tool-icon {
+      width: 44px;
+      height: 44px;
       border-radius: 12px;
       background: #f0fdf4;
-      border: 1px solid rgba(16,185,129,0.2);
+      border: 1px solid rgba(16, 185, 129, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 1.25rem;
       color: #10b981;
     }
-    .tool-title {
-      font-size: 1.2rem;
+
+    .ag-tool-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
       font-weight: 700;
-      color: #111;
+      color: #121212;
       margin-bottom: 0.5rem;
     }
-    .tool-desc {
-      font-size: 0.9rem;
-      color: #666;
-      line-height: 1.5;
+
+    .ag-tool-desc {
+      font-size: 0.92rem;
+      color: #555555;
+      line-height: 1.55;
     }
 
-    /* System Specs Table */
-    .specs-section {
-      max-width: 1000px;
-      margin: 0 auto 6rem;
-      padding: 0 1.5rem;
+    /* Specs Section Table */
+    .ag-specs-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 2.75rem 2.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+      margin-bottom: 2rem;
     }
-    .specs-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 2.5rem;
-      border: 1px solid rgba(0,0,0,0.08);
-    }
-    .specs-table {
+
+    .ag-specs-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1.5rem;
     }
-    .specs-table th, .specs-table td {
-      padding: 1rem 1.25rem;
+
+    .ag-specs-table th, .ag-specs-table td {
+      padding: 1.1rem 1.25rem;
       text-align: left;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      font-size: 0.92rem;
     }
-    .specs-table th {
+
+    .ag-specs-table th {
       font-family: var(--font-mono, monospace);
       font-size: 0.75rem;
       text-transform: uppercase;
-      color: #888;
+      color: #888888;
       font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 900px) {
+      .ag-main-headline {
+        font-size: 2.5rem;
+      }
+      .ag-download-grid {
+        grid-template-columns: 1fr;
+      }
+      .ag-os-column {
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .ag-os-column:last-child {
+        border-bottom: none;
+      }
     }
   </style>
 </head>
 <body>
 
-              <header>
+  <!-- Header -->
+  <header>
     <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
       <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
       <span style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; color: #111;">
@@ -238,82 +423,129 @@
     </nav>
   </header>
 
+  <!-- Main Content Container -->
   <main style="padding-top: 100px; min-height: 100vh; background-color: var(--bg-primary, #f6f6f6);">
-    <div class="dl-hero">
-      <span class="dl-badge">OFFICIAL RELEASE v2.4.0</span>
-      <h1 class="dl-title">BOT BARRACKS SUITE</h1>
-      <p class="dl-subtitle">Download the unified robotics sandbox & virtual IoT laboratory. Build 3D pathfinding algorithms, wire virtual ESP32 microcontrollers, and execute MicroPython code directly in your browser or desktop.</p>
-    </div>
+    <div class="ag-download-wrapper">
 
-    <!-- Download Card -->
-    <div class="dl-box">
-      <div class="os-tabs">
-        <button class="os-tab active" data-os="win">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.95-9.6L24 0v11.4H10.95M0 12.6h9.75v9.451L0 20.699M10.95 12.6H24V24l-13.05-1.85"/></svg>
-          Windows 64-bit (.exe)
-        </button>
-        <button class="os-tab" data-os="mac">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.32c.67-.82 1.13-1.96.99-3.12-1 .04-2.17.67-2.88 1.49-.63.73-1.18 1.89-1.03 3.02 1.11.09 2.25-.56 2.92-1.39z"/></svg>
-          macOS Universal (.dmg)
-        </button>
-        <button class="os-tab" data-os="linux">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z"/></svg>
-          Linux AppImage
-        </button>
-      </div>
-
-      <div class="dl-main-action">
-        <button class="btn-download-hero" id="download-trigger-btn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span id="dl-btn-label">Download BotBarracks_Setup_v2.4.0.exe</span>
-        </button>
-
-        <div class="dl-meta-info" id="dl-meta-spec">Size: ~142 MB | Version: 2.4.0 (Stable) | License: Free Educational Use</div>
-
-        <div class="dl-progress-wrap" id="progress-wrap">
-          <div class="dl-progress-bar" id="progress-bar"></div>
+      <!-- Top Hero Header Bar -->
+      <div class="ag-hero-header">
+        <div class="ag-hero-left">
+          <h1 class="ag-main-headline" id="ag-page-headline">Download Bot Barracks for Windows</h1>
+          <p class="ag-hero-subline" id="ag-page-subline">The unified robotics sandbox, 3D pathfinding compiler & virtual IoT laboratory for educators, students, and engineers.</p>
         </div>
-        <div class="dl-status-msg" id="status-msg">✔ INSTALLER DOWNLOAD READY! CHECK YOUR DOWNLOADS FOLDER.</div>
+        <a href="https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases" target="_blank" class="ag-releases-btn">
+          <span>View previous releases</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
       </div>
-    </div>
 
-    <!-- Included Tools -->
-    <div class="tools-grid">
-      <div class="tool-card">
-        <div class="tool-icon-wrap">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+
+
+      <!-- Section Title & Release Badge -->
+      <div class="ag-section-title-wrap">
+        <h2 class="ag-product-title" id="ag-product-name">Bot Barracks 2.4</h2>
+        <span class="ag-version-badge" id="ag-version-tag">v2.4.0</span>
+      </div>
+
+      <!-- 3-Column Download Grid (macOS, Windows, Linux) -->
+      <div class="ag-download-grid">
+        
+        <!-- Column 1: macOS -->
+        <div class="ag-os-column" id="col-mac">
+          <div>
+            <div class="ag-os-header">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.32c.67-.82 1.13-1.96.99-3.12-1 .04-2.17.67-2.88 1.49-.63.73-1.18 1.89-1.03 3.02 1.11.09 2.25-.56 2.92-1.39z"/></svg>
+              <span>macOS</span>
+              <span class="ag-os-badge-detect" id="badge-mac" style="display: none;">YOUR OS</span>
+            </div>
+          </div>
+          <div class="ag-btn-group">
+            <button class="btn-ag-primary" id="btn-mac-arm">Download for Apple Silicon</button>
+            <button class="btn-ag-secondary" id="btn-mac-intel">Download for Intel</button>
+          </div>
         </div>
-        <h3 class="tool-title">Sim-1 Maze Runner 3D</h3>
-        <p class="tool-desc">3D pathfinding maze compiler. Code robot navigation using manual WASD parameters or AI-generated path scripts.</p>
-      </div>
 
-      <div class="tool-card">
-        <div class="tool-icon-wrap">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>
+        <!-- Column 2: Windows -->
+        <div class="ag-os-column highlighted" id="col-win">
+          <div>
+            <div class="ag-os-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.95-9.6L24 0v11.4H10.95M0 12.6h9.75v9.451L0 20.699M10.95 12.6H24V24l-13.05-1.85"/></svg>
+              <span>Windows</span>
+              <span class="ag-os-badge-detect" id="badge-win">YOUR OS</span>
+            </div>
+          </div>
+          <div class="ag-btn-group">
+            <button class="btn-ag-primary" id="btn-win-x64">Download for x64</button>
+            <button class="btn-ag-secondary" id="btn-win-arm">Download for ARM64</button>
+          </div>
         </div>
-        <h3 class="tool-title">Sim-2 2.5D Hardware Sandbox</h3>
-        <p class="tool-desc">Isometric virtual lab for wiring ESP32 microcontrollers, ultrasonic distance sensors, and 4-wheel robot chassis.</p>
-      </div>
 
-      <div class="tool-card">
-        <div class="tool-icon-wrap">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <!-- Column 3: Linux -->
+        <div class="ag-os-column" id="col-linux">
+          <div>
+            <div class="ag-os-header">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z"/></svg>
+              <span>Linux</span>
+              <span class="ag-os-badge-detect" id="badge-linux" style="display: none;">YOUR OS</span>
+            </div>
+          </div>
+          <div class="ag-btn-group">
+            <button class="btn-ag-primary" id="btn-linux-x64">Download for x64</button>
+            <button class="btn-ag-secondary" id="btn-linux-arm">Download for ARM64</button>
+          </div>
         </div>
-        <h3 class="tool-title">MicroPython IDE Bridge</h3>
-        <p class="tool-desc">Built-in code editor and compiler bridge for dumping Python scripts directly into virtual or physical microcontrollers.</p>
-      </div>
-    </div>
 
-    <!-- System Requirements -->
-    <div class="specs-section">
-      <div class="specs-card">
-        <h2 style="font-size: 1.5rem; font-weight: 800; color: #111;">SYSTEM REQUIREMENTS</h2>
-        <table class="specs-table">
+      </div>
+
+      <!-- Download Status Bar -->
+      <div class="ag-status-container">
+        <div class="ag-progress-wrap" id="ag-progress-wrap">
+          <div class="ag-progress-bar" id="ag-progress-bar"></div>
+        </div>
+        <div class="ag-status-text" id="ag-status-text"></div>
+      </div>
+
+      <!-- Included Tools Section -->
+      <div class="ag-tools-section">
+        <h2 class="ag-section-heading">Included Virtual Laboratories</h2>
+        <div class="ag-tools-grid">
+          
+          <div class="ag-tool-card">
+            <div class="ag-tool-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <h3 class="ag-tool-name">Sim-1 Maze Runner 3D</h3>
+            <p class="ag-tool-desc">3D pathfinding maze compiler. Code autonomous robot navigation using manual telemetry parameters or AI-generated path scripts.</p>
+          </div>
+
+          <div class="ag-tool-card">
+            <div class="ag-tool-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>
+            </div>
+            <h3 class="ag-tool-name">Sim-2 2.5D Hardware Sandbox</h3>
+            <p class="ag-tool-desc">Isometric virtual lab for wiring ESP32 microcontrollers, ultrasonic distance sensors, infrared arrays, and 4-wheel robot chassis.</p>
+          </div>
+
+          <div class="ag-tool-card">
+            <div class="ag-tool-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3 class="ag-tool-name">MicroPython IDE Bridge</h3>
+            <p class="ag-tool-desc">Built-in code editor and compiler bridge for dumping Python scripts directly into virtual or physical microcontrollers over Serial/USB.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- System Requirements Section -->
+      <div class="ag-specs-card">
+        <h2 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: #121212;">System Requirements</h2>
+        <table class="ag-specs-table">
           <thead>
             <tr>
-              <th>COMPONENT</th>
-              <th>MINIMUM SPECIFICATION</th>
-              <th>RECOMMENDED SPECIFICATION</th>
+              <th>Component</th>
+              <th>Minimum Specification</th>
+              <th>Recommended Specification</th>
             </tr>
           </thead>
           <tbody>
@@ -345,10 +577,12 @@
           </tbody>
         </table>
       </div>
+
     </div>
   </main>
 
-              <footer style="background-color: var(--bg-primary, #f6f6f6); border-top: 1px solid rgba(0, 0, 0, 0.06); padding: 5rem 3.5rem 3rem; position: relative; z-index: 10; width: 100%; margin-top: auto;">
+  <!-- Footer -->
+  <footer style="background-color: var(--bg-primary, #f6f6f6); border-top: 1px solid rgba(0, 0, 0, 0.06); padding: 5rem 3.5rem 3rem; position: relative; z-index: 10; width: 100%; margin-top: auto;">
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem;">
       <div class="footer-brand-row" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
         <a href="/index.html" class="logo" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
@@ -428,144 +662,162 @@
     </div>
   </footer>
 
+  <!-- Floating Contact Buttons -->
+  <div class="floating-contact-actions" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 1rem;">
+    <a href="https://wa.me/919219488809" target="_blank" class="floating-action-btn whatsapp-btn" style="width: 44px; height: 44px; border-radius: 50%; background-color: #111; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-decoration: none; transition: transform 0.3s ease;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="tel:+919219488809" class="floating-action-btn call-btn" style="width: 44px; height: 44px; border-radius: 50%; background-color: #111; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-decoration: none; transition: transform 0.3s ease;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    </a>
+  </div>
+
+  <!-- Client Script for OS Detection, GitHub API & Chip Switching -->
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const API_URL = 'https://api.github.com/repos/Anshuman-Ai/Bot-Barracks-Releases/releases/latest';
 
-      const osTabs = document.querySelectorAll('.os-tab');
-      const dlBtnLabel = document.getElementById('dl-btn-label');
-      const dlMetaSpec = document.getElementById('dl-meta-spec');
-      const triggerBtn = document.getElementById('download-trigger-btn');
-      const badgeEl = document.querySelector('.dl-badge');
+      const pageHeadline = document.getElementById('ag-page-headline');
+      const versionTag = document.getElementById('ag-version-tag');
+      const productName = document.getElementById('ag-product-name');
 
-      // Default Static Fallbacks (Option 2)
+      // OS Column Elements
+      const colMac = document.getElementById('col-mac');
+      const colWin = document.getElementById('col-win');
+      const colLinux = document.getElementById('col-linux');
+
+      const badgeMac = document.getElementById('badge-mac');
+      const badgeWin = document.getElementById('badge-win');
+      const badgeLinux = document.getElementById('badge-linux');
+
+      // Download Buttons
+      const btnMacArm = document.getElementById('btn-mac-arm');
+      const btnMacIntel = document.getElementById('btn-mac-intel');
+      const btnWinX64 = document.getElementById('btn-win-x64');
+      const btnWinArm = document.getElementById('btn-win-arm');
+      const btnLinuxX64 = document.getElementById('btn-linux-x64');
+      const btnLinuxArm = document.getElementById('btn-linux-arm');
+
+      // Progress Feedback
+      const progressWrap = document.getElementById('ag-progress-wrap');
+      const progressBar = document.getElementById('ag-progress-bar');
+      const statusText = document.getElementById('ag-status-text');
+
+      // Release Link Mapping State
       let currentVersion = 'v1.0.9';
-      let downloadMap = {
-        win: {
-          url: 'https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/v1.0.9/Bot-Barracks-Desktop-Setup-1.0.9.exe',
-          label: 'Download Bot-Barracks-Desktop-Setup-1.0.9.exe',
-          spec: 'Size: ~126 MB | Version: v1.0.9 (Windows 64-bit) | License: Free Educational Use',
-          filename: 'Bot-Barracks-Desktop-Setup-1.0.9.exe'
-        },
-        mac: {
-          url: 'https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/v1.0.9/Bot-Barracks-Desktop-1.0.9-arm64.dmg',
-          label: 'Download Bot-Barracks-Desktop-1.0.9-arm64.dmg',
-          spec: 'Size: ~165 MB | Version: v1.0.9 (macOS Universal) | License: Free Educational Use',
-          filename: 'Bot-Barracks-Desktop-1.0.9-arm64.dmg'
-        },
-        linux: {
-          url: 'https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/v1.0.9/Bot-Barracks-Desktop-1.0.9.AppImage',
-          label: 'Download Bot-Barracks-Desktop-1.0.9.AppImage',
-          spec: 'Size: ~120 MB | Version: v1.0.9 (Linux AppImage) | License: Free Educational Use',
-          filename: 'Bot-Barracks-Desktop-1.0.9.AppImage'
-        }
+      let assetsMap = {
+        macArm: 'https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/v1.0.9/Bot-Barracks-Desktop-1.0.9-arm64.dmg',
+        macIntel: 'https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/v1.0.9/Bot-Barracks-Desktop-1.0.9.dmg',
+        winX64: 'https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/v1.0.9/Bot-Barracks-Desktop-Setup-1.0.9.exe',
+        winArm: 'https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/v1.0.9/Bot-Barracks-Desktop-Setup-1.0.9-arm64.exe',
+        linuxX64: 'https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/v1.0.9/Bot-Barracks-Desktop-1.0.9.AppImage',
+        linuxArm: 'https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/v1.0.9/Bot-Barracks-Desktop-1.0.9-arm64.deb'
       };
 
-      // Attempt to dynamically fetch latest release from GitHub API (Option 1)
+      // Fetch Latest Release Assets from GitHub API
       try {
         const res = await fetch(API_URL);
         if (res.ok) {
           const release = await res.json();
-          const version = release.tag_name || 'v1.0.9';
-          currentVersion = version;
+          const tag = release.tag_name || 'v1.0.9';
+          currentVersion = tag;
+          if (versionTag) versionTag.textContent = tag;
+
           const assets = release.assets || [];
+          const cleanVer = tag.replace('v', '');
 
-          const winExe = assets.find(a => a.name.endsWith('.exe') && a.name.includes('Setup')) || assets.find(a => a.name.endsWith('.exe'));
-          const macDmgArm = assets.find(a => a.name.includes('arm64') && a.name.endsWith('.dmg'));
-          const macDmgIntel = assets.find(a => !a.name.includes('arm64') && a.name.endsWith('.dmg'));
-          const linuxAppImage = assets.find(a => a.name.endsWith('.AppImage')) || assets.find(a => a.name.endsWith('.deb'));
+          const winExe = assets.find(a => a.name.endsWith('.exe') && !a.name.includes('arm64'));
+          const winExeArm = assets.find(a => a.name.endsWith('.exe') && a.name.includes('arm64'));
+          const macArm = assets.find(a => a.name.includes('arm64') && a.name.endsWith('.dmg'));
+          const macIntel = assets.find(a => !a.name.includes('arm64') && a.name.endsWith('.dmg'));
+          const linuxAppImage = assets.find(a => a.name.endsWith('.AppImage'));
+          const linuxDeb = assets.find(a => a.name.endsWith('.deb'));
 
-          if (badgeEl) badgeEl.textContent = `OFFICIAL RELEASE ${version}`;
-
-          const cleanVer = version.replace('v', '');
-          downloadMap.win = {
-            url: winExe ? winExe.browser_download_url : `https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/${version}/Bot-Barracks-Desktop-Setup-${cleanVer}.exe`,
-            label: `Download ${winExe ? winExe.name : `Bot-Barracks-Desktop-Setup-${cleanVer}.exe`}`,
-            spec: `Size: ${winExe ? `${(winExe.size / (1024 * 1024)).toFixed(0)} MB` : '~126 MB'} | Version: ${version} (Windows 64-bit) | License: Free Educational Use`,
-            filename: winExe ? winExe.name : `Bot-Barracks-Desktop-Setup-${cleanVer}.exe`
-          };
-
-          const macAsset = macDmgArm || macDmgIntel;
-          downloadMap.mac = {
-            url: macAsset ? macAsset.browser_download_url : `https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/${version}/Bot-Barracks-Desktop-${cleanVer}-arm64.dmg`,
-            label: `Download ${macAsset ? macAsset.name : `Bot-Barracks-Desktop-${cleanVer}-arm64.dmg`}`,
-            spec: `Size: ${macAsset ? `${(macAsset.size / (1024 * 1024)).toFixed(0)} MB` : '~165 MB'} | Version: ${version} (macOS Universal) | License: Free Educational Use`,
-            filename: macAsset ? macAsset.name : `Bot-Barracks-Desktop-${cleanVer}-arm64.dmg`
-          };
-
-          downloadMap.linux = {
-            url: linuxAppImage ? linuxAppImage.browser_download_url : `https://github.com/Anshuman-Ai/Bot-Barracks-Releases/releases/download/${version}/Bot-Barracks-Desktop-${cleanVer}.AppImage`,
-            label: `Download ${linuxAppImage ? linuxAppImage.name : `Bot-Barracks-Desktop-${cleanVer}.AppImage`}`,
-            spec: `Size: ${linuxAppImage ? `${(linuxAppImage.size / (1024 * 1024)).toFixed(0)} MB` : '~120 MB'} | Version: ${version} (Linux) | License: Free Educational Use`,
-            filename: linuxAppImage ? linuxAppImage.name : `Bot-Barracks-Desktop-${cleanVer}.AppImage`
-          };
+          if (winExe) assetsMap.winX64 = winExe.browser_download_url;
+          if (winExeArm) assetsMap.winArm = winExeArm.browser_download_url;
+          if (macArm) assetsMap.macArm = macArm.browser_download_url;
+          if (macIntel) assetsMap.macIntel = macIntel.browser_download_url;
+          if (linuxAppImage) assetsMap.linuxX64 = linuxAppImage.browser_download_url;
+          if (linuxDeb) assetsMap.linuxArm = linuxDeb.browser_download_url;
         }
       } catch (err) {
-        console.warn('[Website Download] Using fallback release links:', err.message);
+        console.warn('[Software Page] Using release link fallbacks:', err.message);
       }
 
-      // Auto-Detect User OS
-      const userAgent = window.navigator.userAgent.toLowerCase();
-      let currentOS = 'win';
-      if (userAgent.includes('mac')) currentOS = 'mac';
-      if (userAgent.includes('linux')) currentOS = 'linux';
+      // Detect User Operating System
+      const userAgent = navigator.userAgent.toLowerCase();
+      let detectedOS = 'Windows';
 
-      function updateOSUI(osKey) {
-        currentOS = osKey;
-        const data = downloadMap[osKey] || downloadMap.win;
+      if (userAgent.includes('mac')) {
+        detectedOS = 'macOS';
+      } else if (userAgent.includes('linux')) {
+        detectedOS = 'Linux';
+      }
 
-        osTabs.forEach(t => {
-          if (t.getAttribute('data-os') === osKey) t.classList.add('active');
-          else t.classList.remove('active');
-        });
+      if (pageHeadline) {
+        pageHeadline.textContent = `Download Bot Barracks for ${detectedOS}`;
+      }
 
-        if (dlBtnLabel) dlBtnLabel.textContent = data.label;
-        if (dlMetaSpec) dlMetaSpec.textContent = data.spec;
-        if (triggerBtn) {
-          triggerBtn.onclick = () => {
-            window.location.href = data.url;
-          };
+      // Highlight User OS Column
+      function setOSHighlight(osName) {
+        colMac.classList.remove('highlighted');
+        colWin.classList.remove('highlighted');
+        colLinux.classList.remove('highlighted');
+
+        badgeMac.style.display = 'none';
+        badgeWin.style.display = 'none';
+        badgeLinux.style.display = 'none';
+
+        if (osName === 'macOS') {
+          colMac.classList.add('highlighted');
+          badgeMac.style.display = 'inline-block';
+        } else if (osName === 'Linux') {
+          colLinux.classList.add('highlighted');
+          badgeLinux.style.display = 'inline-block';
+        } else {
+          colWin.classList.add('highlighted');
+          badgeWin.style.display = 'inline-block';
         }
       }
 
-      // Set initial detected OS
-      updateOSUI(currentOS);
+      setOSHighlight(detectedOS);
 
-      // Attach click listeners to OS Tab buttons
-      osTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          const selectedOS = tab.getAttribute('data-os');
-          updateOSUI(selectedOS);
-        });
-      });
+      // Download Action Handler
+      function triggerDownload(url, filename) {
+        progressWrap.style.display = 'block';
+        statusText.style.display = 'block';
+        statusText.textContent = `INITIATING DOWNLOAD FOR ${filename.toUpperCase()}...`;
+        progressBar.style.width = '0%';
+
+        let width = 0;
+        const interval = setInterval(() => {
+          width += 20;
+          progressBar.style.width = width + '%';
+          if (width >= 100) {
+            clearInterval(interval);
+            statusText.textContent = `✔ DOWNLOAD STARTED: ${filename}`;
+            window.location.href = url;
+            setTimeout(() => {
+              progressWrap.style.display = 'none';
+            }, 4000);
+          }
+        }, 80);
+      }
+
+      // Bind Click Handlers
+      btnMacArm.onclick = () => triggerDownload(assetsMap.macArm, `Bot-Barracks-Mac-AppleSilicon-${currentVersion}.dmg`);
+      btnMacIntel.onclick = () => triggerDownload(assetsMap.macIntel, `Bot-Barracks-Mac-Intel-${currentVersion}.dmg`);
+      btnWinX64.onclick = () => triggerDownload(assetsMap.winX64, `Bot-Barracks-Setup-x64-${currentVersion}.exe`);
+      btnWinArm.onclick = () => triggerDownload(assetsMap.winArm, `Bot-Barracks-Setup-ARM64-${currentVersion}.exe`);
+      btnLinuxX64.onclick = () => triggerDownload(assetsMap.linuxX64, `Bot-Barracks-Linux-x64-${currentVersion}.AppImage`);
+      btnLinuxArm.onclick = () => triggerDownload(assetsMap.linuxArm, `Bot-Barracks-Linux-ARM64-${currentVersion}.deb`);
+
     });
   </script>
 
-
-  
-  
-  
-  
-  
-  <div class="floating-contact-actions" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 1rem;">
-    <!-- WhatsApp -->
-    <a href="https://wa.me/919219488809" target="_blank" class="floating-action-btn whatsapp-btn" style="width: 44px; height: 44px; border-radius: 50%; background-color: #111; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-      </svg>
-    </a>
-    <!-- Call -->
-    <a href="tel:+919219488809" class="floating-action-btn call-btn" style="width: 44px; height: 44px; border-radius: 50%; background-color: #111; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-      </svg>
-    </a>
-  </div>
-
-  <!-- Supabase & App Configuration -->
+  <!-- Supabase & App Config -->
   <script src="/js/config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/js/supabase-client.js"></script>
-  <script src="/js/script.js"></script>
 </body>
 </html>

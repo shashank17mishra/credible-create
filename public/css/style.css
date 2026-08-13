@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Outfit:wght@300;400;500;600;700&family=Roboto+Condensed:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Press+Start+2P&family=Asimovian&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Roboto+Condensed:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Press+Start+2P&display=swap');
 @import "tailwindcss";
 
 /* ==========================================================================
@@ -7,7 +7,7 @@
 
 :root {
   /* Typography */
-  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'Space Mono', monospace;
 
   /* Colors - Ultra-Minimal high-contrast (Bright light gray/white) */
@@ -42,6 +42,19 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/* Global Body & Typography Default */
+body {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, input, button, select, textarea, table, th, td {
+  font-family: inherit;
 }
 
 /* Landing page body styles — scoped so admin panel is unaffected */
