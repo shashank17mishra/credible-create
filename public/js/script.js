@@ -177,31 +177,36 @@ function initCredibleCreate() {
     const descItem = activeItems.find(item => item.type === 'desc');
 
     if (titleItem) {
-      typeElement(titleItem.element, titleItem.tokens, 15, () => {
+      typeElement(titleItem.element, titleItem.tokens, 7.5, () => {
         if (descItem) {
-          typeElement(descItem.element, descItem.tokens, 6, null);
+          typeElement(descItem.element, descItem.tokens, 1, null, 2);
         }
-      });
+      }, 1);
     } else if (descItem) {
-      typeElement(descItem.element, descItem.tokens, 6, null);
+      typeElement(descItem.element, descItem.tokens, 1, null, 2);
     }
   }
 
-  function typeElement(element, tokens, speed, onComplete) {
+  function typeElement(element, tokens, speed, onComplete, chunkSize = 1) {
     element.innerHTML = '';
     let tokenIndex = 0;
 
     function next() {
       if (tokenIndex < tokens.length) {
-        const token = tokens[tokenIndex];
-        element.innerHTML += token;
-        tokenIndex++;
-
-        if (token.startsWith('<') && token.endsWith('>')) {
-          next();
-        } else {
+        let count = 0;
+        while (tokenIndex < tokens.length && (count < chunkSize || (tokens[tokenIndex].startsWith('<') && tokens[tokenIndex].endsWith('>')))) {
+          const token = tokens[tokenIndex];
+          element.innerHTML += token;
+          tokenIndex++;
+          if (!(token.startsWith('<') && token.endsWith('>'))) {
+            count++;
+          }
+        }
+        if (tokenIndex < tokens.length) {
           const timer = setTimeout(next, speed);
           activeTypingTimers.push(timer);
+        } else {
+          if (onComplete) onComplete();
         }
       } else {
         if (onComplete) onComplete();
