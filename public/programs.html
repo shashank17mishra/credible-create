@@ -8,138 +8,686 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Outfit:wght@300;400;500;600;700&family=Roboto+Condensed:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Roboto+Condensed:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
   <!-- Custom Design System & Motion Styles -->
   <link rel="stylesheet" href="/css/style.css">
 
   <style>
-    body { margin: 0; overflow-x: hidden; background-color: #f7f9fc; }
+    :root {
+      --theme-dark: #111111;
+      --theme-dark-secondary: #222222;
+      --theme-text-muted: #5a5a5a;
+      --theme-bg-light: #f6f6f6;
+      --theme-card-bg: rgba(255, 255, 255, 0.96);
+      --theme-border: rgba(0, 0, 0, 0.08);
+      --theme-border-strong: rgba(0, 0, 0, 0.16);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--theme-bg-light);
+      color: var(--theme-dark);
+      font-family: var(--font-display, 'Outfit', sans-serif);
+      overflow-x: hidden;
+    }
+
+    /* Outer Pure Horizontal Section Wrapper */
     .pure-horizontal-wrapper {
       width: 100%;
       height: 100vh;
+      min-height: 720px;
       overflow: hidden;
       position: relative;
-      background-color: #f7f9fc;
+      background-color: var(--theme-bg-light);
     }
+
     .timeline-canvas {
-      width: 2400px;
+      width: 2800px;
       height: 100vh;
+      min-height: 720px;
       display: flex;
       align-items: center;
       position: relative;
       will-change: transform;
     }
+
+    /* Header Left Title Box */
     .process-timeline-header {
       position: absolute;
-      top: 15vh;
-      left: 100px;
-      text-align: left;
-    }
-    .process-timeline-header h3 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      color: #0b1a30;
-      font-family: 'Inter', sans-serif;
-    }
-    .process-timeline-header .subtitle {
-      font-size: 1rem;
-      color: #007bff;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .process-timeline-header .subtitle::before {
-      content: ''; width: 30px; height: 2px; background-color: #007bff;
-    }
-    .process-timeline-header .watermark {
-      position: absolute;
-      top: -2rem;
-      left: 300px;
-      font-size: 6rem;
-      font-weight: 800;
-      color: rgba(0,0,0,0.03);
-      z-index: 0;
-    }
-    
-    .timeline-filter {
-      position: fixed;
-      top: 15vh;
-      right: 50px;
-      display: flex;
-      gap: 12px;
-      z-index: 100;
-    }
-    .filter-btn {
-      padding: 10px 28px;
-      border-radius: 50px;
-      border: 2px solid #007bff;
-      background: rgba(255,255,255,0.8);
-      color: #007bff;
-      font-weight: 700;
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      cursor: pointer;
-      backdrop-filter: blur(5px);
-      transition: all 0.3s ease;
-    }
-    .filter-btn:hover {
-      background: #e6f2ff;
-    }
-    .filter-btn.active {
-      background: #007bff;
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+      top: 90px;
+      left: 80px;
+      z-index: 25;
+      max-width: 440px;
     }
 
+    .process-subtitle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono, monospace);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--theme-dark);
+      margin-bottom: 0.5rem;
+    }
+    .process-subtitle::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 2px;
+      background-color: var(--theme-dark);
+    }
+
+    .process-title {
+      font-family: var(--font-display, 'Outfit', sans-serif);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      color: var(--theme-dark);
+      margin: 0 0 0.75rem 0;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    .process-description {
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--theme-text-muted);
+      margin: 0;
+    }
+
+    .watermark-year {
+      position: absolute;
+      top: -2rem;
+      left: 120px;
+      font-size: clamp(5rem, 10vw, 8rem);
+      font-weight: 900;
+      color: rgba(0, 0, 0, 0.03);
+      user-select: none;
+      pointer-events: none;
+      z-index: -1;
+      font-family: var(--font-display, 'Outfit', sans-serif);
+    }
+
+    /* Toggle Buttons Container - Positioned TOP RIGHT */
+    .process-toggle-container {
+      position: absolute;
+      top: 90px;
+      left: 600px; /* Aligned in clear upper right area */
+      z-index: 30;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 6px;
+      border-radius: 9999px;
+      border: 1px solid var(--theme-border);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(8px);
+    }
+
+    .toggle-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.3rem;
+      border-radius: 9999px;
+      font-family: var(--font-display, 'Outfit', sans-serif);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      outline: none;
+      white-space: nowrap;
+    }
+
+    .toggle-pill-btn.active {
+      background: var(--theme-dark);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+      border-color: var(--theme-dark);
+    }
+
+    .toggle-pill-btn:not(.active) {
+      background: #ffffff;
+      color: var(--theme-dark);
+      border-color: var(--theme-border);
+    }
+    .toggle-pill-btn:not(.active):hover {
+      background: #f1f5f9;
+      border-color: var(--theme-dark);
+    }
+
+    /* SVG Timeline Container */
     .timeline-svg-container {
       position: absolute;
       left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 2400px;
-      height: 500px;
+      top: 0;
+      width: 2800px;
+      height: 100%;
       z-index: 1;
+      pointer-events: none;
     }
-    
-    /* Nodes */
+    .sine-path {
+      fill: none;
+      stroke: var(--theme-dark);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    }
+
+    /* Robot Mascot Rover along path */
+    #car-wrapper {
+      position: absolute;
+      z-index: 50;
+      width: 85px;
+      height: 48px;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+    }
+
+    /* Nodes Layout Container */
     .timeline-nodes {
       position: absolute;
       left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 2400px;
-      height: 500px;
-      z-index: 2;
-      transition: opacity 0.4s ease;
+      top: 0;
+      width: 2800px;
+      height: 100%;
+      z-index: 10;
+    }
+
+    .process-node {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 290px;
+      transform: translateX(-50%);
+    }
+
+    /* Elevated Orbital Icon Badge Design */
+    .node-icon-wrapper,
+    .hexagon-wrapper {
+      position: relative;
+      z-index: 8;
+      margin-bottom: 8px;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .node-icon-badge,
+    .hexagon-badge {
+      width: 56px;
+      height: 56px;
+      background: #ffffff;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid rgba(17, 17, 17, 0.8);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07), 0 2px 6px rgba(0, 0, 0, 0.04);
+      color: var(--theme-dark);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+
+    .node-icon-badge::before,
+    .hexagon-badge::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 22px;
+      border: 1.5px dashed rgba(17, 17, 17, 0.25);
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+
+    .node-icon-badge svg,
+    .hexagon-badge svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--theme-dark);
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: all 0.3s ease;
+    }
+
+    .process-node.active-popup .node-icon-wrapper,
+    .process-node.active-popup .hexagon-wrapper {
+      transform: scale(1.15) translateY(-2px);
+    }
+
+    .process-node.active-popup .node-icon-badge,
+    .process-node.active-popup .hexagon-badge {
+      background: var(--theme-dark);
+      border-color: var(--theme-dark);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+    }
+
+    .process-node.active-popup .node-icon-badge::before,
+    .process-node.active-popup .hexagon-badge::before {
+      border-color: var(--theme-dark);
+      border-style: solid;
+      opacity: 1;
+      transform: scale(1.06);
+    }
+
+    .process-node.active-popup .node-icon-badge svg,
+    .process-node.active-popup .hexagon-badge svg {
+      stroke: #ffffff;
+    }
+
+    .connection-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2.5px solid var(--theme-dark);
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    }
+
+    .connection-stem {
+      width: 2px;
+      height: 20px;
+      background: linear-gradient(180deg, var(--theme-dark) 0%, rgba(0,0,0,0.1) 100%);
+      margin: 2px 0;
+    }
+
+    /* Step Card Box & Reveal Animation */
+    .step-card {
+      background: var(--theme-card-bg);
+      border: 1px solid var(--theme-border);
+      border-radius: 20px;
+      padding: 1.2rem 1.2rem;
+      width: 100%;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+      backdrop-filter: blur(12px);
+      text-align: center;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      opacity: 0.5;
+      transform: scale(0.92);
     }
     
-    /* Pop-up Description Styles */
-    .node-content {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      pointer-events: none;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-      backdrop-filter: blur(5px);
+    .process-node.active-popup .step-card {
+      opacity: 1;
+      transform: scale(1) translateY(-4px);
+      border-color: var(--theme-dark);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
     }
-    .process-node.active-popup .node-content {
+
+    .step-card-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .step-number-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: var(--theme-dark);
+      font-family: var(--font-display, 'Outfit', sans-serif);
+      font-weight: 800;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.35rem;
+      border: 1px solid var(--theme-border);
+    }
+
+    .step-card-title {
+      font-family: var(--font-display, 'Outfit', sans-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--theme-dark);
+      margin: 0;
+    }
+
+    /* Collapsible Content Area (Reveals when car arrives) */
+    .step-card-content {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(12px);
+    }
+
+    .process-node.active-popup .step-card-content {
+      max-height: 250px;
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .step-dash-divider {
+      width: 18px;
+      height: 2px;
+      background: var(--theme-dark);
+      margin: 0.5rem auto 0.5rem auto;
+      border-radius: 1px;
+    }
+
+    .step-card-desc {
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: var(--theme-text-muted);
+      margin: 0;
+    }
+
+    .step-view-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--theme-dark);
+      margin-top: 0.75rem;
+      opacity: 0.9;
+      transition: all 0.3s ease;
+    }
+    .step-card:hover .step-view-more {
+      transform: translateX(3px);
+    }
+
+    /* Program Details Section Below Pinned Horizontal Section */
+    .vertical-details-wrapper {
+      position: relative;
+      width: 100%;
+      background: var(--theme-bg-light);
+      padding: 4rem 2rem 6rem 2rem;
+      box-sizing: border-box;
+    }
+    .program-details-container {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1px solid var(--theme-border);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.03);
+      padding: 3.5rem 3.5rem;
+      box-sizing: border-box;
+    }
+
+    .program-badge-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-bottom: 1.5rem;
+    }
+    .program-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: #f1f5f9;
+      color: var(--theme-dark);
+      border: 1px solid var(--theme-border);
+    }
+
+    .program-header-title {
+      font-family: var(--font-display, 'Outfit', sans-serif);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--theme-dark);
+      margin: 0 0 1rem 0;
+    }
+
+    .program-header-desc {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--theme-text-muted);
+      max-width: 850px;
+      margin-bottom: 2.5rem;
+    }
+
+    .tools-section-title {
+      font-family: var(--font-display, 'Outfit', sans-serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--theme-dark);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .tool-chip {
+      background: #f8fafc;
+      border: 1px solid var(--theme-border);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--theme-dark);
+      transition: all 0.25s ease;
+    }
+    .tool-chip:hover {
+      border-color: var(--theme-dark);
+      background: #ffffff;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      transform: translateY(-2px);
+    }
+    .tool-chip-icon {
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .tool-chip-icon svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+    .outcome-card {
+      background: #f8fafc;
+      border: 1px solid var(--theme-border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+    .outcome-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--theme-dark);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .outcome-text h5 {
+      margin: 0 0 0.25rem 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--theme-dark);
+    }
+    .outcome-text p {
+      margin: 0;
+      font-size: 0.82rem;
+      color: var(--theme-text-muted);
+      line-height: 1.45;
+    }
+
+    .session-week-box {
+      border: 1px solid var(--theme-border);
+      border-radius: 16px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: #ffffff;
+      transition: border-color 0.3s ease;
+    }
+    .session-week-box:hover {
+      border-color: var(--theme-dark);
+    }
+    .session-week-header {
+      padding: 1.25rem 1.5rem;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+    .session-week-title {
+      font-family: var(--font-display, 'Outfit', sans-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--theme-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .week-num-badge {
+      background: var(--theme-dark);
+      color: #ffffff;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+    .session-item-list {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      border-top: 1px solid #f1f5f9;
+    }
+    .session-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--theme-dark);
+    }
+    .session-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--theme-dark);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    /* Modal / Drawer */
+    .curriculum-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(6px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .curriculum-modal-overlay.open {
+      opacity: 1;
       pointer-events: auto;
+    }
+    .curriculum-modal-card {
+      background: #ffffff;
+      width: 90%;
+      max-width: 650px;
+      max-height: 85vh;
+      overflow-y: auto;
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+    .curriculum-modal-overlay.open .curriculum-modal-card {
+      transform: translateY(0);
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #64748b;
+      transition: all 0.2s ease;
+    }
+    .modal-close-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    @media (max-width: 640px) {
+      .program-details-container {
+        padding: 2rem 1.5rem;
+      }
+      .process-toggle-container {
+        left: 80px;
+        top: 250px;
+      }
     }
   </style>
 </head>
 <body class="horizontal-page">
 
-                    <header>
+  <!-- Background Grid Lines -->
+  <div class="bg-grid-lines">
+    <div class="grid-line grid-line-v1"></div>
+    <div class="grid-line grid-line-v2"></div>
+    <div class="grid-line grid-line-v3"></div>
+  </div>
+
+  <!-- EXACT Standard Header Navigation (Matching index.html, gallery.html, about.html) -->
+  <header>
     <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
       <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
       <span style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; color: #111;">
@@ -150,7 +698,7 @@
     <nav>
       <ul>
         <li><a href="/index.html" class="nav-link">Home</a></li>
-        <li><a href="/programs.html" class="nav-link">Programs</a></li>
+        <li><a href="/programs.html" class="nav-link active">Programs</a></li>
         <li><a href="/about.html" class="nav-link">About</a></li>
         <li><a href="/gallery.html" class="nav-link">Gallery</a></li>
         <li><a href="/download.html" class="nav-link">Software</a></li>
@@ -162,113 +710,138 @@
     </nav>
   </header>
 
+  <!-- Pinned Pure Horizontal Section (Car Moves Along Sine Path, Canvas Scrolls Left) -->
   <main class="pure-horizontal-wrapper" id="pure-horizontal-wrapper">
     
-    <div class="timeline-filter">
-      <button class="filter-btn active" id="btn-idt">Innovation Design (IDT)</button>
-      <button class="filter-btn" id="btn-robo">Robotics & IoT</button>
-    </div>
-
     <div class="timeline-canvas">
       
+      <!-- Canvas Header Left Title Box -->
       <div class="process-timeline-header">
-        <div class="subtitle">Pathways.</div>
-        <h3>Process section.</h3>
-        <div class="watermark">2026</div>
+        <div class="process-subtitle">OUR PROCESS</div>
+        <h1 class="process-title">Process section.</h1>
+        <p class="process-description">A simple, step-by-step journey designed to turn ideas into real-world solutions.</p>
+        <div class="watermark-year">2026</div>
       </div>
 
+      <!-- Toggle Buttons Container - Positioned TOP RIGHT -->
+      <div class="process-toggle-container">
+        <button class="toggle-pill-btn active" id="btn-idt-tab">
+          <span>✨</span> Innovation Design (IDT)
+        </button>
+        <button class="toggle-pill-btn" id="btn-robo-tab">
+          <span>🤖</span> Robotics & IoT
+        </button>
+      </div>
+
+      <!-- SVG Sine Wave Path Container -->
       <div class="timeline-svg-container">
-        <svg viewBox="0 0 2400 500" width="2400" height="500" preserveAspectRatio="none">
-          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#007bff" flood-opacity="0.3"/>
-          </filter>
-          <!-- Shifted path 100px right to prevent car cutoff -->
-          <path d="M 100,250 C 200,250 250,400 400,400 C 600,400 600,100 800,100 C 1000,100 1000,400 1200,400 C 1400,400 1400,100 1600,100 C 1800,100 1900,250 2300,250" 
-                fill="none" stroke="#007bff" stroke-width="3" filter="url(#glow)"/>
+        <svg viewBox="0 0 2800 650" width="2800" height="650" preserveAspectRatio="none">
+          <path id="sine-motion-path" class="sine-path" 
+                d="M 100,320 C 260,320 380,440 600,440 C 820,440 930,180 1150,180 C 1370,180 1480,440 1700,440 C 1920,440 2030,180 2250,180 C 2470,180 2550,320 2680,320" />
         </svg>
 
-        <div id="car-wrapper" style="position: absolute; z-index: 50; width: 100px; height: 50px; left: 0; top: 0; pointer-events: none;">
-          <img src="/assets/car.png" alt="Car" style="width: 100%; height: auto; transform: scaleX(-1); display: block;" />
+        <!-- Mascot Robot Rover animating along SVG path -->
+        <div id="car-wrapper">
+          <img src="/assets/car.png" alt="Autonomous Mascot Rover" style="width: 100%; height: auto; transform: scaleX(-1); display: block;" />
         </div>
       </div>
 
-      <!-- IDT Timeline -->
-      <div class="timeline-nodes" id="nodes-idt" style="display: block;">
+      <!-- Interactive Step Nodes positioned cleanly along path -->
+      <div class="timeline-nodes" id="nodes-container">
         
-        <div class="process-node pos-trough" style="left: 400px; top: 400px;">
-          <span class="node-bg-num">1</span>
-          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div></div>
-          <div class="node-content">
-            <h4>Creativity & Expression</h4>
-            <p>Empathy mapping & visual creation with Canva.</p>
+        <!-- Node 01: Discover (Trough 1 at x = 600px, y = 440px) -->
+        <div class="process-node" style="left: 600px; top: 380px;">
+          <div class="node-icon-wrapper">
+            <div class="node-icon-badge" id="badge-01">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.2" y2="16.2"></line><path d="M11 8v.01M8 11v.01" stroke-width="2.5"></path></svg>
+            </div>
+          </div>
+          <div class="connection-dot"></div>
+          <div class="connection-stem"></div>
+          
+          <div class="step-card" onclick="openStepModal(1)">
+            <div class="step-card-header">
+              <div class="step-number-badge">01</div>
+              <h3 class="step-card-title" id="card-01-title">Discover</h3>
+            </div>
+            
+            <div class="step-card-content">
+              <div class="step-dash-divider"></div>
+              <p class="step-card-desc" id="card-01-desc">Understand Innovation, Invention & Entrepreneurship. Conduct user research, problem identification, and visual design with Canva.</p>
+              <div class="step-view-more">View Week 1 Details →</div>
+            </div>
           </div>
         </div>
 
-        <div class="process-node pos-peak" style="left: 800px; top: 100px;">
-          <span class="node-bg-num">2</span>
-          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg></div></div>
-          <div class="node-content">
-            <h4>Idea to Visual Thinking</h4>
-            <p>Wireframing basic apps and screens using Figma.</p>
+        <!-- Node 02: Design (Peak 1 at x = 1150px, y = 180px) -->
+        <div class="process-node" style="left: 1150px; top: 120px;">
+          <div class="node-icon-wrapper">
+            <div class="node-icon-badge" id="badge-02">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+          </div>
+          <div class="connection-dot"></div>
+          <div class="connection-stem"></div>
+          
+          <div class="step-card" onclick="openStepModal(2)">
+            <div class="step-card-header">
+              <div class="step-number-badge">02</div>
+              <h3 class="step-card-title" id="card-02-title">Design</h3>
+            </div>
+            
+            <div class="step-card-content">
+              <div class="step-dash-divider"></div>
+              <p class="step-card-desc" id="card-02-desc">Wireframe UI/UX with Figma & Stitch. Master Prompt & Context Engineering using ChatGPT, Gemini, and AI presentation tools.</p>
+              <div class="step-view-more">View Week 2 Details →</div>
+            </div>
           </div>
         </div>
 
-        <div class="process-node pos-trough" style="left: 1200px; top: 400px;">
-          <span class="node-bg-num">3</span>
-          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div></div>
-          <div class="node-content">
-            <h4>AI + Smart Learning</h4>
-            <p>Prompt engineering & summarizing with NotebookLM.</p>
+        <!-- Node 03: Develop (Trough 2 at x = 1700px, y = 440px) -->
+        <div class="process-node" style="left: 1700px; top: 380px;">
+          <div class="node-icon-wrapper">
+            <div class="node-icon-badge" id="badge-03">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"></rect><path d="M7 10l3 2.5L7 15"></path><line x1="13" y1="15" x2="17" y2="15"></line></svg>
+            </div>
+          </div>
+          <div class="connection-dot"></div>
+          <div class="connection-stem"></div>
+          
+          <div class="step-card" onclick="openStepModal(3)">
+            <div class="step-card-header">
+              <div class="step-number-badge">03</div>
+              <h3 class="step-card-title" id="card-03-title">Develop</h3>
+            </div>
+            
+            <div class="step-card-content">
+              <div class="step-dash-divider"></div>
+              <p class="step-card-desc" id="card-03-desc">Design 3D products using Onshape, build virtual IoT hardware with Arduino/ESP32, and plan interactive prototypes.</p>
+              <div class="step-view-more">View Week 3 Details →</div>
+            </div>
           </div>
         </div>
 
-        <div class="process-node pos-peak" style="left: 1600px; top: 100px;">
-          <span class="node-bg-num">4</span>
-          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg></div></div>
-          <div class="node-content">
-            <h4>Build & Present</h4>
-            <p>Google AI Studio interactive builds & final Demo Day.</p>
+        <!-- Node 04: Deliver (Peak 2 at x = 2250px, y = 180px) -->
+        <div class="process-node" style="left: 2250px; top: 120px;">
+          <div class="node-icon-wrapper">
+            <div class="node-icon-badge" id="badge-04">
+              <svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.71.79-1.81.2-2.55L4.5 16.5z"></path><path d="M12 15l-3-3 7.5-7.5.75 2.25L12 15z"></path><path d="M15 12l3 3 2.25-.75L12 4.5 15 12z"></path></svg>
+            </div>
           </div>
-        </div>
-
-      </div>
-
-      <!-- Robotics Timeline -->
-      <div class="timeline-nodes" id="nodes-robo" style="display: none; opacity: 0;">
-        
-        <div class="process-node pos-trough" style="left: 400px; top: 400px;">
-          <span class="node-bg-num">1</span>
-          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div></div>
-          <div class="node-content">
-            <h4>How Robots Think</h4>
-            <p>Logic, play, and digital environments with Sim-1.</p>
-          </div>
-        </div>
-
-        <div class="process-node pos-peak" style="left: 800px; top: 100px;">
-          <span class="node-bg-num">2</span>
-          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg></div></div>
-          <div class="node-content">
-            <h4>Smart Robots (Adding AI)</h4>
-            <p>Vibe coding and generating maze-solving logic.</p>
-          </div>
-        </div>
-
-        <div class="process-node pos-trough" style="left: 1200px; top: 400px;">
-          <span class="node-bg-num">3</span>
-          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div></div>
-          <div class="node-content">
-            <h4>Virtual Gadgets & IoT</h4>
-            <p>Tinkercad digital circuits, batteries, and LEDs.</p>
-          </div>
-        </div>
-
-        <div class="process-node pos-peak" style="left: 1600px; top: 100px;">
-          <span class="node-bg-num">4</span>
-          <div class="hexagon-wrapper"><div class="node-hexagon"><svg class="node-icon" viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg></div></div>
-          <div class="node-content">
-            <h4>Build & Show Off</h4>
-            <p>Building virtual robots in Sim-2 & Demo Day.</p>
+          <div class="connection-dot"></div>
+          <div class="connection-stem"></div>
+          
+          <div class="step-card" onclick="openStepModal(4)">
+            <div class="step-card-header">
+              <div class="step-number-badge">04</div>
+              <h3 class="step-card-title" id="card-04-title">Deliver</h3>
+            </div>
+            
+            <div class="step-card-content">
+              <div class="step-dash-divider"></div>
+              <p class="step-card-desc" id="card-04-desc">Construct final app concepts, test integrated prototypes, refine storytelling, and pitch on Demo Day to industry experts.</p>
+              <div class="step-view-more">View Week 4 Details →</div>
+            </div>
           </div>
         </div>
 
@@ -277,72 +850,190 @@
     </div>
   </main>
 
+  <!-- Vertical Scroll Section (Unpins and becomes active after horizontal scroll completes) -->
+  <section class="vertical-details-wrapper">
+    <div class="program-details-container" id="program-details-box">
+      
+      <div class="program-badge-strip" id="program-badges">
+        <!-- Populated by JS -->
+      </div>
+
+      <h2 class="program-header-title" id="program-main-heading">Innovation, Design & Thinking</h2>
+      <p class="program-header-desc" id="program-main-desc">
+        AI-First Product Innovation & Prototyping Curriculum bridging physical hardware, visual UI design, and generative AI workflows.
+      </p>
+
+      <!-- Tools Mastered / Tech Stack -->
+      <h3 class="tools-section-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--theme-dark)" stroke-width="2.2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+        <span id="tools-heading-text">Tools You'll Master</span>
+      </h3>
+      
+      <div class="tools-grid" id="tools-container">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Outcomes -->
+      <h3 class="tools-section-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--theme-dark)" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+        <span id="outcomes-heading-text">Learning Outcomes & Deliverables</span>
+      </h3>
+
+      <div class="outcomes-grid" id="outcomes-container">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- 4-Week Session Roadmap Accordion -->
+      <h3 class="tools-section-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--theme-dark)" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        4-Week Session Roadmap (12 Sessions)
+      </h3>
+
+      <div id="roadmap-accordion-container">
+        <!-- Populated by JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Site-Wide Footer -->
+  <footer style="background-color: var(--bg-primary, #f6f6f6); border-top: 1px solid rgba(0, 0, 0, 0.06); padding: 5rem 3.5rem 3rem; position: relative; z-index: 10; width: 100%; margin-top: auto;">
+    <div style="max-width: 1440px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem;">
+      <div class="footer-brand-row" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+        <a href="/index.html" class="logo" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
+          <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
+          <span style="font-family: 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; text-align: left; color: #121212;">
+            <span>CREDIBLE</span>
+            <span style="color: #666; font-weight: 600;">CREATE</span>
+          </span>
+        </a>
+        <nav class="footer-top-nav">
+          <ul style="display: flex; list-style: none; gap: 2rem; align-items: center; flex-wrap: wrap; margin: 0; padding: 0;">
+            <li><a href="/programs.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Programs</a></li>
+            <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">About</a></li>
+            <li><a href="/gallery.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Gallery</a></li>
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Software</a></li>
+            <li><a href="/projects.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">FAQ</a></li>
+            <li><a href="/verify.html" style="text-decoration: none; color: #5a5a5a; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Verify</a></li>
+            <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem; background: #111; color: #fff; text-decoration: none; border-radius: 4px;"><span class="btn-text">Join</span></a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="footer-section-divider" style="height: 1px; background-color: rgba(0, 0, 0, 0.06); width: 100%;"></div>
+
+      <div class="footer-columns-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2.5rem; width: 100%;">
+        <div class="footer-col">
+          <h4 style="font-family: var(--font-mono, monospace); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #121212; margin-bottom: 1.25rem;">Credible Create</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin: 0; padding: 0;">
+            <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Our Mission</a></li>
+            <li><a href="/about.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Our Team</a></li>
+            <li><a href="/gallery.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Media Gallery</a></li>
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Bot Barracks Suite</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 style="font-family: var(--font-mono, monospace); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #121212; margin-bottom: 1.25rem;">Bot Barracks</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin: 0; padding: 0;">
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Software Download</a></li>
+            <li><a href="/programs.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Robotics Labs</a></li>
+            <li><a href="/programs.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Innovation Design</a></li>
+            <li><a href="/projects.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Student Cohorts</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 style="font-family: var(--font-mono, monospace); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #121212; margin-bottom: 1.25rem;">Resources</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin: 0; padding: 0;">
+            <li><a href="/download.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Bot Barracks Installer</a></li>
+            <li><a href="/verify.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Verify Certificate</a></li>
+            <li><a href="/blog.html" style="text-decoration: none; color: #5a5a5a; font-size: 0.9rem;">Curriculum Articles</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-cta-col">
+          <h4 style="font-family: var(--font-mono, monospace); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #121212; margin-bottom: 1.25rem;">Connect</h4>
+          <p style="color: #5a5a5a; font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.25rem;">Have a school or program in mind? Let's build something meaningful.</p>
+          <a href="/demo.html" class="btn btn-primary footer-cta-btn" style="display: inline-block; padding: 0.6rem 1.25rem; background: #111; color: #fff; text-decoration: none; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1.25rem;">
+            <span class="btn-text">Request a Call →</span>
+          </a>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <a href="mailto:crediblecreate0@gmail.com" style="text-decoration: none; color: #121212; font-size: 0.85rem;">crediblecreate0@gmail.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-section-divider" style="height: 1px; background-color: rgba(0, 0, 0, 0.06); width: 100%;"></div>
+
+      <div class="footer-bottom-row" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-family: var(--font-mono, monospace); font-size: 0.75rem; color: #909090;">
+        <span>© 2026 Credible Create. All rights reserved.</span>
+        <div style="display: flex; align-items: center; gap: 0.5rem; color: #10b981;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background-color: #10b981; display: inline-block;"></span>
+          <span style="color: #909090;">SYS.STATUS // LIVE</span>
+        </div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="/privacy.html" style="text-decoration: none; color: #909090;">Privacy Policy</a>
+          <a href="/terms.html" style="text-decoration: none; color: #909090;">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive Curriculum Detail Modal -->
+  <div class="curriculum-modal-overlay" id="curriculum-modal">
+    <div class="curriculum-modal-card">
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+      <div id="modal-content-body">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Contact Buttons -->
+  <div class="floating-contact-actions" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.75rem;">
+    <a href="https://wa.me/919219488809" target="_blank" class="floating-action-btn" style="width: 44px; height: 44px; border-radius: 50%; background: #111111; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,0,0,0.3); text-decoration: none;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="tel:+919219488809" class="floating-action-btn" style="width: 44px; height: 44px; border-radius: 50%; background: #111111; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,0,0,0.3); text-decoration: none;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    </a>
+  </div>
+
+  <!-- GSAP & MotionPath Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+
+  <!-- Data & Interaction Controller -->
   <script>
-    // Tab Filter Logic
-    const btnIdt = document.getElementById('btn-idt');
-    const btnRobo = document.getElementById('btn-robo');
-    const nodesIdt = document.getElementById('nodes-idt');
-    const nodesRobo = document.getElementById('nodes-robo');
-
-    btnIdt.addEventListener('click', () => {
-      btnIdt.classList.add('active');
-      btnRobo.classList.remove('active');
-      
-      nodesRobo.style.opacity = '0';
-      setTimeout(() => {
-        nodesRobo.style.display = 'none';
-        nodesIdt.style.display = 'block';
-        setTimeout(() => nodesIdt.style.opacity = '1', 50);
-        // Force a scrolltrigger refresh if dimensions change
-        ScrollTrigger.refresh();
-      }, 400);
-    });
-
-    btnRobo.addEventListener('click', () => {
-      btnRobo.classList.add('active');
-      btnIdt.classList.remove('active');
-      
-      nodesIdt.style.opacity = '0';
-      setTimeout(() => {
-        nodesIdt.style.display = 'none';
-        nodesRobo.style.display = 'block';
-        setTimeout(() => nodesRobo.style.opacity = '1', 50);
-        ScrollTrigger.refresh();
-      }, 400);
-    });
-
-    // Initialize pure horizontal scroll & car animation
+    // Register GSAP Plugins
     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
-    
+
+    // Initialize Pure Horizontal Pinning & Car Animation
     const wrapper = document.getElementById('pure-horizontal-wrapper');
     const canvas = document.querySelector('.timeline-canvas');
-    
+    const car = document.getElementById('car-wrapper');
+    const path = document.getElementById('sine-motion-path');
+
     if (wrapper && canvas) {
-      // Calculate how far to scroll. The canvas width minus viewport width
-      const scrollAmount = canvas.offsetWidth - window.innerWidth;
-      
-      const car = document.getElementById('car-wrapper');
-      const path = document.querySelector('.timeline-svg-container svg path');
-      
+      const getScrollAmount = () => canvas.offsetWidth - window.innerWidth;
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: wrapper,
           pin: true,
           scrub: 1,
-          end: () => "+=" + scrollAmount
+          start: "top top",
+          end: () => "+=" + getScrollAmount(),
+          invalidateOnRefresh: true
         }
       });
-      
-      // 1. Move the canvas left
+
+      // Translate Canvas left
       tl.to(canvas, {
-        x: -scrollAmount,
+        x: () => -getScrollAmount(),
         ease: "none"
       }, 0);
-      
-      // 2. Move the car along the SVG path
+
+      // Animate Rover along sine path
       if (car && path) {
         tl.to(car, {
           ease: "none",
@@ -354,17 +1045,15 @@
           }
         }, 0);
       }
-      
-      // 3. Popup logic based on car position proximity
-      const allNodes = document.querySelectorAll('.process-node');
+
+      // Dynamic pop-up reveal: When car reaches each node's position, open & show content!
+      const nodes = document.querySelectorAll('.process-node');
       tl.eventCallback('onUpdate', function() {
-        // approximate the car's current X position relative to the canvas
-        // path width is 2400. Progress goes 0 to 1.
-        const carX = this.progress() * 2400; 
-        
-        allNodes.forEach(node => {
-          // If car is within 180px of the node, pop it up!
-          if (Math.abs(carX - node.offsetLeft) < 180) {
+        const carProgressX = this.progress() * 2800;
+        nodes.forEach(node => {
+          const nodeX = parseFloat(node.style.left);
+          // Reveal content when car reaches within 160px of node position
+          if (carProgressX >= nodeX - 160) {
             node.classList.add('active-popup');
           } else {
             node.classList.remove('active-popup');
@@ -372,28 +1061,292 @@
         });
       });
     }
+
+    // Program Data Sets from Pic 2 (IDT) & Pic 3 (Robotics & IoT)
+    const programData = {
+      idt: {
+        title: "Innovation, Design & Thinking (IDT)",
+        subheading: "AI-First Product Innovation & Prototyping Curriculum",
+        badges: ["4 Weeks", "12 Sessions", "Project Based", "Industry Ready", "Hands-On Learning", "AI-First Learning"],
+        description: "Master user research, UI/UX design with Canva & Figma, Prompt Engineering, 3D product modeling in Onshape, and IoT prototyping with ESP32/Arduino to build real-world solutions.",
+        cards: [
+          {
+            step: "01",
+            title: "Discover",
+            desc: "Understand Innovation, Invention & Entrepreneurship. Conduct user research, problem identification, and visual design with Canva.",
+            weekTitle: "Week 1: Innovation & Design Thinking",
+            sessions: [
+              "Session 1: Innovation & Design Thinking Overview",
+              "Session 2: User Research & Problem Identification",
+              "Session 3: Canva & Visual Design"
+            ]
+          },
+          {
+            step: "02",
+            title: "Design",
+            desc: "Wireframe UI/UX with Figma & Stitch. Master Prompt & Context Engineering using ChatGPT, Gemini, and AI presentation tools.",
+            weekTitle: "Week 2: Digital Design & AI",
+            sessions: [
+              "Session 4: UI/UX with Figma & Stitch",
+              "Session 5: Prompt & Context Engineering",
+              "Session 6: AI Tools & Dynamic AI Presentations (Gamma, Napkin AI)"
+            ]
+          },
+          {
+            step: "03",
+            title: "Develop",
+            desc: "Design 3D products using Onshape, build virtual IoT hardware with Arduino/ESP32, and plan interactive prototypes.",
+            weekTitle: "Week 3: IoT, CAD & Prototype",
+            sessions: [
+              "Session 7: Introduction to IoT & Sensor Interfacing",
+              "Session 8: Product Design & 3D Modeling with Onshape",
+              "Session 9: Prototype Planning & Wireframing"
+            ]
+          },
+          {
+            step: "04",
+            title: "Deliver",
+            desc: "Construct final app concepts, test integrated prototypes, refine storytelling, and pitch on Demo Day to industry experts.",
+            weekTitle: "Week 4: Innovation Challenge & Pitch",
+            sessions: [
+              "Session 10: Prototype Development & Assembly",
+              "Session 11: Testing & Pitch Preparation",
+              "Session 12: Demo Day & Final Presentation"
+            ]
+          }
+        ],
+        toolsTitle: "Tools You'll Master",
+        tools: [
+          { name: "Canva", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="url(#canvaG)"/><path d="M11.5 7c-2.4 0-4.2 1.6-4.2 4.1s1.8 4.1 4.2 4.1c1.5 0 2.7-.6 3.3-1.6l-1.1-.9c-.5.7-1.3 1-2.2 1-1.6 0-2.6-1-2.6-2.6s1-2.6 2.6-2.6c.9 0 1.7.3 2.2 1l1.1-.9c-.6-1-1.8-1.6-3.3-1.6z" fill="#fff"/><defs><linearGradient id="canvaG" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#00C4CC"/><stop offset="1" stop-color="#7D2AE8"/></linearGradient></defs></svg>` },
+          { name: "Figma", icon: `<svg viewBox="0 0 38 57" width="16" height="22"><path fill="#F24E1E" d="M19 19A9.5 9.5 0 0 1 19 0h9.5a9.5 9.5 0 0 1 0 19H19z"/><path fill="#A259FF" d="M9.5 19A9.5 9.5 0 0 1 19 9.5V19H9.5z"/><path fill="#FF7262" d="M0 9.5A9.5 9.5 0 0 1 9.5 0H19v19H9.5A9.5 9.5 0 0 1 0 9.5z"/><path fill="#1ABCFE" d="M0 28.5A9.5 9.5 0 0 1 9.5 19H19v19H9.5A9.5 9.5 0 0 1 0 28.5z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 0 1-19 0z"/></svg>` },
+          { name: "Google Stitch", icon: `<svg viewBox="0 0 24 24" width="22" height="22"><rect width="24" height="24" rx="6" fill="#1A73E8"/><path d="M7 8h10M7 12h10M7 16h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>` },
+          { name: "ChatGPT", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#10A37F"/><path d="M12 5.5a6.5 6.5 0 0 0-5.8 9.4l.2.35-1.1 2.2 2.3-1 .4.2a6.5 6.5 0 1 0 4-11.15z" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="2.2" fill="#fff"/></svg>` },
+          { name: "Gemini", icon: `<svg viewBox="0 0 24 24" width="22" height="22"><defs><linearGradient id="geminiG" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#1A73E8"/><stop offset="50%" stop-color="#A142F4"/><stop offset="100%" stop-color="#EA4335"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="#0F172A"/><path fill="url(#geminiG)" d="M12 2C12 7.523 7.523 12 2 12c5.523 0 10 4.477 10 10 0-5.523 4.477-10 10-10-5.523 0-10-4.477-10-10z"/></svg>` },
+          { name: "NotebookLM", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#4285F4"/><path d="M7 6h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z" fill="#fff" opacity="0.95"/><path d="M9 9.5h6M9 12h6M9 14.5h4" stroke="#4285F4" stroke-width="1.6" stroke-linecap="round"/></svg>` },
+          { name: "Gamma", icon: `<svg viewBox="0 0 24 24" width="22" height="22"><defs><linearGradient id="gammaG" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#FF5757"/><stop offset="100%" stop-color="#8C52FF"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="url(#gammaG)"/><path d="M12 5L5 9.5l7 4.5 7-4.5L12 5zm-7 8.5l7 4.5 7-4.5" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>` },
+          { name: "Napkin AI", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#FF9F1C"/><path d="M7 17l10-10M17 7v6M17 7h-6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>` },
+          { name: "Google AI Studio", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#1A73E8"/><path d="M12 6v12M6 12h12" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="3" fill="#34A853"/></svg>` },
+          { name: "Google Flow", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#0F172A"/><circle cx="7" cy="12" r="2.5" fill="#4285F4"/><circle cx="17" cy="7" r="2.5" fill="#EA4335"/><circle cx="17" cy="17" r="2.5" fill="#34A853"/><path d="M9 11l6-3M9 13l6 3" stroke="#94A3B8" stroke-width="1.6"/></svg>` },
+          { name: "Onshape 3D", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#FF6B00"/><path d="M12 4.5L5.5 8v8l6.5 3.5 6.5-3.5V8L12 4.5z" stroke="#fff" stroke-width="1.6"/><path d="M12 4.5v15M5.5 8l13 8M18.5 8l-13 8" stroke="#fff" stroke-width="1" opacity="0.6"/></svg>` },
+          { name: "Arduino / ESP32", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#00979D"/><circle cx="8" cy="12" r="3" stroke="#fff" stroke-width="1.6"/><circle cx="16" cy="12" r="3" stroke="#fff" stroke-width="1.6"/><path d="M6.5 12h3M14.5 12h3M16 10.5v3" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></svg>` },
+          { name: "Notion / Docs", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#000000"/><path d="M7 6.5l7 1.5V17.5L7 16V6.5z" fill="#ffffff"/><path d="M17 8L14 6.5V17.5l3 1.5V8z" fill="#E2E8F0"/></svg>` }
+        ],
+        outcomesTitle: "Learning Outcomes & Key Deliverables",
+        outcomes: [
+          { title: "Innovation Journal", desc: "Structured design thinking case study and problem statement mapping." },
+          { title: "Canva Design Portfolio", desc: "Professional visual branding, infographics, and pitch presentation collateral." },
+          { title: "UI/UX Prototype", desc: "Interactive digital app/web wireframes crafted using Figma and Stitch." },
+          { title: "AI-Powered Workflows", desc: "Custom prompt templates and context engineering workflows built in AI Studio." },
+          { title: "3D CAD Model", desc: "Fully modeled 3D mechanical enclosure designed in Onshape." },
+          { title: "Final Integrated Prototype", desc: "Working IoT hardware combined with software & pitched on Demo Day." }
+        ]
+      },
+
+      robo: {
+        title: "Advanced Autonomous Systems & AI Robotics",
+        subheading: "An Experiential Engineering Curriculum for Autonomous IoT & AI Robotics",
+        badges: ["4 Weeks", "12 Sessions", "AI-First Learning", "Hands-On Virtual Labs", "Design Thinking", "Industry Oriented"],
+        description: "Bridges software engineering and physical hardware using state-of-the-art virtual laboratories. Design, code, and document autonomous IoT rovers using MicroPython, ESP32, and AI orchestration.",
+        cards: [
+          {
+            step: "01",
+            title: "Discover",
+            desc: "System Architecture & Algorithmic Logic. Learn how autonomous robots process environment data using Python & AI orchestration.",
+            weekTitle: "Week 1: System Architecture & Logic",
+            sessions: [
+              "Logic & Decision Trees in Robotics",
+              "Python Scripting for Autonomous Systems",
+              "AI Orchestration & Intelligent Control"
+            ]
+          },
+          {
+            step: "02",
+            title: "Design",
+            desc: "Virtual Hardware & ESP32. Interface ultrasonic sensors, motor drivers, and MicroPython routines in virtual electronics labs.",
+            weekTitle: "Week 2: Virtual Hardware & ESP32",
+            sessions: [
+              "Sensors & Environmental Telemetry",
+              "Motor Actuation & PWM Control Logic",
+              "MicroPython & Virtual Lab Circuitry",
+              "AI-Generated Diagnostic Reports"
+            ]
+          },
+          {
+            step: "03",
+            title: "Develop",
+            desc: "Spatial Robotics Design. Build 3D chassis assemblies, CAD models, isometric layouts, and prototype system blueprints.",
+            weekTitle: "Week 3: Spatial Robotics & CAD Design",
+            sessions: [
+              "3D CAD Chassis & Frame Assembly",
+              "Isometric System Blueprinting",
+              "Spatial Kinematics & Mobility Planning",
+              "Integrated Hardware-Software Wiring"
+            ]
+          },
+          {
+            step: "04",
+            title: "Deliver",
+            desc: "Innovation Pitch & Demo Day. Showcase your AI Robotics solution built in virtual labs to an expert panel with technical reports.",
+            weekTitle: "Week 4: Innovation Pitch & Demo Day",
+            sessions: [
+              "Autonomous Solution Final Build",
+              "Technical Documentation & Engineering Reports",
+              "Prototype Live Demonstration",
+              "Demo Day Pitch & Industry Evaluation"
+            ]
+          }
+        ],
+        toolsTitle: "Highlight Features & Tech Stack",
+        tools: [
+          { name: "AI Coding Assistant", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#0F172A"/><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 7l-2 10" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/></svg>` },
+          { name: "Robotics Sim-1/Sim-2", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#2563EB"/><path d="M7 11a5 5 0 0 1 10 0v5a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-5z" fill="#fff"/><circle cx="10" cy="11" r="1.2" fill="#2563EB"/><circle cx="14" cy="11" r="1.2" fill="#2563EB"/></svg>` },
+          { name: "Virtual Electronics Lab", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#059669"/><path d="M13 3L4 14h8l-1 7 10-12h-8l1-6z" fill="#F59E0B"/></svg>` },
+          { name: "ESP32 Controller", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#D97706"/><rect x="6" y="6" width="12" height="12" rx="2" fill="#fff"/><circle cx="12" cy="12" r="3" fill="#D97706"/></svg>` },
+          { name: "MicroPython", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#2B5B84"/><path d="M12 5v14M8 8l4-3 4 3M8 16l4 3 4-3" stroke="#4B8BBE" stroke-width="2" stroke-linecap="round"/></svg>` },
+          { name: "IoT Cloud Feeds", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#0284C7"/><path d="M6 15a4 4 0 0 1 3.8-2.7 5 5 0 0 1 9.4 1.7A3.5 3.5 0 0 1 17.5 20H7a4 4 0 0 1-1-5z" fill="#fff"/></svg>` },
+          { name: "3D CAD Modeling", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#EA580C"/><path d="M12 4.5L5.5 8v8l6.5 3.5 6.5-3.5V8L12 4.5z" stroke="#fff" stroke-width="1.6"/><path d="M12 4.5v15M5.5 8l13 8M18.5 8l-13 8" stroke="#fff" stroke-width="1" opacity="0.6"/></svg>` },
+          { name: "Engineering Docs", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#475569"/><path d="M7 6h10v12H7V6z" fill="#fff"/><path d="M9 9.5h6M9 12.5h6M9 15.5h4" stroke="#475569" stroke-width="1.5"/></svg>` },
+          { name: "AI Orchestration", icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#7C3AED"/><circle cx="12" cy="12" r="3" fill="#fff"/><circle cx="6" cy="6" r="2" fill="#DDD6FE"/><circle cx="18" cy="6" r="2" fill="#DDD6FE"/><circle cx="6" cy="18" r="2" fill="#DDD6FE"/><circle cx="18" cy="18" r="2" fill="#DDD6FE"/><path d="M7.5 7.5l3 3M16.5 7.5l-3 3M7.5 16.5l3-3M16.5 16.5l-3-3" stroke="#DDD6FE" stroke-width="1.2"/></svg>` }
+        ],
+        outcomesTitle: "Demo Day Deliverables & Cohort Outcomes",
+        outcomes: [
+          { title: "Innovation Pitch", desc: "Live presentation of autonomous rover concept to industry experts." },
+          { title: "Technical Documentation", desc: "Comprehensive engineering report detailing code, schematic, and CAD specs." },
+          { title: "AI Workflow Integration", desc: "Vibe coding & prompt-driven algorithmic control systems." },
+          { title: "Prototype Demonstration", desc: "Full simulation of maze-solving, obstacle avoidance & remote IoT telemetry." }
+        ]
+      }
+    };
+
+    let activeTab = 'idt';
+
+    const btnIdtTab = document.getElementById('btn-idt-tab');
+    const btnRoboTab = document.getElementById('btn-robo-tab');
+
+    btnIdtTab.addEventListener('click', () => switchTab('idt'));
+    btnRoboTab.addEventListener('click', () => switchTab('robo'));
+
+    function switchTab(tabKey) {
+      activeTab = tabKey;
+      if (tabKey === 'idt') {
+        btnIdtTab.classList.add('active');
+        btnRoboTab.classList.remove('active');
+      } else {
+        btnRoboTab.classList.add('active');
+        btnIdtTab.classList.remove('active');
+      }
+      renderContent();
+    }
+
+    function renderContent() {
+      const data = programData[activeTab];
+
+      data.cards.forEach((card, idx) => {
+        const stepNum = idx + 1;
+        document.getElementById(`card-0${stepNum}-title`).innerText = card.title;
+        document.getElementById(`card-0${stepNum}-desc`).innerText = card.desc;
+      });
+
+      document.getElementById('program-main-heading').innerText = data.title;
+      document.getElementById('program-main-desc').innerText = data.description;
+      document.getElementById('tools-heading-text').innerText = data.toolsTitle;
+      document.getElementById('outcomes-heading-text').innerText = data.outcomesTitle;
+
+      const badgesContainer = document.getElementById('program-badges');
+      badgesContainer.innerHTML = data.badges.map(b => `<span class="program-badge">✦ ${b}</span>`).join('');
+
+      const toolsContainer = document.getElementById('tools-container');
+      toolsContainer.innerHTML = data.tools.map(t => `
+        <div class="tool-chip">
+          <span class="tool-chip-icon">${t.icon}</span>
+          <span>${t.name}</span>
+        </div>
+      `).join('');
+
+      const outcomesContainer = document.getElementById('outcomes-container');
+      outcomesContainer.innerHTML = data.outcomes.map(o => `
+        <div class="outcome-card">
+          <div class="outcome-icon">✓</div>
+          <div class="outcome-text">
+            <h5>${o.title}</h5>
+            <p>${o.desc}</p>
+          </div>
+        </div>
+      `).join('');
+
+      const accordionContainer = document.getElementById('roadmap-accordion-container');
+      accordionContainer.innerHTML = data.cards.map((card, idx) => `
+        <div class="session-week-box">
+          <div class="session-week-header" onclick="toggleAccordion(this)">
+            <div class="session-week-title">
+              <span class="week-num-badge">WEEK ${idx + 1}</span>
+              <span>${card.weekTitle}</span>
+            </div>
+            <span style="font-weight: 700; color: var(--theme-dark);">+</span>
+          </div>
+          <div class="session-item-list">
+            ${card.sessions.map(s => `
+              <div class="session-item">
+                <div class="session-dot"></div>
+                <div>${s}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleAccordion(headerEl) {
+      const list = headerEl.nextElementSibling;
+      const icon = headerEl.querySelector('span:last-child');
+      if (list.style.display === 'none' || !list.style.display) {
+        list.style.display = 'flex';
+        icon.innerText = '−';
+      } else {
+        list.style.display = 'none';
+        icon.innerText = '+';
+      }
+    }
+
+    function openStepModal(stepIndex) {
+      const data = programData[activeTab];
+      const card = data.cards[stepIndex - 1];
+      const modal = document.getElementById('curriculum-modal');
+      const body = document.getElementById('modal-content-body');
+
+      body.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+          <span style="background: #f1f5f9; color: var(--theme-dark); border: 1px solid var(--theme-border); font-family: var(--font-display, 'Outfit', sans-serif); font-weight: 800; font-size: 1.1rem; padding: 0.35rem 0.85rem; border-radius: 9999px;">STEP ${card.step}</span>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--theme-dark); text-transform: uppercase;">${data.title}</span>
+        </div>
+        
+        <h2 style="font-family: var(--font-display, 'Outfit', sans-serif); font-size: 1.8rem; font-weight: 800; color: var(--theme-dark); margin: 0 0 0.75rem 0;">${card.weekTitle}</h2>
+        <p style="font-size: 0.95rem; line-height: 1.6; color: var(--theme-text-muted); margin-bottom: 1.5rem;">${card.desc}</p>
+        
+        <h4 style="font-family: var(--font-display, 'Outfit', sans-serif); font-size: 1.1rem; font-weight: 700; color: var(--theme-dark); margin-bottom: 0.75rem;">Key Sessions & Modules:</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; background: #f8fafc; padding: 1.25rem; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 1.5rem;">
+          ${card.sessions.map(s => `
+            <div style="display: flex; align-items: center; gap: 0.65rem; font-size: 0.9rem; font-weight: 600; color: var(--theme-dark);">
+              <span style="color: var(--theme-dark);">⚡</span> ${s}
+            </div>
+          `).join('')}
+        </div>
+
+        <a href="/demo.html" style="display: block; text-align: center; background: var(--theme-dark); color: #fff; padding: 0.85rem 1.5rem; border-radius: 9999px; text-decoration: none; font-weight: 700; font-size: 0.92rem; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);">Enroll / Request Call →</a>
+      `;
+
+      modal.classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('curriculum-modal').classList.remove('open');
+    }
+
+    document.getElementById('curriculum-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'curriculum-modal') closeModal();
+    });
+
+    renderContent();
   </script>
-
-  <!-- Supabase & App Configuration -->
-  <script src="/js/config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/js/supabase-client.js"></script>
-  <script src="/js/script.js"></script>
-
-  <div class="floating-contact-actions" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 1rem;">
-    <!-- WhatsApp -->
-    <a href="https://wa.me/919219488809" target="_blank" class="floating-action-btn whatsapp-btn" style="width: 44px; height: 44px; border-radius: 50%; background-color: #111; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-      </svg>
-    </a>
-    <!-- Call -->
-    <a href="tel:+919219488809" class="floating-action-btn call-btn" style="width: 44px; height: 44px; border-radius: 50%; background-color: #111; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-      </svg>
-    </a>
-  </div>
-
 </body>
 </html>
