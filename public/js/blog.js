@@ -62,15 +62,15 @@ function renderPosts() {
     html += `
       <div style="margin-bottom: 4rem;">
         <a href="/blog-detail.html?slug=${encodeURIComponent(featuredPost.slug)}" style="text-decoration: none; color: inherit;">
-          <div class="apple-card-hover" style="background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 1.25rem; overflow: hidden; display: grid; grid-template-columns: 1.2fr 1fr; gap: 0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);">
-            <div style="height: 380px; overflow: hidden; position: relative;">
+          <div class="blog-featured-card apple-card-hover">
+            <div class="blog-featured-img-wrap">
               <div class="card-zoom-img" style="width: 100%; height: 100%; ${bgStyle}"></div>
               <span style="position: absolute; top: 1.5rem; left: 1.5rem; background-color: #121212; color: #ffffff; padding: 0.35rem 0.85rem; border-radius: 9999px; font-size: 0.7rem; font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.05em;">
                 FEATURED STORY
               </span>
             </div>
 
-            <div style="padding: 3rem; display: flex; flex-direction: column; justify-content: center;">
+            <div class="blog-featured-content">
               <span style="font-size: 0.75rem; font-family: var(--font-mono); font-weight: 700; color: #10b981; letter-spacing: 0.08em; margin-bottom: 0.75rem;">
                 ARTICLE // RESEARCH
               </span>
@@ -98,7 +98,7 @@ function renderPosts() {
         <h3 style="font-size: 1rem; font-family: var(--font-mono); font-weight: 700; color: #121212; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2rem;">
           ✦ Latest Publications
         </h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem;">
+        <div class="blog-posts-grid">
     `;
 
     gridPosts.forEach(post => {

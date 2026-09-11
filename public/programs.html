@@ -666,13 +666,175 @@
       color: #0f172a;
     }
 
-    @media (max-width: 640px) {
-      .program-details-container {
-        padding: 2rem 1.5rem;
+    /* Tablet & Mobile Responsive System for Curriculum Page */
+    @media (max-width: 1024px) {
+      .pure-horizontal-wrapper {
+        height: auto !important;
+        min-height: auto !important;
+        overflow: visible !important;
+        padding-top: 85px !important;
+        padding-bottom: 2rem !important;
       }
+
+      .timeline-canvas {
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1.75rem !important;
+        position: relative !important;
+        transform: none !important;
+      }
+
+      .process-timeline-header {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        max-width: 640px !important;
+        padding: 0 1.5rem 0.5rem !important;
+        text-align: center !important;
+      }
+
+      .watermark-year {
+        display: none !important;
+      }
+
       .process-toggle-container {
-        left: 80px;
-        top: 250px;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        margin: 0.5rem auto 1.5rem auto !important;
+        display: flex !important;
+        justify-content: center !important;
+        z-index: 20 !important;
+      }
+
+      .timeline-svg-container,
+      #car-wrapper,
+      .connection-stem,
+      .connection-dot {
+        display: none !important;
+      }
+
+      .process-node {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        width: 100% !important;
+        max-width: 520px !important;
+        padding: 0 1.25rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+      }
+
+      .node-icon-wrapper {
+        margin-bottom: 0.75rem !important;
+        position: relative !important;
+      }
+
+      .step-card {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        margin: 0 !important;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05) !important;
+      }
+
+      .step-card-content {
+        display: block !important;
+        opacity: 1 !important;
+        max-height: none !important;
+        margin-top: 0.5rem !important;
+      }
+
+      .step-dash-divider {
+        display: block !important;
+        width: 100% !important;
+        margin: 0.5rem 0 !important;
+      }
+
+      .step-view-more {
+        display: inline-block !important;
+        margin-top: 0.75rem !important;
+      }
+
+      .vertical-details-wrapper {
+        padding: 2.5rem 1.5rem 4rem !important;
+      }
+
+      .program-details-container {
+        max-width: 100% !important;
+        padding: 2.5rem 1.5rem !important;
+      }
+
+      .tools-grid {
+        grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)) !important;
+        gap: 0.85rem !important;
+      }
+
+      .outcomes-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .process-timeline-header {
+        padding: 0 1rem 0.25rem !important;
+      }
+
+      .process-title {
+        font-size: clamp(1.9rem, 7vw, 2.5rem) !important;
+      }
+
+      .process-toggle-container {
+        padding: 4px !important;
+        gap: 0.35rem !important;
+      }
+
+      .toggle-pill-btn {
+        padding: 0.45rem 0.85rem !important;
+        font-size: 0.75rem !important;
+      }
+
+      .process-node {
+        padding: 0 0.75rem !important;
+      }
+
+      .step-card {
+        padding: 1.5rem 1.25rem !important;
+      }
+
+      .vertical-details-wrapper {
+        padding: 1.5rem 0.75rem 3.5rem !important;
+      }
+
+      .program-details-container {
+        padding: 1.75rem 1rem !important;
+        border-radius: 16px !important;
+      }
+
+      .tools-grid {
+        grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)) !important;
+        gap: 0.65rem !important;
+      }
+
+      .tool-chip {
+        padding: 0.6rem 0.75rem !important;
+        font-size: 0.8rem !important;
+      }
+
+      .curriculum-modal-card {
+        padding: 1.75rem 1.25rem !important;
+        border-radius: 18px !important;
       }
     }
   </style>
@@ -686,7 +848,7 @@
     <div class="grid-line grid-line-v3"></div>
   </div>
 
-  <!-- EXACT Standard Header Navigation (Matching index.html, gallery.html, about.html) -->
+  <!-- EXACT Standard Header Navigation -->
   <header>
     <a href="/index.html" class="logo" id="logo-link" style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
       <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
@@ -708,6 +870,13 @@
         <li><a href="/demo.html" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.65rem;"><span class="btn-text">Join</span></a></li>
       </ul>
     </nav>
+    <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <div class="hamburger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
   </header>
 
   <!-- Pinned Pure Horizontal Section (Car Moves Along Sine Path, Canvas Scrolls Left) -->
@@ -1013,7 +1182,7 @@
     const car = document.getElementById('car-wrapper');
     const path = document.getElementById('sine-motion-path');
 
-    if (wrapper && canvas) {
+    if (wrapper && canvas && window.innerWidth > 1024) {
       const getScrollAmount = () => canvas.offsetWidth - window.innerWidth;
 
       const tl = gsap.timeline({
@@ -1348,5 +1517,6 @@
 
     renderContent();
   </script>
+  <script src="/js/script.js" defer></script>
 </body>
 </html>
