@@ -718,21 +718,32 @@
         display: none !important;
       }
 
+      .timeline-nodes {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1.5rem !important;
+        width: 100% !important;
+        max-width: 840px !important;
+        padding: 0 1.5rem !important;
+        box-sizing: border-box !important;
+      }
+
       .process-node {
         position: relative !important;
         left: auto !important;
         top: auto !important;
         width: 100% !important;
-        max-width: 520px !important;
-        padding: 0 1.25rem !important;
+        max-width: 100% !important;
+        padding: 0 !important;
         display: flex !important;
         flex-direction: column !important;
-        align-items: center !important;
+        align-items: stretch !important;
       }
 
       .node-icon-wrapper {
         margin-bottom: 0.75rem !important;
         position: relative !important;
+        align-self: center !important;
       }
 
       .step-card {
@@ -742,14 +753,24 @@
         transform: none !important;
         width: 100% !important;
         max-width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
         opacity: 1 !important;
         pointer-events: auto !important;
         margin: 0 !important;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05) !important;
+        border-radius: 16px !important;
+        padding: 1.75rem 1.5rem !important;
+        box-sizing: border-box !important;
       }
 
       .step-card-content {
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        flex: 1 !important;
         opacity: 1 !important;
         max-height: none !important;
         margin-top: 0.5rem !important;
@@ -762,7 +783,9 @@
       }
 
       .step-view-more {
-        display: inline-block !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        min-height: 44px !important;
         margin-top: 0.75rem !important;
       }
 
@@ -781,7 +804,7 @@
       }
 
       .outcomes-grid {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: 1fr 1fr !important;
         gap: 1rem !important;
       }
     }
@@ -798,15 +821,25 @@
       .process-toggle-container {
         padding: 4px !important;
         gap: 0.35rem !important;
+        width: 100% !important;
+        max-width: 360px !important;
       }
 
       .toggle-pill-btn {
-        padding: 0.45rem 0.85rem !important;
+        padding: 0.65rem 0.85rem !important;
         font-size: 0.75rem !important;
+        flex: 1 !important;
+        min-height: 44px !important;
+      }
+
+      .timeline-nodes {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem !important;
+        padding: 0 1rem !important;
       }
 
       .process-node {
-        padding: 0 0.75rem !important;
+        padding: 0 !important;
       }
 
       .step-card {
@@ -828,8 +861,13 @@
       }
 
       .tool-chip {
-        padding: 0.6rem 0.75rem !important;
+        padding: 0.65rem 0.75rem !important;
         font-size: 0.8rem !important;
+        min-height: 44px !important;
+      }
+
+      .outcomes-grid {
+        grid-template-columns: 1fr !important;
       }
 
       .curriculum-modal-card {

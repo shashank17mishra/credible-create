@@ -252,9 +252,10 @@ function initCredibleCreate() {
   function startScrollCooldown() {
     isScrollingCooldown = true;
     if (cooldownTimer) clearTimeout(cooldownTimer);
+    const duration = window.innerWidth > 1024 ? 900 : 550;
     cooldownTimer = setTimeout(() => {
       isScrollingCooldown = false;
-    }, 900); // 900ms matches the slide fade transition duration
+    }, duration);
   }
 
   // Intercept scroll wheel intents
@@ -365,7 +366,19 @@ function initCredibleCreate() {
     if (sections[index]) {
       activeSectionIndex = index;
       targetScrollY = index * container.clientHeight;
+      if (window.innerWidth <= 1024) {
+        sections[index].scrollTop = 0;
+      }
     }
+  }
+
+  // Mobile Hero Down Arrow Button to advance to Chapter 2
+  const heroDownArrowBtn = document.getElementById('hero-down-arrow-btn');
+  if (heroDownArrowBtn) {
+    heroDownArrowBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToSection(1);
+    });
   }
 
   // Update navigation items and background colors on section change
@@ -1329,75 +1342,92 @@ function initCredibleCreate() {
           if (index === 0 && Math.abs(progress) < 0.2) {
             const avatarContainer = section.querySelector('.hero-avatar-container');
             if (avatarContainer) {
-              const avatarX = mouseX * 30;
-              const avatarY = mouseY * 15;
-              avatarContainer.style.transform = `translate3d(calc(-50% + ${avatarX}px), calc(-50% + ${avatarY}px), 0)`;
+              const avatarX = mouseX * 25;
+              const avatarY = mouseY * 12;
+              avatarContainer.style.transform = `translate3d(${avatarX}px, ${avatarY}px, 0)`;
             }
           }
         } else if (index === 0) {
           const avatarContainer = section.querySelector('.hero-avatar-container');
           if (avatarContainer) {
-            if (window.innerWidth <= 768) {
-              avatarContainer.style.transform = 'translateX(-50%)';
-            } else {
-              avatarContainer.style.transform = 'translate(-50%, -50%)';
-            }
+            avatarContainer.style.transform = 'none';
           }
         }
 
-        // C. Animate Opposing Parallax Columns for Gallery Showcase
+        // C. Animate Opposing Parallax Columns for Gallery Showcase (Desktop only)
         if (section.id === 'gallery' || index === 3) {
           const colLeft = section.querySelector('.col-left');
           const colRight = section.querySelector('.col-right');
           if (colLeft && colRight) {
-            const leftY = -40 + (progress * -180);
-            const rightY = 40 + (progress * 180);
-            colLeft.style.transform = `translate3d(0, ${leftY}px, 0)`;
-            colRight.style.transform = `translate3d(0, ${rightY}px, 0)`;
+            if (window.innerWidth > 1024) {
+              const leftY = -40 + (progress * -180);
+              const rightY = 40 + (progress * 180);
+              colLeft.style.transform = `translate3d(0, ${leftY}px, 0)`;
+              colRight.style.transform = `translate3d(0, ${rightY}px, 0)`;
+            } else {
+              colLeft.style.transform = '';
+              colRight.style.transform = '';
+            }
           }
         }
 
-        // D. Animate Mockup Card 3D tilt, image parallax, and badges
+        // D. Animate Mockup Card 3D tilt, image parallax, and badges (Desktop only)
         if (section.id === 'myna-tribe' || index === 5) {
           const mockupCard = section.querySelector('.myna-section-body');
           const cardImg = section.querySelector('.myna-card-img');
           const badgeLeft = section.querySelector('.myna-floating-badge.badge-left');
           const badgeRight = section.querySelector('.myna-floating-badge.badge-right');
 
-          // 3D Card tilt and scroll parallax
-          if (mockupCard) {
-            const scrollY = progress * -150;
-            const tiltX = mouseY * -8;
-            const tiltY = mouseX * 8;
-            const shiftX = mouseX * 10;
-            const shiftY = mouseY * 5;
-            const scale = 1 - Math.abs(progress) * 0.05;
-            const opacity = Math.max(0, 1 - Math.abs(progress) * 1.5);
+          if (window.innerWidth > 1024) {
+            // 3D Card tilt and scroll parallax
+            if (mockupCard) {
+              const scrollY = progress * -150;
+              const tiltX = mouseY * -8;
+              const tiltY = mouseX * 8;
+              const shiftX = mouseX * 10;
+              const shiftY = mouseY * 5;
+              const scale = 1 - Math.abs(progress) * 0.05;
+              const opacity = Math.max(0, 1 - Math.abs(progress) * 1.5);
 
-            mockupCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translate3d(${shiftX}px, calc(${scrollY}px + ${shiftY}px), 0) scale(${scale})`;
-            mockupCard.style.opacity = opacity;
-          }
+              mockupCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translate3d(${shiftX}px, calc(${scrollY}px + ${shiftY}px), 0) scale(${scale})`;
+              mockupCard.style.opacity = opacity;
+            }
 
-          // Image scroll and mouse move parallax
-          if (cardImg && Math.abs(progress) < 0.3) {
-            const imgMouseX = mouseX * -25;
-            const imgMouseY = mouseY * -15;
-            // Mixed percentage translation for dynamic responsive crop and scroll parallax (centered horizontally)
-            cardImg.style.transform = `translate3d(calc(-50% + ${imgMouseX}px), calc(${progress * -4}% + ${imgMouseY}px), 0) scale(1.02)`;
-          }
+            // Image scroll and mouse move parallax
+            if (cardImg && Math.abs(progress) < 0.3) {
+              const imgMouseX = mouseX * -25;
+              const imgMouseY = mouseY * -15;
+              // Mixed percentage translation for dynamic responsive crop and scroll parallax (centered horizontally)
+              cardImg.style.transform = `translate3d(calc(-50% + ${imgMouseX}px), calc(${progress * -4}% + ${imgMouseY}px), 0) scale(1.02)`;
+            }
 
-          // Floating badges parallax depth
-          if (badgeLeft && Math.abs(progress) < 0.3) {
-            const badgeScrollY = progress * -50;
-            const badgeMouseX = mouseX * 18;
-            const badgeMouseY = mouseY * 8;
-            badgeLeft.style.transform = `translate3d(${badgeMouseX}px, calc(${badgeScrollY}px + ${badgeMouseY}px), 0)`;
-          }
-          if (badgeRight && Math.abs(progress) < 0.3) {
-            const badgeScrollY = progress * -70;
-            const badgeMouseX = mouseX * 22;
-            const badgeMouseY = mouseY * 10;
-            badgeRight.style.transform = `translate3d(${badgeMouseX}px, calc(${badgeScrollY}px + ${badgeMouseY}px), 0)`;
+            // Floating badges parallax depth
+            if (badgeLeft && Math.abs(progress) < 0.3) {
+              const badgeScrollY = progress * -50;
+              const badgeMouseX = mouseX * 18;
+              const badgeMouseY = mouseY * 8;
+              badgeLeft.style.transform = `translate3d(${badgeMouseX}px, calc(${badgeScrollY}px + ${badgeMouseY}px), 0)`;
+            }
+            if (badgeRight && Math.abs(progress) < 0.3) {
+              const badgeScrollY = progress * -70;
+              const badgeMouseX = mouseX * 22;
+              const badgeMouseY = mouseY * 10;
+              badgeRight.style.transform = `translate3d(${badgeMouseX}px, calc(${badgeScrollY}px + ${badgeMouseY}px), 0)`;
+            }
+          } else {
+            if (mockupCard) {
+              mockupCard.style.transform = '';
+              mockupCard.style.opacity = '1';
+            }
+            if (cardImg) {
+              cardImg.style.transform = '';
+            }
+            if (badgeLeft) {
+              badgeLeft.style.transform = '';
+            }
+            if (badgeRight) {
+              badgeRight.style.transform = '';
+            }
           }
         }
       }
