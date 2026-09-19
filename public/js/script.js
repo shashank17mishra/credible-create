@@ -129,28 +129,38 @@ function initCredibleCreate() {
     return tokens;
   }
 
+  const isMobile = () => window.innerWidth <= 768;
+
   // Parse and cache initial content text for each story section
   sections.forEach((section, sIdx) => {
     const title = section.querySelector('.story-title');
     const desc = section.querySelector('.story-content-box p');
     
     if (title) {
+      const raw = title.innerHTML;
       typableElements.push({
         element: title,
-        tokens: tokenizeHtml(title.innerHTML.trim()),
+        rawHtml: raw,
+        tokens: tokenizeHtml(raw.trim()),
         sectionIndex: sIdx,
         type: 'title'
       });
-      title.innerHTML = ''; // Start clean
+      if (!isMobile()) {
+        title.innerHTML = ''; // Start clean only on desktop
+      }
     }
     if (desc) {
+      const raw = desc.innerHTML;
       typableElements.push({
         element: desc,
-        tokens: tokenizeHtml(desc.innerHTML.trim()),
+        rawHtml: raw,
+        tokens: tokenizeHtml(raw.trim()),
         sectionIndex: sIdx,
         type: 'desc'
       });
-      desc.innerHTML = ''; // Start clean
+      if (!isMobile()) {
+        desc.innerHTML = ''; // Start clean only on desktop
+      }
     }
   });
 
@@ -162,6 +172,17 @@ function initCredibleCreate() {
   }
 
   function startTypingForSection(sectionIndex) {
+    if (isMobile()) {
+      // Stop typing animation for mobile view - render full text immediately
+      clearAllTyping();
+      typableElements.forEach(item => {
+        if (item.sectionIndex === sectionIndex) {
+          item.element.innerHTML = item.rawHtml;
+        }
+      });
+      return;
+    }
+
     clearAllTyping();
 
     // Reset others instantly
@@ -241,6 +262,14 @@ function initCredibleCreate() {
     // Align current target on resize to prevent drift
     targetScrollY = activeSectionIndex * containerHeight;
     currentScrollY = targetScrollY;
+    if (isMobile()) {
+      clearAllTyping();
+      typableElements.forEach(item => {
+        if (item.sectionIndex === activeSectionIndex) {
+          item.element.innerHTML = item.rawHtml;
+        }
+      });
+    }
   }
   window.addEventListener('resize', updateScrollBounds);
   updateScrollBounds();
@@ -385,6 +414,7 @@ function initCredibleCreate() {
   function updateNavigation(activeIndex) {
     // Update active index tracking
     activeSectionIndex = activeIndex;
+    document.body.classList.toggle('hero-active', activeIndex === 0);
 
     // Update dots
     dots.forEach((dot, index) => {
@@ -1525,14 +1555,39 @@ function initGlobalMobileNav() {
     toggleBtn.className = 'mobile-nav-toggle';
     toggleBtn.setAttribute('aria-label', 'Toggle navigation menu');
     toggleBtn.setAttribute('aria-expanded', 'false');
+    header.appendChild(toggleBtn);
+  }
+
+  // Ensure both hamburger icon and close X icon exist inside toggleBtn
+  if (!toggleBtn.querySelector('.hamburger-icon')) {
     toggleBtn.innerHTML = `
       <div class="hamburger-icon">
         <span></span>
         <span></span>
         <span></span>
       </div>
+      <svg class="close-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
     `;
-    header.appendChild(toggleBtn);
+  } else if (!toggleBtn.querySelector('.close-icon')) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'close-icon');
+    svg.setAttribute('width', '20');
+    svg.setAttribute('height', '20');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', '#111111');
+    svg.setAttribute('stroke-width', '2.4');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = `
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    `;
+    toggleBtn.appendChild(svg);
   }
 
   // 2. Ensure drawer exists inside document.body
@@ -1585,12 +1640,14 @@ function initGlobalMobileNav() {
       drawer.setAttribute('aria-hidden', 'false');
       toggleBtn.classList.add('is-active');
       toggleBtn.setAttribute('aria-expanded', 'true');
+      toggleBtn.setAttribute('aria-label', 'Close navigation menu');
       document.body.classList.add('mobile-nav-open');
     } else {
       drawer.classList.remove('is-open');
       drawer.setAttribute('aria-hidden', 'true');
       toggleBtn.classList.remove('is-active');
       toggleBtn.setAttribute('aria-expanded', 'false');
+      toggleBtn.setAttribute('aria-label', 'Open navigation menu');
       document.body.classList.remove('mobile-nav-open');
     }
   }

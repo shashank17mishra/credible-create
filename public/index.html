@@ -20,7 +20,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Custom Design System & Motion Styles -->
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v=7">
 </head>
 
 <body>
@@ -36,11 +36,11 @@
   <header>
     <a href="/index.html" class="logo" id="logo-link"
       style="display: flex; align-items: center; gap: 0.65rem; text-decoration: none;">
-      <span style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
-      <span
-        style="font-family: 'Asimovian', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.05; display: flex; flex-direction: column; color: #111;">
+      <span class="logo-bar" style="width: 3px; height: 26px; background: #111; border-radius: 2px; display: inline-block;"></span>
+      <span class="logo-text"
+        style="font-family: 'Montserrat', 'Space Mono', sans-serif; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.14em; line-height: 1.05; display: flex; flex-direction: column; color: #111;">
         <span>CREDIBLE</span>
-        <span style="color: #666; font-weight: 600;">CREATE</span>
+        <span class="logo-subtext" style="color: #666; font-weight: 600;">CREATE</span>
       </span>
     </a>
     <nav>
@@ -63,6 +63,10 @@
         <span></span>
         <span></span>
       </div>
+      <svg class="close-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
     </button>
   </header>
 
@@ -89,21 +93,44 @@
       </div>
 
       <div class="editorial-container">
+        <!-- Mobile Right Peeking Illustration (Shown strictly on mobile <= 768px) -->
+        <div class="mobile-peeking-characters">
+          <img src="/assets/image.png" alt="Credible Create Innovators" class="mobile-peeking-img" />
+        </div>
+
         <div class="story-content-box">
           <span class="chapter-indicator"><span class="indicator-dash">—</span> CH. 01 / START</span>
           <h1 class="story-title">Shaping the Innovators of Tomorrow</h1>
           <p class="story-text">At Credible Create, we redefine technology education. Through hands-on, project-based
             training, we prepare young minds to build the future.</p>
           <div class="story-actions">
-            <a href="/demo.html" class="btn btn-primary btn-pill"
-              style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><span
-                class="btn-text">Request Call →</span></a>
-            <a href="/programs.html" class="btn btn-secondary btn-pill"
-              style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><span
-                class="btn-text">Explore Programs</span></a>
+            <a href="/demo.html" class="btn btn-primary btn-pill hero-btn-main"
+              style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+              <span class="btn-text desktop-btn-text">Request Call →</span>
+              <span class="btn-text mobile-btn-text">Start Learning &nbsp;→</span>
+            </a>
+            <a href="/programs.html" class="btn btn-secondary btn-pill hero-btn-sub"
+              style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+              <span class="btn-text">Explore Programs</span>
+            </a>
           </div>
         </div>
 
+        <!-- Mobile Hero Desk Card (Shown strictly on mobile <= 768px) -->
+        <div class="mobile-hero-desk-card">
+          <img src="/assets/hero-desk-card.png" alt="Robotics and AI Workbench" class="mobile-desk-img" />
+        </div>
+
+        <!-- Mobile Scroll Indicator (Shown strictly on mobile <= 768px) -->
+        <div class="mobile-scroll-discover">
+          <div class="scroll-vertical-line"></div>
+          <div class="scroll-discover-text">SCROLL TO DISCOVER</div>
+          <svg class="scroll-down-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        <!-- Desktop Mascot Avatar Container (Strictly untouched for desktop) -->
         <div class="hero-avatar-container">
           <div class="hero-avatar-video">
             <video id="hero-avatar-video" src="/assets/Create_a_subtle_high_quality-nobg.mp4" autoplay loop muted
@@ -112,6 +139,7 @@
           </div>
         </div>
 
+        <!-- Desktop Telemetry Status Panel -->
         <div class="status-panel">
           <span class="status-num">01</span>
           <div>
@@ -121,7 +149,7 @@
           </div>
         </div>
 
-        <!-- Mobile Bottom Telemetry & Navigation Bar -->
+        <!-- Mobile Bottom Telemetry & Navigation Bar (Legacy fallback) -->
         <div class="mobile-bottom-bar">
           <div class="mobile-status-block">
             <div>STATUS // LIVE</div>
@@ -577,7 +605,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/js/supabase-client.js"></script>
   <!-- Core Page Interactions Script -->
-  <script src="/js/script.js"></script>
+  <script src="/js/script.js?v=7"></script>
 
   <!-- Floating Contact Actions -->
   <div class="floating-contact-actions"
