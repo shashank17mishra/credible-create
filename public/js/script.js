@@ -1694,6 +1694,11 @@ function initMobileCarAnimation() {
   let isRunning = false;
   let loopTimeout = null;
 
+  // Pre-render CREATIVE so it is never blank
+  textWord.textContent = word;
+  textWord.style.opacity = "0.6";
+  if (textCursor) textCursor.style.opacity = "0.6";
+
   function runCarDrive() {
     if (window.innerWidth > 768) {
       loopTimeout = setTimeout(runCarDrive, 2000);
@@ -1703,11 +1708,7 @@ function initMobileCarAnimation() {
     if (isRunning) return;
     isRunning = true;
 
-    // Reset car position and text (60% transparency)
-    textWord.textContent = "";
-    textWord.style.opacity = "0.6";
-    if (textCursor) textCursor.style.opacity = "0.6";
-
+    // Reset car position
     car.style.transition = "none";
     car.style.left = "-70px";
 
@@ -1723,6 +1724,8 @@ function initMobileCarAnimation() {
 
     // 2. Type "CREATIVE" in uppercase as the car crosses the center area
     setTimeout(() => {
+      textWord.textContent = "";
+      textWord.style.opacity = "0.6";
       let charIdx = 0;
       const typeInterval = setInterval(() => {
         if (charIdx < word.length) {
@@ -1732,25 +1735,20 @@ function initMobileCarAnimation() {
           clearInterval(typeInterval);
         }
       }, 95);
-    }, 950);
+    }, 850);
 
-    // 3. Keep word displayed for 4.5s, then fade out and reset for next loop
+    // 3. Keep word displayed for 5s, then reset car for next loop (text stays visible)
     loopTimeout = setTimeout(() => {
-      textWord.style.transition = "opacity 0.5s ease";
-      textWord.style.opacity = "0";
-      if (textCursor) textCursor.style.opacity = "0";
+      textWord.textContent = word;
+      textWord.style.opacity = "0.6";
+      if (textCursor) textCursor.style.opacity = "0.6";
+      car.style.transition = "none";
+      car.style.left = "-70px";
+      isRunning = false;
 
-      setTimeout(() => {
-        textWord.textContent = "";
-        textWord.style.opacity = "0.6";
-        car.style.transition = "none";
-        car.style.left = "-70px";
-        isRunning = false;
-
-        // Pause 1.2s before next car drive loop
-        loopTimeout = setTimeout(runCarDrive, 1200);
-      }, 600);
-    }, 6200);
+      // Pause 2s before next car drive loop
+      loopTimeout = setTimeout(runCarDrive, 2000);
+    }, 5800);
   }
 
   // Start after initial page load settles
