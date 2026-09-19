@@ -414,7 +414,6 @@ function initCredibleCreate() {
   function updateNavigation(activeIndex) {
     // Update active index tracking
     activeSectionIndex = activeIndex;
-    document.body.classList.toggle('hero-active', activeIndex === 0);
 
     // Update dots
     dots.forEach((dot, index) => {
@@ -1679,9 +1678,96 @@ function initGlobalMobileNav() {
   });
 }
 
+/* ==========================================================================
+   MOBILE ROBOTIC CAR TRACK & "CREATIVE" TYPING CONTROLLER
+   ========================================================================== */
+function initMobileCarAnimation() {
+  const track = document.getElementById('mobile-car-track');
+  const car = document.getElementById('mobile-robot-car');
+  if (!track || !car) return;
+
+  const textWord = track.querySelector('.typing-word');
+  const textCursor = track.querySelector('.typing-cursor');
+  if (!textWord) return;
+
+  const word = "CREATIVE";
+  let isRunning = false;
+  let loopTimeout = null;
+
+  function runCarDrive() {
+    if (window.innerWidth > 768) {
+      loopTimeout = setTimeout(runCarDrive, 2000);
+      return;
+    }
+
+    if (isRunning) return;
+    isRunning = true;
+
+    // Reset car position and text (60% transparency)
+    textWord.textContent = "";
+    textWord.style.opacity = "0.6";
+    if (textCursor) textCursor.style.opacity = "0.6";
+
+    car.style.transition = "none";
+    car.style.left = "-70px";
+
+    // Force style recalculation
+    void car.offsetWidth;
+
+    const trackWidth = track.clientWidth || 320;
+    const driveDuration = 2.8; // seconds
+
+    // 1. Car drives smoothly from left across to right
+    car.style.transition = `left ${driveDuration}s cubic-bezier(0.35, 0, 0.25, 1)`;
+    car.style.left = `${trackWidth + 25}px`;
+
+    // 2. Type "CREATIVE" in uppercase as the car crosses the center area
+    setTimeout(() => {
+      let charIdx = 0;
+      const typeInterval = setInterval(() => {
+        if (charIdx < word.length) {
+          textWord.textContent += word[charIdx];
+          charIdx++;
+        } else {
+          clearInterval(typeInterval);
+        }
+      }, 95);
+    }, 950);
+
+    // 3. Keep word displayed for 4.5s, then fade out and reset for next loop
+    loopTimeout = setTimeout(() => {
+      textWord.style.transition = "opacity 0.5s ease";
+      textWord.style.opacity = "0";
+      if (textCursor) textCursor.style.opacity = "0";
+
+      setTimeout(() => {
+        textWord.textContent = "";
+        textWord.style.opacity = "0.6";
+        car.style.transition = "none";
+        car.style.left = "-70px";
+        isRunning = false;
+
+        // Pause 1.2s before next car drive loop
+        loopTimeout = setTimeout(runCarDrive, 1200);
+      }, 600);
+    }, 6200);
+  }
+
+  // Start after initial page load settles
+  setTimeout(runCarDrive, 700);
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth <= 768 && !isRunning) {
+      clearTimeout(loopTimeout);
+      runCarDrive();
+    }
+  });
+}
+
 function runInit() {
   initCredibleCreate();
   initGlobalMobileNav();
+  initMobileCarAnimation();
 }
 
 if (document.readyState === 'loading') {
