@@ -405,11 +405,23 @@ app.get('*', (req, res) => {
 
 // Start Express Server
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`==================================================`);
     console.log(` CREDIBLE CREATE SERVER LIVE ON http://localhost:${PORT}`);
     console.log(` Stack: Standard HTML, CSS, JS + Node/Express (Static)`);
     console.log(`==================================================`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`\n⚠️  Port ${PORT} is already in use by another process.`);
+      console.error(`To resolve this on Windows PowerShell, run:`);
+      console.error(`  Get-Process -Id (Get-NetTCPConnection -LocalPort ${PORT}).OwningProcess | Stop-Process -Force\n`);
+      console.error(`Or set a different port via the PORT environment variable (e.g. PORT=3001 npm run dev).\n`);
+      process.exit(1);
+    } else {
+      throw err;
+    }
   });
 }
 
