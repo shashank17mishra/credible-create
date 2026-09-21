@@ -3026,7 +3026,7 @@ body.mobile-nav-open {
   }
 
   #meadow .editorial-container {
-    padding: 0.65rem 1.25rem 1rem 1.25rem !important;
+    padding: 0.65rem 0.85rem 1.5rem 0.85rem !important;
     height: auto !important;
     min-height: auto !important;
     max-height: none !important;
@@ -3039,7 +3039,7 @@ body.mobile-nav-open {
     box-sizing: border-box !important;
     overflow: visible !important;
     width: 100% !important;
-    max-width: 440px !important;
+    max-width: 100% !important;
     margin: 0 auto !important;
   }
 
@@ -3117,15 +3117,15 @@ body.mobile-nav-open {
     font-weight: 450 !important;
   }
 
-  /* Peeking Characters on right edge (Enlarged by 40%, placed above CTA buttons) */
+  /* Peeking Characters on right edge (Enlarged by 40%, placed cleanly above CTA buttons) */
   .mobile-peeking-characters {
     display: block !important;
     position: absolute !important;
-    top: 16px !important;
+    top: 8px !important;
     right: -12px !important;
     width: auto !important;
-    height: 310px !important;
-    max-width: 215px !important;
+    height: 295px !important;
+    max-width: 205px !important;
     z-index: 4 !important;
     pointer-events: none !important;
     user-select: none !important;
@@ -3209,7 +3209,7 @@ body.mobile-nav-open {
     pointer-events: none !important;
   }
 
-  /* CTA Buttons (Pill Format) */
+  /* CTA Buttons: Shifted down by 20% for generous spacing below character artwork */
   #meadow .story-actions {
     display: flex !important;
     flex-direction: row !important;
@@ -3217,7 +3217,7 @@ body.mobile-nav-open {
     justify-content: flex-start !important;
     gap: 0.65rem !important;
     width: 100% !important;
-    margin: 0 0 1.15rem 0 !important;
+    margin: 2.35rem 0 1.35rem 0 !important; /* Shifted down by 20% */
     z-index: 7 !important;
   }
 
@@ -3267,20 +3267,20 @@ body.mobile-nav-open {
     transform: scale(0.98) !important;
   }
 
-  /* Editorial 3-Part Statistics Panel */
+  /* Editorial 3-Part Statistics Panel (Full screen width coverage with clean margin) */
   .mobile-metrics-panel {
     display: flex !important;
     order: 2 !important;
     align-items: center !important;
     justify-content: space-between !important;
     width: 100% !important;
-    background: rgba(255, 255, 255, 0.88) !important;
+    background: rgba(255, 255, 255, 0.9) !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
     border: 1px solid rgba(0, 0, 0, 0.06) !important;
     border-radius: 16px !important;
-    padding: 0.85rem 0.75rem !important;
-    margin: 0 0 1.25rem 0 !important;
+    padding: 0.95rem 0.65rem !important;
+    margin: 0 0 1.35rem 0 !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
     box-sizing: border-box !important;
     z-index: 6 !important;
@@ -3329,14 +3329,14 @@ body.mobile-nav-open {
     margin: 0 0.35rem !important;
   }
 
-  /* Focus Areas Section (3 Horizontal Cards with Bubbles) */
+  /* Focus Areas Section (Full screen width coverage with non-truncated cards) */
   .mobile-focus-section {
     display: flex !important;
     order: 3 !important;
     flex-direction: column !important;
     gap: 0.65rem !important;
     width: 100% !important;
-    margin: 0 0 1.35rem 0 !important;
+    margin: 0 0 1.75rem 0 !important;
     z-index: 6 !important;
     box-sizing: border-box !important;
   }
@@ -3364,7 +3364,7 @@ body.mobile-nav-open {
     flex-direction: row !important;
     align-items: center !important;
     justify-content: space-between !important;
-    gap: 0.45rem !important;
+    gap: 0.35rem !important;
     width: 100% !important;
     box-sizing: border-box !important;
   }
@@ -3377,12 +3377,13 @@ body.mobile-nav-open {
     background: #ffffff !important;
     border: 1px solid rgba(0, 0, 0, 0.05) !important;
     border-radius: 9999px !important;
-    padding: 0.32rem 0.5rem 0.32rem 0.32rem !important;
+    padding: 0.35rem 0.45rem 0.35rem 0.3rem !important;
     text-decoration: none !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03) !important;
     transition: transform 0.2s ease, box-shadow 0.2s ease !important;
     -webkit-tap-highlight-color: transparent !important;
     min-width: 0 !important;
+    box-sizing: border-box !important;
   }
 
   .mobile-focus-card:active {
@@ -3390,8 +3391,8 @@ body.mobile-nav-open {
   }
 
   .focus-icon-bubble {
-    width: 30px !important;
-    height: 30px !important;
+    width: 26px !important;
+    height: 26px !important;
     border-radius: 50% !important;
     display: flex !important;
     align-items: center !important;
@@ -3416,32 +3417,36 @@ body.mobile-nav-open {
 
   .focus-card-text {
     font-family: var(--font-display) !important;
-    font-size: 0.7rem !important;
+    font-size: clamp(0.64rem, 2.55vw, 0.72rem) !important;
     font-weight: 700 !important;
     color: #111111 !important;
     white-space: nowrap !important;
-    letter-spacing: -0.01em !important;
-    margin: 0 0.15rem !important;
+    letter-spacing: -0.02em !important;
+    margin: 0 0.1rem !important;
     overflow: hidden !important;
-    text-overflow: ellipsis !important;
+    text-overflow: clip !important;
   }
 
   .focus-card-arrow {
     color: #888888 !important;
     flex-shrink: 0 !important;
+    width: 12px !important;
+    height: 12px !important;
   }
 
-  /* Atmospheric Bottom Layer & Leaf Silhouettes */
+  /* Atmospheric Bottom Layer: Covers entire width of the mobile screen without framing out */
   .mobile-bottom-atmosphere {
     display: block !important;
     position: absolute !important;
     bottom: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    height: 160px !important;
+    max-width: 100% !important;
+    height: 190px !important;
     pointer-events: none !important;
     overflow: hidden !important;
     z-index: 2 !important;
+    box-sizing: border-box !important;
   }
 
   .mobile-wave-svg {
@@ -3450,6 +3455,7 @@ body.mobile-nav-open {
     left: 0 !important;
     width: 100% !important;
     height: 100% !important;
+    display: block !important;
   }
 
   .mobile-leaf-accent {
