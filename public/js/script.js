@@ -256,6 +256,21 @@ function initCredibleCreate() {
   // Touch Swipe state
   let touchStartY = 0;
 
+  // Helper to reset mobile parallax styles and in-transit state
+  function resetMobileParallax(sec) {
+    if (!sec) return;
+    sec.classList.remove('in-transit');
+    sec.style.transform = '';
+    sec.style.opacity = '';
+    sec.style.zIndex = '';
+    sec.style.boxShadow = '';
+
+    const els = sec.querySelectorAll(
+      '.mobile-peeking-characters, .canopy-stage-image, .thermals-stage-image, .gallery-cards-track, .contact-m-quick-channels, .contact-m-form-card, .myna-card-image-wrap, .canopy-pill-left, .canopy-pill-right, .floating-pill, .hero-badge-live, .thermals-radar, .peeking-spark-doodle, .chapter-indicator, .mobile-tag, .mobile-focus-label, .mobile-bottom-atmosphere, .peeking-leaf-accent, .mobile-focus-section, .canopy-feature-grid, .thermals-feature-grid'
+    );
+    els.forEach(el => { el.style.transform = ''; });
+  }
+
   // Calculate scroll boundaries
   function updateScrollBounds() {
     const containerHeight = container.clientHeight;
@@ -269,6 +284,8 @@ function initCredibleCreate() {
           item.element.innerHTML = item.rawHtml;
         }
       });
+    } else {
+      sections.forEach(sec => resetMobileParallax(sec));
     }
   }
   window.addEventListener('resize', updateScrollBounds);
@@ -1334,8 +1351,11 @@ function initCredibleCreate() {
 
     // 2. Lerp virtual scroll positions
     currentScrollY += (targetScrollY - currentScrollY) * scrollLerpFactor;
+    if (Math.abs(targetScrollY - currentScrollY) < 0.25) {
+      currentScrollY = targetScrollY;
+    }
     const containerHeight = container.clientHeight;
-
+    const isScrolling = Math.abs(targetScrollY - currentScrollY) > 0.25;
 
     // Determine target index closest to current progression float
     const targetIndex = Math.max(0, Math.min(sections.length - 1, Math.round(currentScrollY / containerHeight)));
@@ -1344,6 +1364,70 @@ function initCredibleCreate() {
     sections.forEach((section, index) => {
       const sectionOffset = index * containerHeight;
       const progress = (currentScrollY - sectionOffset) / containerHeight;
+
+      // Mobile Section Parallax Transition Engine (Applies strictly on mobile <= 768px)
+      if (isMobile()) {
+        const absProgress = Math.abs(progress);
+
+        if (isScrolling && absProgress < 1.05) {
+          section.classList.add('in-transit');
+
+          if (progress >= 0) {
+            // Outgoing / upper card: recedes with slower upward parallax (-28%), subtle scale down, soft fade
+            const translateY = progress * -28;
+            const scale = Math.max(0.88, 1 - progress * 0.08);
+            const opacity = Math.max(0, 1 - progress * 0.75);
+
+            section.style.transform = `translate3d(0, ${translateY}%, 0) scale(${scale})`;
+            section.style.opacity = opacity;
+            section.style.zIndex = '5';
+            section.style.boxShadow = 'none';
+          } else {
+            // Incoming / lower card: slides smoothly up over the receding section
+            const translateY = -progress * 100;
+            const scale = Math.min(1, 1 + progress * 0.04);
+            const opacity = Math.min(1, 1 + progress * 0.15);
+
+            section.style.transform = `translate3d(0, ${translateY}%, 0) scale(${scale})`;
+            section.style.opacity = opacity;
+            section.style.zIndex = '10';
+            section.style.boxShadow = '0 -14px 36px rgba(0, 0, 0, 0.12)';
+          }
+
+          // Differential inner element parallax for rich layered depth
+          const heroVisual = section.querySelector(
+            '.mobile-peeking-characters, .canopy-stage-image, .thermals-stage-image, .gallery-cards-track, .contact-m-quick-channels, .contact-m-form-card, .myna-card-image-wrap'
+          );
+          if (heroVisual) {
+            heroVisual.style.transform = `translate3d(0, ${progress * -55}px, 0)`;
+          }
+
+          const floatingPills = section.querySelectorAll(
+            '.canopy-pill-left, .canopy-pill-right, .floating-pill, .hero-badge-live, .thermals-radar, .peeking-spark-doodle'
+          );
+          floatingPills.forEach(pill => {
+            pill.style.transform = `translate3d(0, ${progress * -85}px, 0)`;
+          });
+
+          const chapterTag = section.querySelector('.chapter-indicator, .mobile-tag, .mobile-focus-label');
+          if (chapterTag) {
+            chapterTag.style.transform = `translate3d(0, ${progress * -22}px, 0)`;
+          }
+
+          const atmosphere = section.querySelector('.mobile-bottom-atmosphere, .peeking-leaf-accent');
+          if (atmosphere) {
+            atmosphere.style.transform = `translate3d(0, ${progress * 30}px, 0) scale(${1 + absProgress * 0.08})`;
+          }
+
+          const secondaryVisual = section.querySelector('.mobile-focus-section, .canopy-feature-grid, .thermals-feature-grid');
+          if (secondaryVisual) {
+            secondaryVisual.style.transform = `translate3d(0, ${progress * -35}px, 0)`;
+          }
+        } else {
+          // Settled or offscreen on mobile
+          resetMobileParallax(section);
+        }
+      }
 
       // Animate visible sections (within close progression boundary [-1.2, 1.2])
       if (progress >= -1.2 && progress <= 1.2) {
@@ -2051,5 +2135,186 @@ window.handleGetInTouchSubmit = async function(event) {
     if (btnText) btnText.textContent = originalText;
   }
 };
+
+// ==========================================================================
+// MOBILE GALLERY INTERACTIVE SHOWCASE CONTROLLER
+// ==========================================================================
+function initGalleryMobileShowcase() {
+  const track = document.getElementById('gallery-cards-track');
+  if (!track) return;
+
+  const cards = track.querySelectorAll('.gallery-mobile-card');
+  const chips = document.querySelectorAll('.gallery-chip');
+  const dots = document.querySelectorAll('.gallery-dot');
+  const currentSlideText = document.getElementById('gallery-current-slide');
+  const modal = document.getElementById('gallery-mobile-modal');
+  const modalImg = document.getElementById('gallery-modal-img');
+  const modalBadge = document.getElementById('gallery-modal-badge');
+  const modalTitle = document.getElementById('gallery-modal-title');
+  const modalDesc = document.getElementById('gallery-modal-desc');
+  const modalClose = document.getElementById('gallery-modal-close');
+
+  function updateActiveState(index) {
+    chips.forEach((chip, i) => {
+      chip.classList.toggle('active', i === index);
+      chip.setAttribute('aria-selected', i === index ? 'true' : 'false');
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+    cards.forEach((card, i) => {
+      card.classList.toggle('active', i === index);
+    });
+    if (currentSlideText) {
+      currentSlideText.textContent = String(index + 1).padStart(2, '0');
+    }
+  }
+
+  function scrollToIndex(index) {
+    if (cards[index]) {
+      cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      updateActiveState(index);
+    }
+  }
+
+  // Chip click handlers
+  chips.forEach((chip) => {
+    chip.addEventListener('click', (e) => {
+      e.preventDefault();
+      const idx = parseInt(chip.getAttribute('data-index'), 10);
+      if (!isNaN(idx)) scrollToIndex(idx);
+    });
+  });
+
+  // Dot click handlers
+  dots.forEach((dot) => {
+    dot.addEventListener('click', (e) => {
+      e.preventDefault();
+      const idx = parseInt(dot.getAttribute('data-index'), 10);
+      if (!isNaN(idx)) scrollToIndex(idx);
+    });
+  });
+
+  // Track scroll detection for snap synchronization
+  let scrollTimeout = null;
+  track.addEventListener('scroll', () => {
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const trackCenter = track.getBoundingClientRect().left + track.offsetWidth / 2;
+      let closestIdx = 0;
+      let minDistance = Infinity;
+
+      cards.forEach((card, idx) => {
+        const cardRect = card.getBoundingClientRect();
+        const cardCenter = cardRect.left + cardRect.width / 2;
+        const distance = Math.abs(trackCenter - cardCenter);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIdx = idx;
+        }
+      });
+
+      updateActiveState(closestIdx);
+    }, 40);
+  }, { passive: true });
+
+  // Lightbox Modal open on card tap
+  cards.forEach((card) => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      const img = card.querySelector('.gallery-mobile-img');
+      const badge = card.querySelector('.gallery-floating-badge');
+      const title = card.querySelector('.gallery-card-title');
+      const desc = card.querySelector('.gallery-card-desc');
+
+      if (modalImg && img) modalImg.src = img.src;
+      if (modalBadge && badge) modalBadge.textContent = badge.textContent.replace(/\s+/g, ' ').trim();
+      if (modalTitle && title) modalTitle.textContent = title.textContent;
+      if (modalDesc && desc) modalDesc.textContent = desc.textContent;
+
+      if (modal) {
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+    });
+  });
+
+  // Lightbox Modal close handlers
+  if (modalClose) {
+    modalClose.addEventListener('click', () => {
+      if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target.classList.contains('gallery-modal-body')) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+
+  // Keyboard navigation
+  track.addEventListener('keydown', (e) => {
+    const currentIdx = parseInt(currentSlideText?.textContent || '1', 10) - 1;
+    if (e.key === 'ArrowRight' && currentIdx < cards.length - 1) {
+      scrollToIndex(currentIdx + 1);
+    } else if (e.key === 'ArrowLeft' && currentIdx > 0) {
+      scrollToIndex(currentIdx - 1);
+    }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initGalleryMobileShowcase);
+} else {
+  setTimeout(initGalleryMobileShowcase, 150);
+}
+
+// ==========================================================================
+// MOBILE CONTACT INTERACTIVE TABS CONTROLLER
+// ==========================================================================
+function initContactMobileTabs() {
+  const tabButtons = document.querySelectorAll('.contact-tab-btn');
+  const panels = document.querySelectorAll('.contact-panel');
+  const quickSwitchBtn = document.getElementById('quick-switch-to-form');
+
+  function switchTab(targetId) {
+    tabButtons.forEach(btn => {
+      const isTarget = btn.getAttribute('data-target') === targetId;
+      btn.classList.toggle('active', isTarget);
+      btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+    });
+
+    panels.forEach(panel => {
+      panel.classList.toggle('active', panel.id === targetId);
+    });
+  }
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = btn.getAttribute('data-target');
+      if (target) switchTab(target);
+    });
+  });
+
+  if (quickSwitchBtn) {
+    quickSwitchBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchTab('panel-send-message');
+    });
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initContactMobileTabs);
+} else {
+  setTimeout(initContactMobileTabs, 150);
+}
 
 

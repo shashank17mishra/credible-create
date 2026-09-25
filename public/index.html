@@ -20,7 +20,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Custom Design System & Motion Styles -->
-  <link rel="stylesheet" href="/css/style.css?v=38">
+  <link rel="stylesheet" href="/css/style.css?v=40">
 </head>
 
 <body>
@@ -480,207 +480,643 @@
     <section id="gallery" class="story-section" data-index="3">
       <div class="section-bg"></div>
 
-      <div class="parallax-canvas">
-        <div class="watermark-bg" data-speed="0.25">Showcase</div>
+      <!-- DESKTOP VIEW (Strictly untouched original desktop markup) -->
+      <div class="gallery-desktop-view">
+        <div class="parallax-canvas">
+          <div class="watermark-bg" data-speed="0.25">Showcase</div>
+        </div>
+
+        <div class="editorial-container">
+          <div class="story-content-box">
+            <span class="chapter-indicator">CH.04 / GALLERY</span>
+            <h2 class="story-title">Creative Work In Motion</h2>
+            <p class="story-text">Observe our robotics, coding, and innovation, prototyping and electronics to design
+              classes in action. These images represent
+              cohort milestones, robot test flights, and team builds.</p>
+            <div class="story-actions">
+              <a href="/gallery.html" class="btn btn-primary"
+                style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><span
+                  class="btn-text">Full Gallery</span></a>
+            </div>
+          </div>
+
+          <div class="gallery-scroll-wrapper">
+            <div class="gallery-column col-left">
+              <div class="gallery-card">
+                <img src="/assets/class_robotics.png" alt="Robotics Class" class="gallery-img" />
+                <div class="gallery-info">
+                  <h4>BOT BARRACKS LAB</h4>
+                  <span>CH-01</span>
+                </div>
+              </div>
+              <div class="gallery-card">
+                <img src="/assets/class_ai.png" alt="AI Programming" class="gallery-img" />
+                <div class="gallery-info">
+                  <h4>COGNITIVE LABS</h4>
+                  <span>CH-02</span>
+                </div>
+              </div>
+            </div>
+            <div class="gallery-column col-right">
+              <div class="gallery-card">
+                <img src="/assets/class_drone.png" alt="Drone Aerospace" class="gallery-img" />
+                <div class="gallery-info">
+                  <h4>FLIGHT TELEMETRY</h4>
+                  <span>CH-03</span>
+                </div>
+              </div>
+              <div class="gallery-card">
+                <img src="/assets/class_aerospace.png" alt="Aerospace Models" class="gallery-img" />
+                <div class="gallery-info">
+                  <h4>MODEL PROTOTYPING</h4>
+                  <span>CH-04</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="status-panel">
+            <span class="status-num">04</span>
+            <div>
+              GALLERY // PORTFOLIO<br>
+              SHOWCASE // ACTIVE<br>
+              INDEX // RUNNING
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="editorial-container">
-        <div class="story-content-box">
-          <span class="chapter-indicator">CH.04 / GALLERY</span>
-          <h2 class="story-title">Creative Work In Motion</h2>
-          <p class="story-text">Observe our robotics, coding, and innovation, prototyping and electronics to design
-            classes in action. These images represent
-            cohort milestones, robot test flights, and team builds.</p>
-          <div class="story-actions">
-            <a href="/gallery.html" class="btn btn-primary"
-              style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><span
-                class="btn-text">Full Gallery</span></a>
+      <!-- MOBILE VIEW (Strictly shown only on mobile <= 768px) -->
+      <div class="gallery-mobile-view">
+        <div class="gallery-mobile-container">
+          
+          <!-- Top Block: Chapter Indicator, Telemetry & Headline -->
+          <div class="gallery-top-block">
+            <div class="gallery-mobile-header">
+              <span class="chapter-indicator"><span class="indicator-dash">—</span> CH. 04 / GALLERY</span>
+              <div class="gallery-telemetry-badge">
+                <span class="gallery-pulse-dot"></span>
+                <span class="gallery-telemetry-text">LIVE LABS</span>
+              </div>
+            </div>
+
+            <h2 class="gallery-mobile-title">
+              Creative Work <span class="highlight-underline-wrap">In Motion
+                <svg class="handdrawn-accent-underline" viewBox="0 0 220 16" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M3 11C48 4.5 138 4 217 10" stroke="#F5A623" stroke-width="4.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </h2>
+
+            <p class="gallery-mobile-text">
+              Observe robotics, coding, flight telemetry, and model prototyping in real-world cohort action.
+            </p>
+          </div>
+
+          <!-- Middle Block: Interactive Showcase Card Deck / Carousel -->
+          <div class="gallery-showcase-stage">
+            
+            <!-- Category Quick Switcher Chips -->
+            <div class="gallery-category-chips" role="tablist" aria-label="Filter gallery cohorts">
+              <button class="gallery-chip active" data-index="0" role="tab" aria-selected="true" type="button">
+                <span class="chip-dot"></span>
+                <span>Robotics</span>
+              </button>
+              <button class="gallery-chip" data-index="1" role="tab" aria-selected="false" type="button">
+                <span class="chip-dot"></span>
+                <span>Cognitive AI</span>
+              </button>
+              <button class="gallery-chip" data-index="2" role="tab" aria-selected="false" type="button">
+                <span class="chip-dot"></span>
+                <span>Drones</span>
+              </button>
+              <button class="gallery-chip" data-index="3" role="tab" aria-selected="false" type="button">
+                <span class="chip-dot"></span>
+                <span>Prototyping</span>
+              </button>
+            </div>
+
+            <!-- Horizontal Swipeable Snap Cards Track -->
+            <div class="gallery-cards-track" id="gallery-cards-track" tabindex="0" aria-label="Cohort photo showcase">
+              
+              <!-- Card 1: Robotics -->
+              <div class="gallery-mobile-card active" data-index="0" role="button" tabindex="0" aria-label="View Bot Barracks Lab photo">
+                <div class="gallery-card-media">
+                  <img src="/assets/class_robotics.png" alt="Bot Barracks Robotics Lab Cohort" class="gallery-mobile-img" loading="eager" />
+                  <div class="gallery-card-scrim"></div>
+                  <div class="gallery-floating-badge">
+                    <span class="badge-code">CH-01</span>
+                    <span class="badge-sep">•</span>
+                    <span class="badge-cat">ROBOTICS LAB</span>
+                  </div>
+                </div>
+                <div class="gallery-card-overlay">
+                  <div class="gallery-card-meta">
+                    <h3 class="gallery-card-title">Bot Barracks Lab</h3>
+                    <p class="gallery-card-desc">Chassis fabrication, actuator controls &amp; competition robots</p>
+                  </div>
+                  <span class="gallery-card-view-btn" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <polyline points="9 21 3 21 3 15"></polyline>
+                      <line x1="21" y1="3" x2="14" y2="10"></line>
+                      <line x1="3" y1="21" x2="10" y2="14"></line>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Card 2: AI Programming -->
+              <div class="gallery-mobile-card" data-index="1" role="button" tabindex="0" aria-label="View Cognitive Labs AI photo">
+                <div class="gallery-card-media">
+                  <img src="/assets/class_ai.png" alt="Cognitive Labs AI Programming" class="gallery-mobile-img" loading="lazy" />
+                  <div class="gallery-card-scrim"></div>
+                  <div class="gallery-floating-badge">
+                    <span class="badge-code">CH-02</span>
+                    <span class="badge-sep">•</span>
+                    <span class="badge-cat">COGNITIVE AI</span>
+                  </div>
+                </div>
+                <div class="gallery-card-overlay">
+                  <div class="gallery-card-meta">
+                    <h3 class="gallery-card-title">Cognitive Labs</h3>
+                    <p class="gallery-card-desc">Machine vision, neural pipelines &amp; embedded Python models</p>
+                  </div>
+                  <span class="gallery-card-view-btn" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <polyline points="9 21 3 21 3 15"></polyline>
+                      <line x1="21" y1="3" x2="14" y2="10"></line>
+                      <line x1="3" y1="21" x2="10" y2="14"></line>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Card 3: Drone Flight -->
+              <div class="gallery-mobile-card" data-index="2" role="button" tabindex="0" aria-label="View Flight Telemetry Drone photo">
+                <div class="gallery-card-media">
+                  <img src="/assets/class_drone.png" alt="Flight Telemetry & Aerospace Drones" class="gallery-mobile-img" loading="lazy" />
+                  <div class="gallery-card-scrim"></div>
+                  <div class="gallery-floating-badge">
+                    <span class="badge-code">CH-03</span>
+                    <span class="badge-sep">•</span>
+                    <span class="badge-cat">FLIGHT TELEMETRY</span>
+                  </div>
+                </div>
+                <div class="gallery-card-overlay">
+                  <div class="gallery-card-meta">
+                    <h3 class="gallery-card-title">Flight Telemetry</h3>
+                    <p class="gallery-card-desc">Aerodynamic airframes, avionics sensors &amp; autonomous flight</p>
+                  </div>
+                  <span class="gallery-card-view-btn" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <polyline points="9 21 3 21 3 15"></polyline>
+                      <line x1="21" y1="3" x2="14" y2="10"></line>
+                      <line x1="3" y1="21" x2="10" y2="14"></line>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Card 4: Aerospace Models -->
+              <div class="gallery-mobile-card" data-index="3" role="button" tabindex="0" aria-label="View Model Prototyping photo">
+                <div class="gallery-card-media">
+                  <img src="/assets/class_aerospace.png" alt="Model Prototyping and CAD" class="gallery-mobile-img" loading="lazy" />
+                  <div class="gallery-card-scrim"></div>
+                  <div class="gallery-floating-badge">
+                    <span class="badge-code">CH-04</span>
+                    <span class="badge-sep">•</span>
+                    <span class="badge-cat">PROTOTYPING</span>
+                  </div>
+                </div>
+                <div class="gallery-card-overlay">
+                  <div class="gallery-card-meta">
+                    <h3 class="gallery-card-title">Model Prototyping</h3>
+                    <p class="gallery-card-desc">3D fabrication, rapid iterations &amp; physical engineering</p>
+                  </div>
+                  <span class="gallery-card-view-btn" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <polyline points="9 21 3 21 3 15"></polyline>
+                      <line x1="21" y1="3" x2="14" y2="10"></line>
+                      <line x1="3" y1="21" x2="10" y2="14"></line>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Bottom Progress Dots & Counter -->
+            <div class="gallery-carousel-footer">
+              <div class="gallery-dots-indicator" aria-label="Slide indicators">
+                <span class="gallery-dot active" data-index="0" role="button" tabindex="0" aria-label="Go to slide 1"></span>
+                <span class="gallery-dot" data-index="1" role="button" tabindex="0" aria-label="Go to slide 2"></span>
+                <span class="gallery-dot" data-index="2" role="button" tabindex="0" aria-label="Go to slide 3"></span>
+                <span class="gallery-dot" data-index="3" role="button" tabindex="0" aria-label="Go to slide 4"></span>
+              </div>
+              <div class="gallery-slide-counter">
+                <span id="gallery-current-slide">01</span> / <span class="counter-total">04</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Block: Action Buttons -->
+          <div class="gallery-bottom-block">
+            <div class="gallery-mobile-actions">
+              <a href="/gallery.html" class="gallery-mobile-btn gallery-btn-primary" aria-label="View Full Gallery & Visual Archives">
+                <span>View Full Gallery &nbsp;→</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Mobile Subtle Bottom Atmospheric Layer -->
+        <div class="mobile-bottom-atmosphere" aria-hidden="true">
+          <svg class="mobile-wave-svg" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0 45C110 15 260 75 400 25V120H0V45Z" fill="#F4EFE6" fill-opacity="0.65"/>
+          </svg>
+          <div class="mobile-leaf-accent leaf-left">
+            <svg width="75" height="95" viewBox="0 0 75 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M-5 95C10 65 20 32 5 5C30 15 50 42 45 80C62 52 72 32 68 10C85 38 78 72 55 92" fill="#3D5A34" fill-opacity="0.2"/>
+            </svg>
+          </div>
+          <div class="mobile-leaf-accent leaf-right">
+            <svg width="65" height="85" viewBox="0 0 65 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M75 85C60 58 48 32 65 5C38 15 18 40 22 75C8 48 -2 30 2 8C-12 32 -8 65 12 85" fill="#3D5A34" fill-opacity="0.16"/>
+            </svg>
           </div>
         </div>
 
-        <div class="gallery-scroll-wrapper">
-          <div class="gallery-column col-left">
-            <div class="gallery-card">
-              <img src="/assets/class_robotics.png" alt="Robotics Class" class="gallery-img" />
-              <div class="gallery-info">
-                <h4>BOT BARRACKS LAB</h4>
-                <span>CH-01</span>
-              </div>
-            </div>
-            <div class="gallery-card">
-              <img src="/assets/class_ai.png" alt="AI Programming" class="gallery-img" />
-              <div class="gallery-info">
-                <h4>COGNITIVE LABS</h4>
-                <span>CH-02</span>
-              </div>
-            </div>
-          </div>
-          <div class="gallery-column col-right">
-            <div class="gallery-card">
-              <img src="/assets/class_drone.png" alt="Drone Aerospace" class="gallery-img" />
-              <div class="gallery-info">
-                <h4>FLIGHT TELEMETRY</h4>
-                <span>CH-03</span>
-              </div>
-            </div>
-            <div class="gallery-card">
-              <img src="/assets/class_aerospace.png" alt="Aerospace Models" class="gallery-img" />
-              <div class="gallery-info">
-                <h4>MODEL PROTOTYPING</h4>
-                <span>CH-04</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="status-panel">
-          <span class="status-num">04</span>
-          <div>
-            GALLERY // PORTFOLIO<br>
-            SHOWCASE // ACTIVE<br>
-            INDEX // RUNNING
-          </div>
-        </div>
       </div>
     </section>
 
-    <!-- Chapter 06: Contact & Connect -->
-    <section id="contact-section" class="story-section" data-index="5">
+    <!-- Mobile Gallery Lightbox Modal -->
+    <div class="gallery-mobile-modal" id="gallery-mobile-modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="gallery-modal-header">
+        <span class="gallery-modal-badge" id="gallery-modal-badge">CH-01 • ROBOTICS LAB</span>
+        <button class="gallery-modal-close" id="gallery-modal-close" aria-label="Close photo preview">✕</button>
+      </div>
+      <div class="gallery-modal-body">
+        <img src="/assets/class_robotics.png" alt="Enlarged Lab Photo" class="gallery-modal-img" id="gallery-modal-img" />
+      </div>
+      <div class="gallery-modal-footer">
+        <h3 class="gallery-modal-title" id="gallery-modal-title">Bot Barracks Lab</h3>
+        <p class="gallery-modal-desc" id="gallery-modal-desc">Chassis fabrication, actuator controls & competition robots</p>
+      </div>
+    </div>
+
+    <!-- Chapter 05: Contact & Connect -->
+    <section id="contact-section" class="story-section" data-index="4">
       <div class="section-bg"></div>
 
-      <!-- Faded Background Watermark -->
-      <div class="parallax-canvas" style="z-index: 1;">
-        <div class="watermark-bg" data-speed="0.25"
-          style="opacity: 0.04; font-size: clamp(8rem, 18vw, 22rem); user-select: none;">CONTACT</div>
+      <!-- DESKTOP VIEW (Strictly untouched original desktop markup) -->
+      <div class="contact-desktop-view">
+        <!-- Faded Background Watermark -->
+        <div class="parallax-canvas" style="z-index: 1;">
+          <div class="watermark-bg" data-speed="0.25"
+            style="opacity: 0.04; font-size: clamp(8rem, 18vw, 22rem); user-select: none;">CONTACT</div>
+        </div>
+
+        <!-- Main Editorial Container (Grid Layout) -->
+        <div class="editorial-container"
+          style="display: grid; grid-template-columns: 1fr 1fr 240px; align-items: center; width: 100%; height: 100%; padding: 6.5rem 4rem 2.5rem 4rem; gap: 2rem; position: relative; z-index: 10; box-sizing: border-box;">
+
+          <!-- LEFT COLUMN: Indicator, Headline, Description, Mascot Image & Bottom Social Icons -->
+          <div class="story-content-box"
+            style="display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; height: 100%; max-height: calc(100vh - 8.5rem); box-sizing: border-box;">
+            <div style="width: 100%;">
+              <span class="chapter-indicator"
+                style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; color: #707070; display: block; margin-bottom: 0.4rem;">CH.05
+                / CONNECT</span>
+              <h2 class="story-title"
+                style="font-family: var(--font-display); font-size: clamp(2.1rem, 3.2vw, 2.7rem); font-weight: 800; line-height: 1.05; text-transform: uppercase; color: #111; margin: 0 0 0.75rem 0;">
+                LET'S BUILD<br>TOGETHER</h2>
+              <p class="story-text"
+                style="font-family: var(--font-display); font-size: 0.85rem; line-height: 1.55; color: #5a5a5a; margin: 0 0 0.85rem 0; max-width: 420px;">
+                Have an idea, project, or partnership in mind? Reach out to our team for robotics, AI, IoT, design,
+                training programs, internships, or collaborations. We're always ready to connect.</p>
+
+              <div class="left-mascot-wrapper" style="max-width: 440px; width: 100%; margin-top: 0.5rem;">
+                <img src="/assets/contact us .png" alt="Let's Build Together Mascot"
+                  style="width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.06));" />
+              </div>
+            </div>
+
+            <!-- Bottom Left Social Links -->
+            <div class="bottom-left-socials"
+              style="display: flex; align-items: center; gap: 0.85rem; margin-top: auto; padding-top: 0.5rem;">
+              <a href="https://instagram.com" target="_blank" class="social-icon-btn" aria-label="Instagram"
+                style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; color: #111; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease; background: rgba(255,255,255,0.75);">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <a href="https://linkedin.com" target="_blank" class="social-icon-btn" aria-label="LinkedIn"
+                style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; color: #111; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease; background: rgba(255,255,255,0.75);">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </a>
+              <a href="https://youtube.com" target="_blank" class="social-icon-btn" aria-label="YouTube"
+                style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; color: #111; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease; background: rgba(255,255,255,0.75);">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z">
+                  </path>
+                  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                </svg>
+              </a>
+              <a href="https://wa.me/919219488809" target="_blank" class="social-icon-btn" aria-label="WhatsApp"
+                style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; color: #111; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease; background: rgba(255,255,255,0.75);">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                  </path>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- CENTER COLUMN: Vertical Contact Form Card (Increased height, reduced width) -->
+          <div class="center-contact-form-card" style="width: 100%; max-width: 460px; margin: 0 auto; z-index: 10;">
+            <form onsubmit="handleGetInTouchSubmit(event)"
+              style="background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 16px; padding: 2rem 1.85rem; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04); display: flex; flex-direction: column; gap: 1.15rem;">
+
+              <div
+                style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: #111; letter-spacing: -0.02em; margin-bottom: 0.25rem; text-transform: uppercase;">
+                GET IN TOUCH
+              </div>
+
+              <!-- Name -->
+              <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+                <label
+                  style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: #5a5a5a; letter-spacing: 0.08em;">NAME</label>
+                <input type="text" placeholder="Your name" required
+                  style="width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; font-family: var(--font-display); font-size: 0.85rem; color: #111; outline: none; transition: border-color 0.2s ease;" />
+              </div>
+
+              <!-- Email -->
+              <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+                <label
+                  style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: #5a5a5a; letter-spacing: 0.08em;">EMAIL</label>
+                <input type="email" placeholder="name@domain.com" required
+                  style="width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; font-family: var(--font-display); font-size: 0.85rem; color: #111; outline: none; transition: border-color 0.2s ease;" />
+              </div>
+
+              <!-- Phone -->
+              <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+                <label
+                  style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: #5a5a5a; letter-spacing: 0.08em;">PHONE</label>
+                <input type="tel" placeholder="+91 XXXXX XXXXX"
+                  style="width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; font-family: var(--font-display); font-size: 0.85rem; color: #111; outline: none; transition: border-color 0.2s ease;" />
+              </div>
+
+              <!-- Message -->
+              <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+                <label
+                  style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: #5a5a5a; letter-spacing: 0.08em;">MESSAGE</label>
+                <textarea rows="3" placeholder="Tell us about your inquiry..."
+                  style="width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; font-family: var(--font-display); font-size: 0.85rem; color: #111; outline: none; resize: none; transition: border-color 0.2s ease;"></textarea>
+              </div>
+
+              <!-- Send Message Button -->
+              <button type="submit" class="btn btn-primary"
+                style="width: 100%; padding: 0.8rem 1.25rem; background: #111; color: #fff; border: none; border-radius: 8px; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; margin-top: 0.35rem;">
+                <span class="btn-text">SEND MESSAGE</span>
+              </button>
+
+            </form>
+          </div>
+
+          <!-- RIGHT COLUMN: Standard Status Panel (05) -->
+          <div class="status-panel">
+            <span class="status-num">05</span>
+            <div>
+              SUPPORT // 24x7<br>
+              EMAIL // RESPONSE<br>
+              CALL // ASSISTANCE<br>
+              VISIT // OFFICE
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      <!-- Main Editorial Container (Grid Layout) -->
-      <div class="editorial-container"
-        style="display: grid; grid-template-columns: 1fr 1fr 240px; align-items: center; width: 100%; height: 100%; padding: 6.5rem 4rem 2.5rem 4rem; gap: 2rem; position: relative; z-index: 10; box-sizing: border-box;">
-
-        <!-- LEFT COLUMN: Indicator, Headline, Description, Mascot Image & Bottom Social Icons -->
-        <div class="story-content-box"
-          style="display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; height: 100%; max-height: calc(100vh - 8.5rem); box-sizing: border-box;">
-          <div style="width: 100%;">
-            <span class="chapter-indicator"
-              style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; color: #707070; display: block; margin-bottom: 0.4rem;">CH.05
-              / CONNECT</span>
-            <h2 class="story-title"
-              style="font-family: var(--font-display); font-size: clamp(2.1rem, 3.2vw, 2.7rem); font-weight: 800; line-height: 1.05; text-transform: uppercase; color: #111; margin: 0 0 0.75rem 0;">
-              LET'S BUILD<br>TOGETHER</h2>
-            <p class="story-text"
-              style="font-family: var(--font-display); font-size: 0.85rem; line-height: 1.55; color: #5a5a5a; margin: 0 0 0.85rem 0; max-width: 420px;">
-              Have an idea, project, or partnership in mind? Reach out to our team for robotics, AI, IoT, design,
-              training programs, internships, or collaborations. We're always ready to connect.</p>
-
-            <div class="left-mascot-wrapper" style="max-width: 440px; width: 100%; margin-top: 0.5rem;">
-              <img src="/assets/contact us .png" alt="Let's Build Together Mascot"
-                style="width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.06));" />
+      <!-- MOBILE VIEW (Strictly shown only on mobile <= 768px) -->
+      <div class="contact-mobile-view">
+        <div class="contact-mobile-container">
+          
+          <!-- Top Block: Indicator, Telemetry Badge & Headline -->
+          <div class="contact-top-block">
+            <div class="contact-mobile-header">
+              <span class="chapter-indicator"><span class="indicator-dash">—</span> CH. 05 / CONNECT</span>
+              <div class="contact-telemetry-badge">
+                <span class="contact-pulse-dot"></span>
+                <span class="contact-telemetry-text">24/7 ACTIVE</span>
+              </div>
             </div>
+
+            <h2 class="contact-mobile-title">
+              Let's Build <span class="highlight-underline-wrap">Together
+                <svg class="handdrawn-accent-underline" viewBox="0 0 220 16" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M3 11C48 4.5 138 4 217 10" stroke="#F5A623" stroke-width="4.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </h2>
+
+            <p class="contact-mobile-text">
+              Have an idea, project, or partnership in mind? Reach our robotics &amp; AI innovation team directly.
+            </p>
           </div>
 
-          <!-- Bottom Left Social Links -->
-          <div class="bottom-left-socials"
-            style="display: flex; align-items: center; gap: 0.85rem; margin-top: auto; padding-top: 0.5rem;">
-            <a href="https://instagram.com" target="_blank" class="social-icon-btn" aria-label="Instagram"
-              style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; color: #111; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease; background: rgba(255,255,255,0.75);">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-              </svg>
-            </a>
-            <a href="https://linkedin.com" target="_blank" class="social-icon-btn" aria-label="LinkedIn"
-              style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; color: #111; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease; background: rgba(255,255,255,0.75);">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                <rect x="2" y="9" width="4" height="12"></rect>
-                <circle cx="4" cy="4" r="2"></circle>
-              </svg>
-            </a>
-            <a href="https://youtube.com" target="_blank" class="social-icon-btn" aria-label="YouTube"
-              style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; color: #111; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease; background: rgba(255,255,255,0.75);">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path
-                  d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z">
-                </path>
-                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
-              </svg>
-            </a>
-            <a href="https://wa.me/919219488809" target="_blank" class="social-icon-btn" aria-label="WhatsApp"
-              style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; color: #111; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease; background: rgba(255,255,255,0.75);">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path
-                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
-                </path>
-              </svg>
-            </a>
+          <!-- Segmented Mode Switcher Tabs -->
+          <div class="contact-mode-switch" role="tablist" aria-label="Contact options">
+            <button class="contact-tab-btn active" id="tab-quick-reach" data-target="panel-quick-reach" role="tab" aria-selected="true" type="button">
+              <span class="tab-icon">⚡</span>
+              <span>Quick Connect</span>
+            </button>
+            <button class="contact-tab-btn" id="tab-send-message" data-target="panel-send-message" role="tab" aria-selected="false" type="button">
+              <span class="tab-icon">✉️</span>
+              <span>Send Inquiry</span>
+            </button>
           </div>
-        </div>
 
-        <!-- CENTER COLUMN: Vertical Contact Form Card (Increased height, reduced width) -->
-        <div class="center-contact-form-card" style="width: 100%; max-width: 460px; margin: 0 auto; z-index: 10;">
-          <form onsubmit="handleGetInTouchSubmit(event)"
-            style="background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 16px; padding: 2rem 1.85rem; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04); display: flex; flex-direction: column; gap: 1.15rem;">
+          <!-- Tab Content 1: Quick Connect (Direct Channels + Mascot) -->
+          <div class="contact-panel active" id="panel-quick-reach" role="tabpanel" aria-labelledby="tab-quick-reach">
+            
+            <!-- Quick Action Channel Cards -->
+            <div class="contact-channels-grid">
+              
+              <!-- WhatsApp Direct Action -->
+              <a href="https://wa.me/919219488809" target="_blank" class="contact-channel-card whatsapp-channel" aria-label="Chat directly on WhatsApp">
+                <div class="channel-icon-wrap wa-icon-wrap">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                </div>
+                <div class="channel-info">
+                  <div class="channel-title-row">
+                    <span class="channel-name">WhatsApp Direct</span>
+                    <span class="channel-badge green">Instant</span>
+                  </div>
+                  <span class="channel-subtext">Chat with engineering &amp; cohort leads</span>
+                </div>
+                <span class="channel-arrow">→</span>
+              </a>
 
-            <div
-              style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: #111; letter-spacing: -0.02em; margin-bottom: 0.25rem; text-transform: uppercase;">
-              GET IN TOUCH
+              <!-- Direct Call Action -->
+              <a href="tel:+919219488809" class="contact-channel-card phone-channel" aria-label="Call directly">
+                <div class="channel-icon-wrap phone-icon-wrap">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                </div>
+                <div class="channel-info">
+                  <div class="channel-title-row">
+                    <span class="channel-name">+91 9219488809</span>
+                    <span class="channel-badge dark">Call</span>
+                  </div>
+                  <span class="channel-subtext">Direct line • Mon–Sat 9:00 AM – 7:00 PM</span>
+                </div>
+                <span class="channel-arrow">→</span>
+              </a>
+
+              <!-- Direct Email Action -->
+              <a href="mailto:info@crediblecreate.com" class="contact-channel-card email-channel" aria-label="Send email">
+                <div class="channel-icon-wrap email-icon-wrap">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </div>
+                <div class="channel-info">
+                  <div class="channel-title-row">
+                    <span class="channel-name">info@crediblecreate.com</span>
+                    <span class="channel-badge outline">Email</span>
+                  </div>
+                  <span class="channel-subtext">General inquiries &amp; partnerships</span>
+                </div>
+                <span class="channel-arrow">→</span>
+              </a>
+
             </div>
 
-            <!-- Name -->
-            <div style="display: flex; flex-direction: column; gap: 0.35rem;">
-              <label
-                style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: #5a5a5a; letter-spacing: 0.08em;">NAME</label>
-              <input type="text" placeholder="Your name" required
-                style="width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; font-family: var(--font-display); font-size: 0.85rem; color: #111; outline: none; transition: border-color 0.2s ease;" />
+            <!-- Social Media Hub Strip -->
+            <div class="contact-social-section">
+              <span class="contact-social-label">OFFICIAL CHANNELS</span>
+              <div class="contact-social-pills">
+                <a href="https://instagram.com" target="_blank" class="contact-social-btn" aria-label="Instagram">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  <span>Instagram</span>
+                </a>
+                <a href="https://linkedin.com" target="_blank" class="contact-social-btn" aria-label="LinkedIn">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                  </svg>
+                  <span>LinkedIn</span>
+                </a>
+                <a href="https://youtube.com" target="_blank" class="contact-social-btn" aria-label="YouTube">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                  </svg>
+                  <span>YouTube</span>
+                </a>
+              </div>
             </div>
 
-            <!-- Email -->
-            <div style="display: flex; flex-direction: column; gap: 0.35rem;">
-              <label
-                style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: #5a5a5a; letter-spacing: 0.08em;">EMAIL</label>
-              <input type="email" placeholder="name@domain.com" required
-                style="width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; font-family: var(--font-display); font-size: 0.85rem; color: #111; outline: none; transition: border-color 0.2s ease;" />
-            </div>
-
-            <!-- Phone -->
-            <div style="display: flex; flex-direction: column; gap: 0.35rem;">
-              <label
-                style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: #5a5a5a; letter-spacing: 0.08em;">PHONE</label>
-              <input type="tel" placeholder="+91 XXXXX XXXXX"
-                style="width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; font-family: var(--font-display); font-size: 0.85rem; color: #111; outline: none; transition: border-color 0.2s ease;" />
-            </div>
-
-            <!-- Message -->
-            <div style="display: flex; flex-direction: column; gap: 0.35rem;">
-              <label
-                style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: #5a5a5a; letter-spacing: 0.08em;">MESSAGE</label>
-              <textarea rows="3" placeholder="Tell us about your inquiry..."
-                style="width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; font-family: var(--font-display); font-size: 0.85rem; color: #111; outline: none; resize: none; transition: border-color 0.2s ease;"></textarea>
-            </div>
-
-            <!-- Send Message Button -->
-            <button type="submit" class="btn btn-primary"
-              style="width: 100%; padding: 0.8rem 1.25rem; background: #111; color: #fff; border: none; border-radius: 8px; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; margin-top: 0.35rem;">
-              <span class="btn-text">SEND MESSAGE</span>
+            <!-- Switch to Form Link -->
+            <button type="button" class="switch-to-form-btn" id="quick-switch-to-form">
+              <span>Have a custom requirement? Open Message Form</span>
+              <span class="btn-arrow">→</span>
             </button>
 
-          </form>
+          </div>
+
+          <!-- Tab Content 2: Send Message Form -->
+          <div class="contact-panel" id="panel-send-message" role="tabpanel" aria-labelledby="tab-send-message">
+            <div class="contact-mobile-form-card">
+              <form onsubmit="handleGetInTouchSubmit(event)" class="contact-streamlined-form">
+                
+                <div class="form-header-row">
+                  <span class="form-card-title">GET IN TOUCH</span>
+                  <span class="form-card-response">⚡ Replies in 2h</span>
+                </div>
+
+                <!-- Row 1: Name & Phone Side-by-Side (Saves vertical space!) -->
+                <div class="form-dual-row">
+                  <div class="form-field-group">
+                    <label class="form-label">NAME *</label>
+                    <input type="text" name="name" placeholder="Your name" required class="form-input" />
+                  </div>
+                  <div class="form-field-group">
+                    <label class="form-label">PHONE</label>
+                    <input type="tel" name="phone" placeholder="+91..." class="form-input" />
+                  </div>
+                </div>
+
+                <!-- Row 2: Email -->
+                <div class="form-field-group">
+                  <label class="form-label">EMAIL ADDRESS *</label>
+                  <input type="email" name="email" placeholder="name@domain.com" required class="form-input" />
+                </div>
+
+                <!-- Row 3: Message -->
+                <div class="form-field-group">
+                  <label class="form-label">INQUIRY / MESSAGE *</label>
+                  <textarea name="message" rows="2" placeholder="Tell us about your cohort or project idea..." required class="form-textarea"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="contact-form-submit-btn">
+                  <span class="btn-text">SEND INQUIRY &nbsp;→</span>
+                </button>
+
+                <!-- Micro reassurance -->
+                <div class="form-footer-note">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <span>Encrypted &amp; direct to cohort team</span>
+                </div>
+
+              </form>
+            </div>
+          </div>
+
         </div>
 
-        <!-- RIGHT COLUMN: Standard Status Panel (05) -->
-        <div class="status-panel">
-          <span class="status-num">05</span>
-          <div>
-            SUPPORT // 24x7<br>
-            EMAIL // RESPONSE<br>
-            CALL // ASSISTANCE<br>
-            VISIT // OFFICE
+        <!-- Mobile Subtle Bottom Atmospheric Layer -->
+        <div class="mobile-bottom-atmosphere" aria-hidden="true">
+          <svg class="mobile-wave-svg" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0 45C110 15 260 75 400 25V120H0V45Z" fill="#F4EFE6" fill-opacity="0.65"/>
+          </svg>
+          <div class="mobile-leaf-accent leaf-left">
+            <svg width="75" height="95" viewBox="0 0 75 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M-5 95C10 65 20 32 5 5C30 15 50 42 45 80C62 52 72 32 68 10C85 38 78 72 55 92" fill="#3D5A34" fill-opacity="0.2"/>
+            </svg>
+          </div>
+          <div class="mobile-leaf-accent leaf-right">
+            <svg width="65" height="85" viewBox="0 0 65 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M75 85C60 58 48 32 65 5C38 15 18 40 22 75C8 48 -2 30 2 8C-12 32 -8 65 12 85" fill="#3D5A34" fill-opacity="0.16"/>
+            </svg>
           </div>
         </div>
 
@@ -834,7 +1270,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/js/supabase-client.js"></script>
   <!-- Core Page Interactions Script -->
-  <script src="/js/script.js?v=17"></script>
+  <script src="/js/script.js?v=19"></script>
 
   <!-- Floating Contact Actions -->
   <div class="floating-contact-actions"
