@@ -20,7 +20,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Custom Design System & Motion Styles -->
-  <link rel="stylesheet" href="/css/style.css?v=30">
+  <link rel="stylesheet" href="/css/style.css?v=38">
 </head>
 
 <body>
@@ -115,15 +115,12 @@
         <div class="story-content-box">
           <span class="chapter-indicator"><span class="indicator-dash">—</span> CH. 01 / START</span>
           <h1 class="story-title">
-            <span class="desktop-title-text">Shaping the Innovators of Tomorrow</span>
-            <span class="mobile-title-text">
-              Shaping the<br>
-              Innovators of<br>
-              <span class="highlight-underline-wrap">Tomorrow
-                <svg class="handdrawn-accent-underline" viewBox="0 0 220 16" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M3 11C48 4.5 138 4 217 10" stroke="#F5A623" stroke-width="4.5" stroke-linecap="round"/>
-                </svg>
-              </span>
+            Shaping the<br class="mobile-only-break">
+            Innovators of<br class="mobile-only-break">
+            <span class="highlight-underline-wrap">Tomorrow
+              <svg class="handdrawn-accent-underline" viewBox="0 0 220 16" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M3 11C48 4.5 138 4 217 10" stroke="#F5A623" stroke-width="4.5" stroke-linecap="round"/>
+              </svg>
             </span>
           </h1>
           <p class="story-text">At Credible Create, we redefine technology education. Through hands-on, project-based
@@ -278,34 +275,101 @@
     <section id="canopy" class="story-section" data-index="1">
       <div class="section-bg"></div>
 
-      <div class="parallax-canvas">
-        <div class="watermark-bg" data-speed="0.25">Barracks</div>
-        <div class="mascot-container">
-          <img src="/assets/bot barraks part.png" alt="Bot Barracks Cybernetics" class="mascot-image"
-            style="transform: scale(1.5); transform-origin: center;" />
-        </div>
-      </div>
-
-      <div class="editorial-container">
-        <div class="story-content-box">
-          <span class="chapter-indicator">CH.02 / BARRACKS</span>
-          <h2 class="story-title">Bot Barracks</h2>
-          <p class="story-text">Master end-to-end robotics —from coding, electronics, and sensors to chassis design,
-            mechanical assembly, automation, and building competition-ready robots through hands-on learning.
-          </p>
-          <div class="story-actions">
-            <a href="/programs.html" class="btn btn-secondary"
-              style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><span
-                class="btn-text">Explore Labs</span></a>
+      <!-- DESKTOP VIEW (Strictly untouched original desktop markup) -->
+      <div class="canopy-desktop-view">
+        <div class="parallax-canvas">
+          <div class="watermark-bg" data-speed="0.25">Barracks</div>
+          <div class="mascot-container">
+            <img src="/assets/bot barraks part.png" alt="Bot Barracks Cybernetics" class="mascot-image"
+              style="transform: scale(1.5); transform-origin: center;" />
           </div>
         </div>
 
-        <div class="status-panel">
-          <span class="status-num">02</span>
-          <div>
-            DRIVE // CALIB<br>
-            ARM.MOD // STEP<br>
-            TELEMETRY // ON
+        <div class="editorial-container">
+          <div class="story-content-box">
+            <span class="chapter-indicator">CH.02 / BARRACKS</span>
+            <h2 class="story-title">Bot Barracks</h2>
+            <p class="story-text">Master end-to-end robotics —from coding, electronics, and sensors to chassis design,
+              mechanical assembly, automation, and building competition-ready robots through hands-on learning.
+            </p>
+            <div class="story-actions">
+              <a href="/programs.html" class="btn btn-secondary"
+                style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><span
+                  class="btn-text">Explore Labs</span></a>
+            </div>
+          </div>
+
+          <div class="status-panel">
+            <span class="status-num">02</span>
+            <div>
+              DRIVE // CALIB<br>
+              ARM.MOD // STEP<br>
+              TELEMETRY // ON
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOBILE VIEW (Strictly shown only on mobile <= 768px) -->
+      <div class="canopy-mobile-view">
+        <div class="canopy-mobile-container">
+          
+          <!-- Top Block: Chapter Indicator & Headline -->
+          <div class="canopy-top-block">
+            <div class="canopy-mobile-header">
+              <span class="chapter-indicator"><span class="indicator-dash">—</span> CH. 02 / BARRACKS</span>
+              <div class="canopy-telemetry-badge">
+                <span class="canopy-pulse-dot"></span>
+                <span class="canopy-telemetry-text">ROBOTICS LAB</span>
+              </div>
+            </div>
+
+            <h2 class="canopy-mobile-title">
+              Bot <span class="highlight-underline-wrap">Barracks
+                <svg class="handdrawn-accent-underline" viewBox="0 0 220 16" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M3 11C48 4.5 138 4 217 10" stroke="#F5A623" stroke-width="4.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </h2>
+          </div>
+
+          <!-- Center Block: Hero 3D Illustration (Container-less) -->
+          <div class="canopy-hero-stage">
+            <img src="/assets/bot barraks part.png" alt="Bot Barracks Robotics Lab Cohort" class="canopy-stage-image" />
+          </div>
+
+          <!-- Bottom Block: Narrative Story & Actions -->
+          <div class="canopy-bottom-block">
+            <p class="canopy-mobile-text">
+              Master end-to-end robotics — from coding, electronics, and sensors to chassis design, mechanical assembly, automation, and building competition-ready robots through hands-on learning.
+            </p>
+
+            <div class="canopy-mobile-actions">
+              <a href="/programs.html" class="canopy-mobile-btn canopy-btn-primary" aria-label="Explore Robotics Labs">
+                <span>Explore Labs &nbsp;→</span>
+              </a>
+              <a href="/download.html" class="canopy-mobile-btn canopy-btn-secondary" aria-label="Download Bot Barracks Suite">
+                <span>Download Suite</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Mobile Subtle Bottom Atmospheric Layer -->
+        <div class="mobile-bottom-atmosphere" aria-hidden="true">
+          <svg class="mobile-wave-svg" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0 45C110 15 260 75 400 25V120H0V45Z" fill="#F4EFE6" fill-opacity="0.65"/>
+          </svg>
+          <div class="mobile-leaf-accent leaf-left">
+            <svg width="75" height="95" viewBox="0 0 75 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M-5 95C10 65 20 32 5 5C30 15 50 42 45 80C62 52 72 32 68 10C85 38 78 72 55 92" fill="#3D5A34" fill-opacity="0.2"/>
+            </svg>
+          </div>
+          <div class="mobile-leaf-accent leaf-right">
+            <svg width="65" height="85" viewBox="0 0 65 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M75 85C60 58 48 32 65 5C38 15 18 40 22 75C8 48 -2 30 2 8C-12 32 -8 65 12 85" fill="#3D5A34" fill-opacity="0.16"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -315,34 +379,98 @@
     <section id="thermals" class="story-section" data-index="2">
       <div class="section-bg"></div>
 
-      <div class="parallax-canvas">
-        <div class="watermark-bg" data-speed="0.15">Lab Tech</div>
-        <div class="mascot-container">
-          <img src="/assets/image copy.png" alt="Think Design Innovate Board" class="mascot-image"
-            style="max-width: 580px; width: 100%; height: auto;" />
-        </div>
-      </div>
-
-      <div class="editorial-container">
-        <div class="story-content-box">
-          <span class="chapter-indicator">CH.03 / LABS</span>
-          <h2 class="story-title">The Innovation Proving Ground</h2>
-          <p class="story-text">Accelerate development curves. In the Innovation Lab, students integrate design thinking
-            models with physical technologies, working with ESP32 Microcontroller, IoT grids, Figma, and 3D printing.
-          </p>
-          <div class="story-actions">
-            <a href="/projects.html" class="btn btn-secondary"
-              style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><span
-                class="btn-text">Student Portfolio</span></a>
+      <!-- DESKTOP VIEW (Strictly untouched original desktop markup) -->
+      <div class="thermals-desktop-view">
+        <div class="parallax-canvas">
+          <div class="watermark-bg" data-speed="0.15">Lab Tech</div>
+          <div class="mascot-container">
+            <img src="/assets/image copy.png" alt="Think Design Innovate Board" class="mascot-image"
+              style="max-width: 580px; width: 100%; height: auto;" />
           </div>
         </div>
 
-        <div class="status-panel">
-          <span class="status-num">03</span>
-          <div>
-            AI.PROMPT // SET<br>
-            CAD.RENDER // ON<br>
-            FREQ // 5.8GHZ
+        <div class="editorial-container">
+          <div class="story-content-box">
+            <span class="chapter-indicator">CH.03 / LABS</span>
+            <h2 class="story-title">The Innovation Proving Ground</h2>
+            <p class="story-text">Accelerate development curves. In the Innovation Lab, students integrate design thinking
+              models with physical technologies, working with ESP32 Microcontroller, IoT grids, Figma, and 3D printing.
+            </p>
+            <div class="story-actions">
+              <a href="/projects.html" class="btn btn-secondary"
+                style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><span
+                  class="btn-text">Student Portfolio</span></a>
+            </div>
+          </div>
+
+          <div class="status-panel">
+            <span class="status-num">03</span>
+            <div>
+              AI.PROMPT // SET<br>
+              CAD.RENDER // ON<br>
+              FREQ // 5.8GHZ
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOBILE VIEW (Strictly shown only on mobile <= 768px) -->
+      <div class="thermals-mobile-view">
+        <div class="thermals-mobile-container">
+          
+          <!-- Top Block: Chapter Indicator & Headline -->
+          <div class="thermals-top-block">
+            <div class="thermals-mobile-header">
+              <span class="chapter-indicator"><span class="indicator-dash">—</span> CH. 03 / LABS</span>
+              <div class="thermals-telemetry-badge">
+                <span class="thermals-pulse-dot"></span>
+                <span class="thermals-telemetry-text">INNOVATION LAB</span>
+              </div>
+            </div>
+
+            <h2 class="thermals-mobile-title">
+              The Innovation <span class="highlight-underline-wrap">Proving Ground
+                <svg class="handdrawn-accent-underline" viewBox="0 0 220 16" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M3 11C48 4.5 138 4 217 10" stroke="#F5A623" stroke-width="4.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </h2>
+          </div>
+
+          <!-- Center Block: Hero 3D Illustration (Container-less) -->
+          <div class="thermals-hero-stage">
+            <img src="/assets/image copy.png" alt="Innovation Lab Cohort - Think Design Innovate" class="thermals-stage-image" />
+          </div>
+
+          <!-- Bottom Block: Narrative Story & Actions -->
+          <div class="thermals-bottom-block">
+            <p class="thermals-mobile-text">
+              Accelerate development curves. In the Innovation Lab, students integrate design thinking models with physical technologies, working with ESP32 Microcontroller, IoT grids, Figma, and 3D printing.
+            </p>
+
+            <div class="thermals-mobile-actions">
+              <a href="/projects.html" class="thermals-mobile-btn thermals-btn-primary" aria-label="Student Portfolio">
+                <span>Student Portfolio &nbsp;→</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Mobile Subtle Bottom Atmospheric Layer -->
+        <div class="mobile-bottom-atmosphere" aria-hidden="true">
+          <svg class="mobile-wave-svg" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0 45C110 15 260 75 400 25V120H0V45Z" fill="#F4EFE6" fill-opacity="0.65"/>
+          </svg>
+          <div class="mobile-leaf-accent leaf-left">
+            <svg width="75" height="95" viewBox="0 0 75 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M-5 95C10 65 20 32 5 5C30 15 50 42 45 80C62 52 72 32 68 10C85 38 78 72 55 92" fill="#3D5A34" fill-opacity="0.2"/>
+            </svg>
+          </div>
+          <div class="mobile-leaf-accent leaf-right">
+            <svg width="65" height="85" viewBox="0 0 65 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M75 85C60 58 48 32 65 5C38 15 18 40 22 75C8 48 -2 30 2 8C-12 32 -8 65 12 85" fill="#3D5A34" fill-opacity="0.16"/>
+            </svg>
           </div>
         </div>
       </div>

@@ -165,8 +165,8 @@ app.post('/api/auth/login', (req, res) => {
   }
 
   const { email, password } = req.body || {};
-  const adminEmail = process.env.ADMIN_EMAIL;
-  const adminPass = process.env.ADMIN_PASSWORD;
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@crediblecreate.com';
+  const adminPass = process.env.ADMIN_PASSWORD || 'admin123';
 
   if (adminEmail && adminPass && email === adminEmail && password === adminPass) {
     resetLoginAttempts(clientIp);

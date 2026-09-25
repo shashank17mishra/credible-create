@@ -57,6 +57,21 @@ h1, h2, h3, h4, h5, h6, input, button, select, textarea, table, th, td {
   font-family: inherit;
 }
 
+/* Base Guards: Prevent Mobile-Only elements from rendering on desktop */
+.mobile-only-break,
+.mobile-title-text,
+.mobile-btn-text,
+.mobile-peeking-characters,
+.canopy-mobile-view,
+.thermals-mobile-view,
+.mobile-metrics-panel,
+.mobile-focus-section,
+.mobile-bottom-atmosphere,
+.mobile-nav-toggle,
+.mobile-nav-drawer {
+  display: none;
+}
+
 /* Landing page body styles — scoped so admin panel is unaffected */
 html:has(.scroll-container),
 html:has(.scroll-container) body {
@@ -2457,15 +2472,22 @@ body.mobile-nav-open {
   .mobile-hero-contact-card,
   .mobile-hero-highlights,
   .mobile-car-track-container,
+  .canopy-mobile-view,
+  .thermals-mobile-view,
   .mobile-scroll-discover,
   .mobile-title-text,
   .mobile-btn-text,
+  .mobile-only-break,
   .mobile-metrics-panel,
   .mobile-focus-section,
   .mobile-bottom-atmosphere,
   .mobile-nav-toggle,
   .mobile-nav-drawer {
     display: none !important;
+  }
+  .canopy-desktop-view,
+  .thermals-desktop-view {
+    display: contents !important;
   }
   .desktop-title-text {
     display: inline !important;
@@ -2852,6 +2874,9 @@ body.mobile-nav-open {
 
   /* Full-height clean section layout on mobile */
   .story-section {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
     width: 100% !important;
     height: 100vh !important;
     height: 100dvh !important;
@@ -2865,6 +2890,31 @@ body.mobile-nav-open {
     padding-top: 64px !important;
     padding-bottom: 0.5rem !important;
     box-sizing: border-box !important;
+  }
+
+  .story-section:not(.active) {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+  }
+
+  .story-section.active {
+    display: flex !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    z-index: 10 !important;
+  }
+
+  .canopy-desktop-view,
+  .thermals-desktop-view {
+    display: none !important;
+  }
+
+  .canopy-mobile-view,
+  .thermals-mobile-view {
+    display: flex !important;
   }
 
   .editorial-container {
@@ -2986,6 +3036,10 @@ body.mobile-nav-open {
   }
 
   /* Desktop text vs Mobile text toggle */
+  .mobile-only-break {
+    display: inline !important;
+  }
+
   .desktop-title-text {
     display: none !important;
   }
@@ -3003,17 +3057,22 @@ body.mobile-nav-open {
   }
 
   /* ==========================================================================
-     CHAPTER 01 (HERO MEADOW) MOBILE VIEW — Matches Reference Design Exactly
+     CHAPTER 01 (HERO MEADOW) & CHAPTER 02 (BOT BARRACKS) MOBILE VIEW
      ========================================================================== */
-  #meadow.story-section {
+  #meadow.story-section,
+  #canopy.story-section {
     padding-top: 68px !important;
     padding-bottom: 1.25rem !important;
     background: #FAF7F2 !important; /* Warm ivory/cream background */
     overflow-x: hidden !important;
-    overflow-y: visible !important;
-    height: auto !important;
-    min-height: 100dvh !important;
-    position: relative !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
     box-sizing: border-box !important;
     display: flex !important;
     flex-direction: column !important;
@@ -3021,11 +3080,13 @@ body.mobile-nav-open {
     justify-content: flex-start !important;
   }
 
-  #meadow .section-bg {
+  #meadow .section-bg,
+  #canopy .section-bg {
     background: #FAF7F2 !important;
   }
 
-  #meadow .editorial-container {
+  #meadow .editorial-container,
+  #canopy .editorial-container {
     padding: 0.65rem 0.85rem 1.5rem 0.85rem !important;
     height: auto !important;
     min-height: auto !important;
@@ -3043,7 +3104,8 @@ body.mobile-nav-open {
     margin: 0 auto !important;
   }
 
-  #meadow .story-content-box {
+  #meadow .story-content-box,
+  #canopy .story-content-box {
     order: 1 !important;
     position: relative !important;
     z-index: 6 !important;
@@ -3056,8 +3118,9 @@ body.mobile-nav-open {
     box-sizing: border-box !important;
   }
 
-  /* Chapter 01 / Start */
-  #meadow .chapter-indicator {
+  /* Chapter Indicator */
+  #meadow .chapter-indicator,
+  #canopy .chapter-indicator {
     font-family: var(--font-mono) !important;
     font-size: 0.7rem !important;
     font-weight: 700 !important;
@@ -3076,7 +3139,8 @@ body.mobile-nav-open {
   }
 
   /* Hero Headline */
-  #meadow .story-title {
+  #meadow .story-title,
+  #canopy .story-title {
     width: 100% !important;
     max-width: 100% !important;
     font-family: var(--font-display) !important;
@@ -3106,7 +3170,8 @@ body.mobile-nav-open {
   }
 
   /* Paragraph on left side with comfortable width */
-  #meadow .story-text {
+  #meadow .story-text,
+  #canopy .story-text {
     width: calc(100% - 145px) !important;
     max-width: 220px !important;
     font-family: var(--font-display) !important;
@@ -3210,7 +3275,8 @@ body.mobile-nav-open {
   }
 
   /* CTA Buttons: Shifted down by 20% for generous spacing below character artwork */
-  #meadow .story-actions {
+  #meadow .story-actions,
+  #canopy .story-actions {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -3221,7 +3287,8 @@ body.mobile-nav-open {
     z-index: 7 !important;
   }
 
-  #meadow .story-actions .btn {
+  #meadow .story-actions .btn,
+  #canopy .story-actions .btn {
     flex: 1 !important;
     height: 48px !important;
     min-height: 48px !important;
@@ -3241,7 +3308,8 @@ body.mobile-nav-open {
     -webkit-tap-highlight-color: transparent !important;
   }
 
-  #meadow .hero-btn-main {
+  #meadow .hero-btn-main,
+  #canopy .hero-btn-main {
     background: #111111 !important;
     color: #ffffff !important;
     border: none !important;
@@ -3249,12 +3317,14 @@ body.mobile-nav-open {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14) !important;
   }
 
-  #meadow .hero-btn-main:active {
+  #meadow .hero-btn-main:active,
+  #canopy .hero-btn-main:active {
     background: #282828 !important;
     transform: scale(0.98) !important;
   }
 
-  #meadow .hero-btn-sub {
+  #meadow .hero-btn-sub,
+  #canopy .hero-btn-sub {
     background: transparent !important;
     color: #111111 !important;
     border: 1.5px solid #111111 !important;
@@ -3262,7 +3332,8 @@ body.mobile-nav-open {
     box-shadow: none !important;
   }
 
-  #meadow .hero-btn-sub:active {
+  #meadow .hero-btn-sub:active,
+  #canopy .hero-btn-sub:active {
     background: rgba(0, 0, 0, 0.04) !important;
     transform: scale(0.98) !important;
   }
@@ -3517,16 +3588,22 @@ body.mobile-nav-open {
 
   /* Small Mobile Breakpoint (<= 380px — iPhone SE, etc.) */
   @media (max-width: 380px) {
-    #meadow .story-title {
+    #meadow .story-title,
+    #canopy .story-title,
+    #thermals .story-title {
       font-size: 2.15rem !important;
     }
 
-    #meadow .story-actions {
+    #meadow .story-actions,
+    #canopy .story-actions,
+    #thermals .story-actions {
       flex-direction: column !important;
       gap: 0.55rem !important;
     }
 
-    #meadow .story-actions .btn {
+    #meadow .story-actions .btn,
+    #canopy .story-actions .btn,
+    #thermals .story-actions .btn {
       width: 100% !important;
     }
 
@@ -3539,73 +3616,499 @@ body.mobile-nav-open {
       width: 100% !important;
       padding: 0.5rem 0.85rem !important;
     }
+
+    .canopy-mobile-actions,
+    .thermals-mobile-actions {
+      flex-direction: column !important;
+      gap: 0.55rem !important;
+    }
+
+    .canopy-mobile-btn,
+    .thermals-mobile-btn {
+      width: 100% !important;
+    }
+
+    .canopy-hero-stage,
+    .thermals-hero-stage {
+      height: 190px !important;
+    }
   }
 
-  /* Hide Desktop Elements on Mobile in Meadow */
+  /* Hide Desktop Elements on Mobile in Meadow, Canopy & Thermals */
   #meadow .hero-avatar-container,
   #meadow .status-panel,
-  #meadow .mobile-bottom-bar {
+  #meadow .mobile-bottom-bar,
+  #canopy .parallax-canvas .mascot-container,
+  #canopy .status-panel,
+  #thermals .parallax-canvas,
+  #thermals .mascot-container,
+  #thermals .status-panel {
     display: none !important;
   }
 
-  /* ==========================================================================
-     CHAPTER 02: BOT BARRACKS (MOBILE)
-     ========================================================================== */
-  #canopy .mascot-container {
-    position: absolute !important;
-    top: auto !important;
-    bottom: 2.5rem !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: 78% !important;
-    max-width: 290px !important;
-    height: auto !important;
-    max-height: 26vh !important;
-    margin: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 2 !important;
-  }
-
-  #canopy .mascot-image {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 22vh !important;
-    object-fit: contain !important;
-    transform: none !important;
-    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.1)) !important;
-    animation: hover-drift 6s infinite ease-in-out !important;
+  /* Inactive Section Guard for Mobile */
+  #canopy.story-section:not(.active),
+  #thermals.story-section:not(.active) {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
   }
 
   /* ==========================================================================
-     CHAPTER 03: TECH LABS (MOBILE)
+     CHAPTER 02: BOT BARRACKS (MOBILE REDESIGN — PERFECT FIT)
      ========================================================================== */
-  #thermals .mascot-container {
-    position: absolute !important;
-    top: auto !important;
-    bottom: 2.5rem !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: 85% !important;
-    max-width: 320px !important;
-    height: auto !important;
-    max-height: 26vh !important;
-    margin: 0 !important;
+  #canopy.story-section {
+    padding-top: 72px !important;
+    padding-bottom: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    box-sizing: border-box !important;
     display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 2 !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
-  #thermals .mascot-image {
+  .canopy-mobile-view {
+    display: flex !important;
+    flex-direction: column !important;
     width: 100% !important;
-    height: auto !important;
-    max-height: 22vh !important;
-    object-fit: contain !important;
-    border-radius: 12px !important;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06) !important;
+    height: 100% !important;
+    flex: 1 1 auto !important;
+    min-height: calc(100dvh - 72px) !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  .canopy-mobile-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding: 0.6rem 1.25rem 2.25rem 1.25rem !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    z-index: 10 !important;
+  }
+
+  .canopy-top-block {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .canopy-mobile-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .canopy-mobile-header .chapter-indicator {
+    font-family: var(--font-mono) !important;
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.16em !important;
+    color: #666666 !important;
+    text-transform: uppercase !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    margin: 0 !important;
+  }
+
+  .canopy-telemetry-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.38rem !important;
+    background: rgba(255, 255, 255, 0.88) !important;
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 9999px !important;
+    padding: 0.22rem 0.65rem !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .canopy-pulse-dot {
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background: #10B981 !important;
+    box-shadow: 0 0 8px #10B981 !important;
+    animation: canopyPulse 2s infinite ease-in-out !important;
+    flex-shrink: 0 !important;
+  }
+
+  @keyframes canopyPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.55; }
+  }
+
+  .canopy-telemetry-text {
+    font-family: var(--font-mono) !important;
+    font-size: 0.6rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    color: #333333 !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+  }
+
+  .canopy-mobile-title {
+    font-family: var(--font-display) !important;
+    font-size: clamp(2.35rem, 8.8vw, 3rem) !important;
+    font-weight: 800 !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.04em !important;
+    color: #111111 !important;
+    margin: 0 !important;
+    text-align: left !important;
+  }
+
+  /* 3D Visual Stage Showcase: Container-less & Prominent */
+  .canopy-hero-stage {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+    min-height: 180px !important;
+    max-height: clamp(210px, 32vh, 290px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0.25rem 0 !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .canopy-stage-image {
+    position: relative !important;
+    z-index: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.08)) !important;
+    display: block !important;
+    margin: 0 auto !important;
+  }
+
+  /* Bottom Block: Story Text & Action Buttons */
+  .canopy-bottom-block {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+    gap: 0.95rem !important;
+    margin-top: 0.35rem !important;
+  }
+
+  .canopy-mobile-text {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-family: var(--font-display) !important;
+    font-size: 0.95rem !important;
+    line-height: 1.58 !important;
+    color: #404040 !important;
+    margin: 0 !important;
+    font-weight: 450 !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+  }
+
+  /* CTA Buttons Row */
+  .canopy-mobile-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+    z-index: 5 !important;
+  }
+
+  .canopy-mobile-btn {
+    flex: 1 !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 1.25rem !important;
+    font-family: var(--font-display) !important;
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.01em !important;
+    border-radius: 9999px !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+    white-space: nowrap !important;
+  }
+
+  .canopy-btn-primary {
+    background: #111111 !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16) !important;
+  }
+
+  .canopy-btn-primary:active {
+    background: #262626 !important;
+    transform: scale(0.97) !important;
+  }
+
+  .canopy-btn-secondary {
+    background: rgba(255, 255, 255, 0.85) !important;
+    color: #111111 !important;
+    border: 1.5px solid #111111 !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  .canopy-btn-secondary:active {
+    background: rgba(0, 0, 0, 0.05) !important;
+    transform: scale(0.97) !important;
+  }
+
+  /* ==========================================================================
+     CHAPTER 03: TECH LABS (MOBILE REDESIGN — PERFECT FIT)
+     ========================================================================== */
+  #thermals.story-section {
+    padding-top: 72px !important;
+    padding-bottom: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .thermals-mobile-view {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100% !important;
+    flex: 1 1 auto !important;
+    min-height: calc(100dvh - 72px) !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  .thermals-mobile-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding: 0.6rem 1.25rem 2.25rem 1.25rem !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    z-index: 10 !important;
+  }
+
+  .thermals-top-block {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .thermals-mobile-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .thermals-mobile-header .chapter-indicator {
+    font-family: var(--font-mono) !important;
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.16em !important;
+    color: #666666 !important;
+    text-transform: uppercase !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    margin: 0 !important;
+  }
+
+  .thermals-telemetry-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.38rem !important;
+    background: rgba(255, 255, 255, 0.88) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 9999px !important;
+    padding: 0.22rem 0.65rem !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .thermals-pulse-dot {
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background: #10B981 !important;
+    box-shadow: 0 0 8px #10B981 !important;
+    animation: thermalsPulse 2s infinite ease-in-out !important;
+    flex-shrink: 0 !important;
+  }
+
+  @keyframes thermalsPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.55; }
+  }
+
+  .thermals-telemetry-text {
+    font-family: var(--font-mono) !important;
+    font-size: 0.6rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    color: #333333 !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+  }
+
+  .thermals-mobile-title {
+    font-family: var(--font-display) !important;
+    font-size: clamp(2.05rem, 7.8vw, 2.7rem) !important;
+    font-weight: 800 !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.04em !important;
+    color: #111111 !important;
+    margin: 0 !important;
+    text-align: left !important;
+  }
+
+  /* 3D Visual Stage Showcase: Container-less & Prominent */
+  .thermals-hero-stage {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+    min-height: 180px !important;
+    max-height: clamp(210px, 32vh, 290px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0.25rem 0 !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .thermals-stage-image {
+    position: relative !important;
+    z-index: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.08)) !important;
+    display: block !important;
+    margin: 0 auto !important;
+  }
+
+  /* Bottom Block: Story Text & Action Buttons */
+  .thermals-bottom-block {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+    gap: 0.95rem !important;
+    margin-top: 0.35rem !important;
+  }
+
+  .thermals-mobile-text {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-family: var(--font-display) !important;
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+    color: #404040 !important;
+    margin: 0 !important;
+    font-weight: 450 !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+  }
+
+  /* CTA Buttons Row */
+  .thermals-mobile-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+    z-index: 5 !important;
+  }
+
+  .thermals-mobile-btn {
+    width: 100% !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 1.25rem !important;
+    font-family: var(--font-display) !important;
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.01em !important;
+    border-radius: 9999px !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+    white-space: nowrap !important;
+  }
+
+  .thermals-btn-primary {
+    background: #111111 !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16) !important;
+  }
+
+  .thermals-btn-primary:active {
+    background: #262626 !important;
+    transform: scale(0.97) !important;
   }
 
   /* ==========================================================================
@@ -3945,29 +4448,33 @@ body.mobile-nav-open {
     right: -10px !important;
   }
 
-  #meadow.story-section {
-    height: auto !important;
-    min-height: auto !important;
+  #meadow.story-section,
+  #canopy.story-section {
+    height: 100vh !important;
+    height: 100dvh !important;
     padding-bottom: 1rem !important;
   }
 
-  #meadow .editorial-container {
+  #meadow .editorial-container,
+  #canopy .editorial-container {
     padding: 0.5rem 0.85rem 0.5rem 0.85rem !important;
     min-height: auto !important;
     height: auto !important;
   }
 
-  #meadow .story-actions {
+  #meadow .story-actions,
+  #canopy .story-actions {
     margin: 0.9rem auto 0 auto !important;
     gap: 0.5rem !important;
   }
 
-  #meadow .story-actions .btn {
+  #meadow .story-actions .btn,
+  #canopy .story-actions .btn {
     min-height: 42px !important;
     height: 42px !important;
     font-size: 0.74rem !important;
     padding: 0 0.5rem !important;
-    border-radius: 0px !important;
+    border-radius: 9999px !important;
   }
 
   .mobile-hero-highlights {
