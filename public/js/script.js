@@ -280,10 +280,9 @@ function initCredibleCreate() {
     if (isMobile()) {
       clearAllTyping();
       typableElements.forEach(item => {
-        if (item.sectionIndex === activeSectionIndex) {
-          item.element.innerHTML = item.rawHtml;
-        }
+        item.element.innerHTML = item.rawHtml;
       });
+      sections.forEach(sec => resetMobileParallax(sec));
     } else {
       sections.forEach(sec => resetMobileParallax(sec));
     }
@@ -304,8 +303,9 @@ function initCredibleCreate() {
     }, duration);
   }
 
-  // Intercept scroll wheel intents
+  // Intercept scroll wheel intents (Desktop/Tablet only)
   container.addEventListener('wheel', (e) => {
+    if (isMobile()) return;
     e.preventDefault();
     if (isScrollingCooldown) return;
 
@@ -324,12 +324,14 @@ function initCredibleCreate() {
     }
   }, { passive: false });
 
-  // Intercept touch swipe gestures for mobile compatibility
+  // Intercept touch swipe gestures for mobile compatibility (Desktop/Tablet swipe only)
   container.addEventListener('touchstart', (e) => {
+    if (isMobile()) return;
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
 
   container.addEventListener('touchmove', (e) => {
+    if (isMobile()) return;
     // If interacting with form fields or interactive buttons/links, allow native touch
     if (e.target.closest('input, textarea, select, button, a')) return;
 
@@ -410,6 +412,11 @@ function initCredibleCreate() {
   // Scroll target coordinate function
   function scrollToSection(index) {
     if (sections[index]) {
+      if (isMobile()) {
+        sections[index].scrollIntoView({ behavior: 'smooth' });
+        activeSectionIndex = index;
+        return;
+      }
       activeSectionIndex = index;
       targetScrollY = index * container.clientHeight;
       if (window.innerWidth <= 1024) {
@@ -1365,68 +1372,10 @@ function initCredibleCreate() {
       const sectionOffset = index * containerHeight;
       const progress = (currentScrollY - sectionOffset) / containerHeight;
 
-      // Mobile Section Parallax Transition Engine (Applies strictly on mobile <= 768px)
+      // Mobile View: Ensure static continuous layout, no virtual scroll transforms
       if (isMobile()) {
-        const absProgress = Math.abs(progress);
-
-        if (isScrolling && absProgress < 1.05) {
-          section.classList.add('in-transit');
-
-          if (progress >= 0) {
-            // Outgoing / upper card: recedes with slower upward parallax (-28%), subtle scale down, soft fade
-            const translateY = progress * -28;
-            const scale = Math.max(0.88, 1 - progress * 0.08);
-            const opacity = Math.max(0, 1 - progress * 0.75);
-
-            section.style.transform = `translate3d(0, ${translateY}%, 0) scale(${scale})`;
-            section.style.opacity = opacity;
-            section.style.zIndex = '5';
-            section.style.boxShadow = 'none';
-          } else {
-            // Incoming / lower card: slides smoothly up over the receding section
-            const translateY = -progress * 100;
-            const scale = Math.min(1, 1 + progress * 0.04);
-            const opacity = Math.min(1, 1 + progress * 0.15);
-
-            section.style.transform = `translate3d(0, ${translateY}%, 0) scale(${scale})`;
-            section.style.opacity = opacity;
-            section.style.zIndex = '10';
-            section.style.boxShadow = '0 -14px 36px rgba(0, 0, 0, 0.12)';
-          }
-
-          // Differential inner element parallax for rich layered depth
-          const heroVisual = section.querySelector(
-            '.mobile-peeking-characters, .canopy-stage-image, .thermals-stage-image, .gallery-cards-track, .contact-m-quick-channels, .contact-m-form-card, .myna-card-image-wrap'
-          );
-          if (heroVisual) {
-            heroVisual.style.transform = `translate3d(0, ${progress * -55}px, 0)`;
-          }
-
-          const floatingPills = section.querySelectorAll(
-            '.canopy-pill-left, .canopy-pill-right, .floating-pill, .hero-badge-live, .thermals-radar, .peeking-spark-doodle'
-          );
-          floatingPills.forEach(pill => {
-            pill.style.transform = `translate3d(0, ${progress * -85}px, 0)`;
-          });
-
-          const chapterTag = section.querySelector('.chapter-indicator, .mobile-tag, .mobile-focus-label');
-          if (chapterTag) {
-            chapterTag.style.transform = `translate3d(0, ${progress * -22}px, 0)`;
-          }
-
-          const atmosphere = section.querySelector('.mobile-bottom-atmosphere, .peeking-leaf-accent');
-          if (atmosphere) {
-            atmosphere.style.transform = `translate3d(0, ${progress * 30}px, 0) scale(${1 + absProgress * 0.08})`;
-          }
-
-          const secondaryVisual = section.querySelector('.mobile-focus-section, .canopy-feature-grid, .thermals-feature-grid');
-          if (secondaryVisual) {
-            secondaryVisual.style.transform = `translate3d(0, ${progress * -35}px, 0)`;
-          }
-        } else {
-          // Settled or offscreen on mobile
-          resetMobileParallax(section);
-        }
+        resetMobileParallax(section);
+        return;
       }
 
       // Animate visible sections (within close progression boundary [-1.2, 1.2])
@@ -1621,6 +1570,12 @@ function initCredibleCreate() {
 
   // Initial update
   updateNavigation(0);
+  if (isMobile() && !window.location.hash) {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }
 }
 
 /* ==========================================================================
@@ -1887,6 +1842,12 @@ function initGalleryHorizontalScroll() {
   }
 
   function goToGallerySection(index) {
+    if (isMobile()) {
+      if (sections[index]) {
+        sections[index].scrollIntoView({ behavior: 'smooth' });
+      }
+      return;
+    }
     if (index < 0) index = 0;
     if (index >= sections.length) index = sections.length - 1;
     activeIndex = index;
@@ -1920,6 +1881,7 @@ function initGalleryHorizontalScroll() {
 
   // Wheel listener
   window.addEventListener('wheel', (e) => {
+    if (isMobile()) return;
     const lightbox = document.getElementById('lightbox');
     if (lightbox && lightbox.classList.contains('active')) return;
 
@@ -1945,11 +1907,13 @@ function initGalleryHorizontalScroll() {
   let touchStartX = 0;
   let touchStartY = 0;
   window.addEventListener('touchstart', (e) => {
+    if (isMobile()) return;
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
 
   window.addEventListener('touchend', (e) => {
+    if (isMobile()) return;
     const lightbox = document.getElementById('lightbox');
     if (lightbox && lightbox.classList.contains('active')) return;
 
